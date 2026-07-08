@@ -11,6 +11,7 @@ const elements = {
     nav: {
         links: null
     },
+    scrollTopButton: null,
     home: {
         searchInput: null,
         countryFilter: null,
@@ -59,6 +60,7 @@ function initializeElements() {
     
     // Navigation
     elements.nav.links = document.querySelectorAll('.nav-link');
+    elements.scrollTopButton = document.getElementById('scroll-top-button');
     
     // Home view elements
     elements.home.searchInput = document.getElementById('search-input');
@@ -105,6 +107,29 @@ function setupEventListeners() {
     
     // Browser back/forward
     window.addEventListener('popstate', handlePopState);
+
+    if (elements.scrollTopButton) {
+        elements.scrollTopButton.addEventListener('click', scrollToTop);
+        window.addEventListener('scroll', handleScrollTopVisibility, { passive: true });
+        handleScrollTopVisibility();
+    }
+}
+
+function scrollToTop() {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+}
+
+function handleScrollTopVisibility() {
+    if (!elements.scrollTopButton) return;
+
+    if (handleScrollTopVisibility.queued) return;
+    handleScrollTopVisibility.queued = true;
+
+    requestAnimationFrame(() => {
+        handleScrollTopVisibility.queued = false;
+        const shouldShow = window.scrollY > Math.max(520, window.innerHeight * 0.72);
+        elements.scrollTopButton.classList.toggle('is-visible', shouldShow);
+    });
 }
 
 // Load data from JSON file
@@ -191,7 +216,12 @@ function handleRoute(path) {
             break;
         default:
             navigateTo('/');
+            return;
     }
+
+    requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    });
 }
 
 function updateNavigation() {
@@ -219,7 +249,7 @@ function showView(viewName) {
 function renderFeaturedDances() {
     if (!dancesData || !elements.home.featuredContainer) return;
 
-    const featuredSlugs = ['kizomba', 'semba', 'tarraxinha', 'kizomba-fusion', 'urban-kizz', 'kuduro', 'kompa'];
+    const featuredSlugs = ['kizomba', 'semba', 'tarraxinha', 'tarraxo', 'kizomba-fusion', 'urban-kizz', 'kuduro', 'kompa'];
     const featured = featuredSlugs
         .map(slug => dancesData.find(dance => dance.slug === slug))
         .filter(Boolean);
@@ -242,6 +272,7 @@ function getFeaturedDescription(dance) {
         'kizomba': 'Bliskość, dialog i historia semby spotykająca zouk.',
         'semba': 'Radość, energia i angolska tradycja w szybkim rytmie.',
         'tarraxinha': 'Bardzo bliski kontakt, izolacje i mikro-ruch.',
+        'tarraxo': 'Współczesny puls Lizbony, izolacje i niskie prowadzenie.',
         'kizomba-fusion': 'Kizomba z subtelnymi wpływami innych stylów.',
         'urban-kizz': 'Współczesna interpretacja kizomby w miejskim stylu.',
         'kuduro': 'Energia, opór i elektroniczny puls Luandy.',
@@ -251,16 +282,21 @@ function getFeaturedDescription(dance) {
 }
 
 function getFeaturedImage(slug) {
+    return getDanceImage(slug) || 'assets/hero-dance-workshop.png';
+}
+
+function getDanceImage(slug) {
     const images = {
         'kizomba': 'assets/hero-dance-workshop.png',
         'semba': 'assets/dances/semba.png',
         'tarraxinha': 'assets/dances/tarraxinha.png',
+        'tarraxo': 'assets/dances/tarraxo.png',
         'kizomba-fusion': 'assets/dances/kizomba-fusion.png',
         'urban-kizz': 'assets/dances/urban-kizz.png',
         'kuduro': 'assets/dances/kuduro.png',
         'kompa': 'assets/dances/kompa.png'
     };
-    return images[slug] || 'assets/hero-dance-workshop.png';
+    return images[slug] || null;
 }
 
 function getFeaturedPosition(slug) {
@@ -268,6 +304,7 @@ function getFeaturedPosition(slug) {
         'kizomba': '58% 50%',
         'semba': '48% 50%',
         'tarraxinha': '62% 50%',
+        'tarraxo': '68% 50%',
         'kizomba-fusion': '67% 48%',
         'urban-kizz': '42% 45%',
         'kuduro': '55% 60%',
@@ -370,14 +407,15 @@ function showDanceDetail(slug) {
         navigateTo('/');
         return;
     }
+    const detailImage = getDanceImage(dance.slug);
+    const detailPosition = getFeaturedPosition(dance.slug);
     
     elements.dance.detail.innerHTML = `
-        <button class="back-button" onclick="navigateTo('/')" type="button">
-            Powrót do biblioteki
-        </button>
-        
-        <header class="dance-detail-header">
+        <header class="dance-detail-header ${detailImage ? 'has-detail-image' : ''}" ${detailImage ? `style="--detail-image: url('${escapeAttribute(detailImage)}'); --detail-position: ${escapeAttribute(detailPosition)}"` : ''}>
             <div class="dance-detail-content">
+                <button class="detail-back-link" onclick="navigateTo('/')" type="button">
+                    Wróć do biblioteki
+                </button>
                 <p class="section-kicker">Notatka AfroPasso</p>
                 <h2 class="dance-detail-title">${escapeHTML(dance.names.pl)}</h2>
                 <p class="dance-detail-subtitle">${escapeHTML(dance.character_pl)}</p>
@@ -425,7 +463,12 @@ function showDanceDetail(slug) {
                 <h3>Różnice względem innych stylów</h3>
                 <ul class="differences-list">
                     ${dance.differences_pl.map(diff => `
-                        <li><strong>vs ${escapeHTML(diff.vs)}:</strong> ${escapeHTML(diff.text)}</li>
+                        <li>
+                            <span class="detail-list-content">
+                                <strong>vs ${escapeHTML(diff.vs)}:</strong>
+                                <span>${escapeHTML(diff.text)}</span>
+                            </span>
+                        </li>
                     `).join('')}
                 </ul>
             </section>
@@ -445,12 +488,15 @@ function showDanceDetail(slug) {
                 <div class="videos-grid">
                     ${dance.videos.map(video => `
                         <div class="video-item">
-                            <h4>${escapeHTML(getVideoTypeLabel(video.type))}</h4>
-                            <p><strong>${escapeHTML(video.title)}</strong></p>
-                            <p>Autor: ${escapeHTML(video.author)} (${escapeHTML(String(video.year))})</p>
-                            <a href="${escapeAttribute(video.url)}" target="_blank" rel="noopener noreferrer" class="video-link">
-                                Obejrzyj wideo
-                            </a>
+                            ${renderVideoThumb(video)}
+                            <div class="video-item-content">
+                                <p class="video-type">${escapeHTML(getVideoTypeLabel(video.type))}</p>
+                                <h4>${escapeHTML(video.title)}</h4>
+                                <p class="video-author">Autor: ${escapeHTML(video.author)} (${escapeHTML(String(video.year))})</p>
+                                <a href="${escapeAttribute(video.url)}" target="_blank" rel="noopener noreferrer" class="video-link">
+                                    Obejrzyj wideo
+                                </a>
+                            </div>
                         </div>
                     `).join('')}
                 </div>
@@ -461,8 +507,10 @@ function showDanceDetail(slug) {
                 <ul class="sources-list">
                     ${dance.sources.map(source => `
                         <li>
-                            ${source.url ? `<a href="${escapeAttribute(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(source.title)}</a>` : escapeHTML(source.title)}
-                            ${source.note ? `<br><small>${escapeHTML(source.note)}</small>` : ''}
+                            <span class="detail-list-content">
+                                ${source.url ? `<a href="${escapeAttribute(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(source.title)}</a>` : `<span class="source-title">${escapeHTML(source.title)}</span>`}
+                                ${source.note ? `<small>${escapeHTML(source.note)}</small>` : ''}
+                            </span>
                         </li>
                     `).join('')}
                 </ul>
@@ -476,6 +524,50 @@ function showDanceDetail(slug) {
             </section>
         </div>
     `;
+}
+
+function renderVideoThumb(video) {
+    const thumbnail = getYouTubeThumbnail(video.url);
+    if (!thumbnail) {
+        return `
+            <a href="${escapeAttribute(video.url)}" target="_blank" rel="noopener noreferrer" class="video-thumb video-thumb-fallback" aria-label="Otwórz wideo: ${escapeAttribute(video.title)}">
+                <span>${escapeHTML(getVideoTypeLabel(video.type))}</span>
+            </a>
+        `;
+    }
+
+    return `
+        <a href="${escapeAttribute(video.url)}" target="_blank" rel="noopener noreferrer" class="video-thumb" aria-label="Otwórz wideo: ${escapeAttribute(video.title)}">
+            <img src="${escapeAttribute(thumbnail)}" alt="">
+            <span class="video-play">Odtwórz</span>
+        </a>
+    `;
+}
+
+function getYouTubeThumbnail(url) {
+    const videoId = getYouTubeId(url);
+    return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
+}
+
+function getYouTubeId(url) {
+    if (!url) return '';
+
+    try {
+        const parsed = new URL(url);
+        const host = parsed.hostname.replace(/^www\./, '');
+        if (host === 'youtu.be') {
+            return parsed.pathname.split('/').filter(Boolean)[0] || '';
+        }
+        if (host.endsWith('youtube.com')) {
+            if (parsed.pathname === '/watch') return parsed.searchParams.get('v') || '';
+            const parts = parsed.pathname.split('/').filter(Boolean);
+            if (['shorts', 'embed', 'live'].includes(parts[0])) return parts[1] || '';
+        }
+    } catch (error) {
+        return '';
+    }
+
+    return '';
 }
 
 function getVideoTypeLabel(type) {
