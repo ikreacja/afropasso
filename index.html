@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kizomba i rodzina tańców – przewodnik</title>
+    <meta name="description" content="Interaktywne kompendium tańców związanych z kizombą - massemba, semba, kizomba, kuduro, tarraxinha, tarraxo, urban kizz, kizomba fusion, konpa">
+    <meta name="keywords" content="kizomba, semba, kuduro, tarraxinha, Angola, taniec, przewodnik">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Kizomba i rodzina tańców – przewodnik">
+    <meta property="og:description" content="Interaktywne kompendium tańców związanych z kizombą dla polskiej społeczności tanecznej">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    
+    <!-- Prefers reduced motion -->
+    <meta name="color-scheme" content="light">
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Kizomba i rodzina tańców – przewodnik",
+        "description": "Kompendium tańców związanych z kizombą",
+        "numberOfItems": 9,
+        "itemListElement": [
+            {
+                "@type": "Article",
+                "position": 1,
+                "name": "Massemba",
+                "description": "Tradycyjny taniec angolski, poprzednik semby"
+            },
+            {
+                "@type": "Article", 
+                "position": 2,
+                "name": "Semba",
+                "description": "Energiczny taniec z Angoli, podstawa dla kizomby"
+            },
+            {
+                "@type": "Article",
+                "position": 3, 
+                "name": "Kizomba",
+                "description": "Romantyczny taniec powstały z fuzji semby i zouk"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Główna nawigacja">
+        <div class="nav-container">
+            <h1 class="nav-title">
+                <a href="#/" aria-label="Strona główna">Kizomba i rodzina tańców</a>
+            </h1>
+            <ul class="nav-menu">
+                <li><a href="#/" class="nav-link active" data-route="home">Strona główna</a></li>
+                <li><a href="#/timeline" class="nav-link" data-route="timeline">Oś czasu</a></li>
+                <li><a href="#/compare" class="nav-link" data-route="compare">Porównaj</a></li>
+                <li><a href="#/glossary" class="nav-link" data-route="glossary">Glosariusz</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main">
+        <!-- Home View -->
+        <div id="home-view" class="view active">
+            <!-- Hero Section -->
+            <section class="hero" aria-labelledby="hero-title">
+                <div class="hero-content">
+                    <h2 id="hero-title">Odkryj bogactwo angolskich tańców</h2>
+                    <p class="hero-subtitle">
+                        Interaktywny przewodnik po tańcach związanych z kizombą - 
+                        od tradycyjnych korzeni po współczesne interpretacje
+                    </p>
+                </div>
+            </section>
+
+            <!-- Filters -->
+            <section class="filters" aria-labelledby="filters-title">
+                <h3 id="filters-title" class="sr-only">Filtry</h3>
+                <div class="filters-container">
+                    <div class="search-container">
+                        <label for="search-input" class="sr-only">Wyszukaj taniec</label>
+                        <input 
+                            type="text" 
+                            id="search-input" 
+                            placeholder="Wyszukaj taniec..." 
+                            aria-describedby="search-help"
+                        >
+                        <span id="search-help" class="sr-only">Wpisz nazwę tańca lub słowo kluczowe</span>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="country-filter">Kraj pochodzenia:</label>
+                        <select id="country-filter" aria-label="Filtruj według kraju pochodzenia">
+                            <option value="">Wszystkie</option>
+                            <option value="Angola">Angola</option>
+                            <option value="Haiti">Haiti</option>
+                            <option value="Francja">Francja</option>
+                            <option value="Portugalia">Portugalia</option>
+                            <option value="Europa">Europa</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="period-filter">Okres powstania:</label>
+                        <select id="period-filter" aria-label="Filtruj według okresu powstania">
+                            <option value="">Wszystkie</option>
+                            <option value="przedkolonialny">Przedkolonialny</option>
+                            <option value="kolonialny">Kolonialny</option>
+                            <option value="pokolonialny">Pokolonialny</option>
+                            <option value="współczesny">Współczesny</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="type-filter">Rodzaj tańca:</label>
+                        <select id="type-filter" aria-label="Filtruj według rodzaju tańca">
+                            <option value="">Wszystkie</option>
+                            <option value="tradycyjny">Tradycyjny</option>
+                            <option value="współczesny">Współczesny</option>
+                            <option value="social">Social</option>
+                            <option value="fusion">Fusion</option>
+                            <option value="elektroniczny">Elektroniczny</option>
+                        </select>
+                    </div>
+                    
+                    <button id="clear-filters" class="btn-secondary" aria-label="Wyczyść wszystkie filtry">
+                        Wyczyść filtry
+                    </button>
+                </div>
+            </section>
+
+            <!-- Dance Cards Grid -->
+            <section class="dances-grid" aria-labelledby="dances-title">
+                <h3 id="dances-title" class="section-title">Tańce</h3>
+                <div id="dances-container" class="cards-grid" role="grid" aria-label="Siatka kart tańców">
+                    <!-- Dance cards will be populated by JavaScript -->
+                </div>
+                <div id="no-results" class="no-results hidden" role="status" aria-live="polite">
+                    <p>Nie znaleziono tańców spełniających kryteria wyszukiwania.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Dance Detail View -->
+        <div id="dance-view" class="view">
+            <div id="dance-detail" class="dance-detail">
+                <!-- Dance detail content will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Timeline View -->
+        <div id="timeline-view" class="view">
+            <section class="timeline-section" aria-labelledby="timeline-title">
+                <h2 id="timeline-title">Oś czasu rozwoju tańców</h2>
+                <p class="timeline-intro">
+                    Poznaj historię i ewolucję tańców związanych z kizombą - 
+                    od tradycyjnych korzeni afrykańskich po współczesne interpretacje europejskie.
+                </p>
+                <div id="timeline-container" class="timeline">
+                    <!-- Timeline content will be populated by JavaScript -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Compare View -->
+        <div id="compare-view" class="view">
+            <section class="compare-section" aria-labelledby="compare-title">
+                <h2 id="compare-title">Porównaj tańce</h2>
+                <p class="compare-intro">
+                    Wybierz dwa tańce, aby porównać ich charakterystyki, pochodzenie i różnice.
+                </p>
+                
+                <div class="compare-selectors">
+                    <div class="compare-selector">
+                        <label for="compare-dance-a">Taniec A:</label>
+                        <select id="compare-dance-a" aria-label="Wybierz pierwszy taniec do porównania">
+                            <option value="">Wybierz taniec...</option>
+                        </select>
+                    </div>
+                    <div class="compare-selector">
+                        <label for="compare-dance-b">Taniec B:</label>
+                        <select id="compare-dance-b" aria-label="Wybierz drugi taniec do porównania">
+                            <option value="">Wybierz taniec...</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="comparison-result" class="comparison-result">
+                    <!-- Comparison content will be populated by JavaScript -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Glossary View -->
+        <div id="glossary-view" class="view">
+            <section class="glossary-section" aria-labelledby="glossary-title">
+                <h2 id="glossary-title">Glosariusz</h2>
+                <p class="glossary-intro">
+                    Słownik najważniejszych terminów związanych z tańcami kizomby i stylami pokrewnymi.
+                </p>
+                <div id="glossary-container" class="glossary">
+                    <!-- Glossary content will be populated by JavaScript -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <p>&copy; 2025 Kizomba i rodzina tańców – przewodnik. 
+               Edukacyjny projekt dla polskiej społeczności tanecznej.</p>
+            <p class="footer-note">
+                Źródła i materiały badawcze dostępne w poszczególnych kartach tańców.
+                Projekt stworzony z szacunkiem dla angolskiej kultury i tradycji.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Loading indicator -->
+    <div id="loading" class="loading hidden" role="status" aria-live="polite">
+        <div class="loading-spinner"></div>
+        <p>Ładowanie...</p>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,133 @@
+"Rola: Asystent badawczo-wdrożeniowy i front-end dev. Pracujesz w modelu research → dane → kod.
+
+Cel: Zbuduj interaktywne kompendium o tańcach związanych z kizombą. Edukacja hobbystyczna i precyzyjne doprecyzowanie pojęć dla społeczności tanecznej.
+
+Odbiorcy: Tancerze kizomby i stylów pochodnych w Polsce. Nowi i średniozaawansowani. Osoby, które jeszcze nie tańczą i szukają inspiracji.
+
+Języki: PL teraz. Przygotuj strukturę pod przyszły EN (pola \*\_en puste).
+
+Zakres tańców startowych: massemba, semba, kizomba, kuduro, tarraxinha, tarraxo, urban kizz, kizomba fusion, konpa. Dodaj tła kulturowe: tradycyjne tańce afrykańskie i karnawałowe, które wpłynęły na rozwój powyższych.
+
+Neutralność: Opisuj bez wartościowania. Zaznaczaj różne szkoły i spory rzeczowo.
+
+Źródła:
+
+* Wejście: Google Docs/DOCX z researchu Perplexity i listą źródeł: https://docs.google.com/document/d/1-B69nf2V4Cw2aLE-XUz5vJtStEHZoBW4H4DEKmAm5XE/edit?usp=sharing.
+* Uzupełnij brakujące fakty o min. 2 niezależne źródła. Priorytet autorów i materiałów z Angoli. Linkuj do oficjalnych kanałów i publikacji.
+* Min. 3 wiarygodne źródła na każdą kartę tańca.
+* Wideo: osadzaj YouTube. Nie pobieraj cudzych miniatur. Podawaj autora i rok.
+* Licencje: grafiki tylko własne, public domain lub CC BY z atrybucją.
+
+Architektura informacji:
+
+1. Strona główna (SPA, PL):
+
+   * Siatka kart tańców. Każda karta klikalna.
+   * Filtry: kraj pochodzenia, rodzaj/epoka genezy ("tradycyjny", "współczesny", "plemienny", "kolonialny", "karnawałowy"), rodzina tańców.
+   * Wyszukiwarka po nazwie i słowach kluczowych.
+   * Link do podstrony "oś czasu".
+   * Sekcje: glosariusz i FAQ.
+2. Podstrona "oś czasu" (SPA widok):
+
+   * Oś z wydarzeniami i wpływami: okres przedkolonialny, kolonialny, niepodległość Angoli (1975), diaspora, rozwój stylów, powstanie urban kizz, tarraxo itd.
+   * Każde wydarzenie: rok/zakres lat, opis, powiązane tańce, linki.
+3. Karta tańca (widok szczegółów, wspólny szablon pól):
+
+   * nazwa i alternatywne nazwy,
+   * pochodzenie: kraj/region, okres powstania (przedkolonialny/kolonialny/pokolonialny),
+   * rodzaj/klasyfikacja: tradycyjny/współczesny/plemienny/kolonialny/karnawałowy/social (jeśli dotyczy),
+   * muzyka: opis i przykładowe utwory,
+   * feeling/rytm w prostych słowach,
+   * ramy i kontakt: prowadzenie, dystans, body movement,
+   * kroki bazowe i charakter ruchu,
+   * wpływy i rodzina tańców,
+   * "Jak odróżnić od...": zwięzłe różnice względem stylów pokrewnych,
+   * kontrowersje/spory z cytatem i źródłem,
+   * 3 osadzone wideo: "esencja", "social", "lekcja",
+   * linki do rzetelnych materiałów,
+   * słowa kluczowe do SEO,
+   * pełna bibliografia.
+
+Warstwa danych:
+
+* Utwórz jeden plik "data/dances.json" z jednolitym schematem. Przykład wpisu:
+  {
+  "id": "kizomba",
+  "slug": "kizomba",
+  "names": {"pl": "Kizomba", "en": ""},
+  "origin": {"country": "Angola", "region": "", "period": "pokolonialny", "years": "lata 80."},
+  "classification": \["współczesny", "social"],
+  "family": \["sembá", "zouk/kizomba lineage"],
+  "music": {"description\_pl": "", "examples": \[""]},
+  "feeling\_pl": "",
+  "frame\_pl": "",
+  "basics\_pl": "",
+  "character\_pl": "",
+  "influences": \["sembá", "zouk", "konpa"],
+  "differences\_pl": \[{"vs": "urban kizz", "text": ""}],
+  "controversies\_pl": \[""],
+  "videos": \[
+  {"type": "essence", "title": "", "url": "", "author": "", "year": 0},
+  {"type": "social", "title": "", "url": "", "author": "", "year": 0},
+  {"type": "lesson", "title": "", "url": "", "author": "", "year": 0}
+  ],
+  "sources": \[{"title": "", "url": "", "note": ""}],
+  "keywords\_pl": \[""]
+  }
+* Dodaj pola \*\_en puste. Zadbaj o spójność nazw. Unikaj BPM i instrumentów w filtrach.
+
+Front-end i UX:
+
+* Technologia: czysty HTML + CSS + JS. Bez frameworków i ciężkich bibliotek.
+* SPA: widoki "lista", "szczegóły", "oś-czasu" na hash-trasach (#/dance/kizomba, #/timeline).
+* Lazy-load dla iframe YouTube. Minimalny własny router hash.
+* Dostępność: kontrast, alt text, aria-roles, focus states, klawiatura. Szanuj prefers-reduced-motion.
+* Design: jasne tło, pastelowe odniesienia do flagi Angoli. Zaproponuj i użyj palety:
+  \--sand: #f5f2ea, --red: #e7605a, --gold: #f0c24b, --charcoal: #222, --gray: #6b7280.
+* Typografia: system-ui stack (bez zewnętrznych fontów).
+* Karty: duże tytuły, krótki opis, tagi (kraj, rodzaj/epoka), przycisk "Zobacz".
+* Interaktywne, ale lekkie animacje hover/focus. Cieniowanie subtelne.
+* Porównanie 2 tańców: prosty panel "Porównaj" z wyborem A/B i tabelą różnic.
+
+SEO:
+
+* Meta title/description per widok.
+* Slugi czytelne. Open Graph podstawowy.
+* JSON-LD: "ItemList" dla listy, "Article" dla kart, "BreadcrumbList" dla nawigacji.
+* Brak analityki na teraz.
+
+Dostarcz w tym zadaniu:
+
+1. "index.html" – wszystkie widoki SPA, kontenery na treść, meta, JSON-LD.
+2. "styles.css" – zmienne kolorów, typografia, siatka kart, media queries, dostępność.
+3. "app.js" – router hash, render listy, filtry, wyszukiwarka, render karty tańca, widok osi czasu, lazy-load iframe, ładowanie "data/dances.json".
+4. "data/dances.json" – wypełniony dla min. 9 stylów z listy startowej.
+5. Krótki "README.md" (jak uruchomić lokalnie, jak dodać nowy taniec).
+
+Proces pracy:
+
+* Krok 1. Zrób plan treści i wypisz brakujące elementy danych. Zapytaj, jeśli cokolwiek jest niejednoznaczne.
+* Krok 2. Zweryfikuj i scal źródła z dokumentu https://docs.google.com/document/d/1-B69nf2V4Cw2aLE-XUz5vJtStEHZoBW4H4DEKmAm5XE/edit?usp=sharing. Uzupełnij brakujące.
+* Krok 3. Wygeneruj "data/dances.json" (PL). Ujednolić nazwy i tagi filtrów.
+* Krok 4. Wygeneruj kod ("index.html", "styles.css", "app.js"). Pokaż każdy plik w osobnym bloku kodu z nazwą pliku.
+* Krok 5. QA: sprawdź 200 OK wszystkich linków. Sprawdź działanie filtrów, widok porównania i osi czasu. Sprawdź mobile.
+* Krok 6. Podaj krótką checklistę testów w treści odpowiedzi.
+
+Kryteria akceptacji:
+
+* Min. 9 kompletnych kart tańców (lista startowa).
+* Każda karta: 3+ źródła, 3 wideo ("esencja", "social", "lekcja"), sekcja różnic i kontrowersji.
+* Oś czasu: min. 12 zdarzeń, z podziałem na okresy i relacjami wpływu.
+* Filtry: działają razem i niezależnie. Wyszukiwarka działa w czasie rzeczywistym.
+* Lighthouse: Performance/Best Practices/SEO/Accessibility ≥ 90 na desktop i mobile.
+* Kod prosty do wklejenia jako podstrona w WordPress (osadzenie jako HTML + assets).
+
+Parametry do wypełnienia przez Ciebie:
+
+* KnownSourcesDoc = https://docs.google.com/document/d/1-B69nf2V4Cw2aLE-XUz5vJtStEHZoBW4H4DEKmAm5XE/edit?usp=sharing
+* BrandName = "Kizomba i rodzina tańców – przewodnik"
+* InitialCount = 9
+* Theme = "light"
+* ExtraNotes = "Bez BPM w filtrach. Bez analityki na starcie."
+
+Zacznij od potwierdzenia listy tańców i schematu danych. Potem wygeneruj "data/dances.json" i trzy pliki kodu. Na końcu dołącz checklistę QA."
