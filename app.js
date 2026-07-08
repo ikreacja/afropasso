@@ -17,6 +17,7 @@ const elements = {
         periodFilter: null,
         typeFilter: null,
         clearFilters: null,
+        featuredContainer: null,
         dancesContainer: null,
         noResults: null
     },
@@ -65,6 +66,7 @@ function initializeElements() {
     elements.home.periodFilter = document.getElementById('period-filter');
     elements.home.typeFilter = document.getElementById('type-filter');
     elements.home.clearFilters = document.getElementById('clear-filters');
+    elements.home.featuredContainer = document.getElementById('featured-dances-container');
     elements.home.dancesContainer = document.getElementById('dances-container');
     elements.home.noResults = document.getElementById('no-results');
     
@@ -120,6 +122,8 @@ async function loadData() {
         
         // Initialize compare selectors
         populateCompareSelectors();
+        handleComparison();
+        renderFeaturedDances();
         
         // Initialize glossary
         generateGlossary();
@@ -212,6 +216,66 @@ function showView(viewName) {
     }
 }
 
+function renderFeaturedDances() {
+    if (!dancesData || !elements.home.featuredContainer) return;
+
+    const featuredSlugs = ['kizomba', 'semba', 'tarraxinha', 'kizomba-fusion', 'urban-kizz', 'kuduro', 'kompa'];
+    const featured = featuredSlugs
+        .map(slug => dancesData.find(dance => dance.slug === slug))
+        .filter(Boolean);
+
+    elements.home.featuredContainer.innerHTML = featured.map((dance, index) => `
+        <article class="featured-tile ${index === 0 ? 'featured-large' : ''}" style="--tile-position: ${getFeaturedPosition(dance.slug)}; --tile-image: url('${escapeAttribute(getFeaturedImage(dance.slug))}')" onclick="navigateTo('/dance/${escapeAttribute(dance.slug)}')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ') navigateTo('/dance/${escapeAttribute(dance.slug)}')">
+            <div class="featured-tile-content">
+                <h4>${escapeHTML(dance.names.pl)}</h4>
+                <p class="featured-country">${escapeHTML(formatOrigin(dance))}</p>
+                <p class="featured-character">${escapeHTML(formatClassification(dance))}</p>
+                <p class="featured-description">${escapeHTML(getFeaturedDescription(dance))}</p>
+                <span>Przejdź do karty</span>
+            </div>
+        </article>
+    `).join('');
+}
+
+function getFeaturedDescription(dance) {
+    const overrides = {
+        'kizomba': 'Bliskość, dialog i historia semby spotykająca zouk.',
+        'semba': 'Radość, energia i angolska tradycja w szybkim rytmie.',
+        'tarraxinha': 'Bardzo bliski kontakt, izolacje i mikro-ruch.',
+        'kizomba-fusion': 'Kizomba z subtelnymi wpływami innych stylów.',
+        'urban-kizz': 'Współczesna interpretacja kizomby w miejskim stylu.',
+        'kuduro': 'Energia, opór i elektroniczny puls Luandy.',
+        'kompa': 'Haitański groove, luźniejsza rama i karaibski puls.'
+    };
+    return overrides[dance.slug] || truncateText(dance.character_pl, 96);
+}
+
+function getFeaturedImage(slug) {
+    const images = {
+        'kizomba': 'assets/hero-dance-workshop.png',
+        'semba': 'assets/dances/semba.png',
+        'tarraxinha': 'assets/dances/tarraxinha.png',
+        'kizomba-fusion': 'assets/dances/kizomba-fusion.png',
+        'urban-kizz': 'assets/dances/urban-kizz.png',
+        'kuduro': 'assets/dances/kuduro.png',
+        'kompa': 'assets/dances/kompa.png'
+    };
+    return images[slug] || 'assets/hero-dance-workshop.png';
+}
+
+function getFeaturedPosition(slug) {
+    const positions = {
+        'kizomba': '58% 50%',
+        'semba': '48% 50%',
+        'tarraxinha': '62% 50%',
+        'kizomba-fusion': '67% 48%',
+        'urban-kizz': '42% 45%',
+        'kuduro': '55% 60%',
+        'kompa': '62% 52%'
+    };
+    return positions[slug] || '50% 50%';
+}
+
 // Dance cards rendering
 function renderDanceCards() {
     if (!dancesData) return;
@@ -227,30 +291,38 @@ function renderDanceCards() {
     
     noResults.classList.add('hidden');
     
-    container.innerHTML = filteredDances.map(dance => `
-        <article class="dance-card" onclick="navigateTo('/dance/${dance.slug}')" 
-                 role="button" tabindex="0" 
-                 onkeydown="if(event.key==='Enter'||event.key===' ') navigateTo('/dance/${dance.slug}')">
+    container.innerHTML = filteredDances.map((dance, index) => `
+        <article class="dance-card" onclick="navigateTo('/dance/${escapeAttribute(dance.slug)}')"
+                 role="button" tabindex="0" style="--i: ${index}"
+                 onkeydown="if(event.key==='Enter'||event.key===' ') navigateTo('/dance/${escapeAttribute(dance.slug)}')">
             <header class="dance-card-header">
-                <h3 class="dance-card-title">${dance.names.pl}</h3>
-                <p class="dance-card-origin">
-                    ${dance.origin.country}, ${dance.origin.region} • ${dance.origin.years}
-                </p>
-                <div class="dance-card-tags">
-                    <span class="tag period">${dance.origin.period}</span>
-                    ${dance.classification.map(cls => `<span class="tag classification">${cls}</span>`).join('')}
-                </div>
+                <p class="dance-card-number">${String(index + 1).padStart(2, '0')}</p>
+                <h3 class="dance-card-title">${escapeHTML(dance.names.pl)}</h3>
+                <p class="dance-card-origin">${escapeHTML(formatOrigin(dance))}</p>
+                <p class="dance-card-region">${escapeHTML(dance.origin.years)}</p>
             </header>
             <div class="dance-card-body">
+                <p class="dance-card-character">
+                    <strong>Charakter</strong>
+                    <span>${escapeHTML(formatClassification(dance))}</span>
+                </p>
                 <p class="dance-card-description">
-                    ${dance.character_pl.substring(0, 150)}${dance.character_pl.length > 150 ? '...' : ''}
+                    ${escapeHTML(truncateText(dance.character_pl, 170))}
                 </p>
                 <footer class="dance-card-footer">
-                    <span class="btn-primary">Dowiedz się więcej</span>
+                    <span class="card-link">Poznaj historię</span>
                 </footer>
             </div>
         </article>
     `).join('');
+}
+
+function formatOrigin(dance) {
+    return `${dance.origin.country}, ${dance.origin.region}`;
+}
+
+function formatClassification(dance) {
+    return dance.classification.join(' · ');
 }
 
 // Filtering functionality
@@ -300,18 +372,19 @@ function showDanceDetail(slug) {
     }
     
     elements.dance.detail.innerHTML = `
-        <button class="back-button" onclick="navigateTo('/')">
-            ← Powrót do listy tańców
+        <button class="back-button" onclick="navigateTo('/')" type="button">
+            Powrót do biblioteki
         </button>
         
         <header class="dance-detail-header">
             <div class="dance-detail-content">
-                <h2 class="dance-detail-title">${dance.names.pl}</h2>
-                <p class="dance-detail-subtitle">${dance.character_pl}</p>
+                <p class="section-kicker">Notatka AfroPasso</p>
+                <h2 class="dance-detail-title">${escapeHTML(dance.names.pl)}</h2>
+                <p class="dance-detail-subtitle">${escapeHTML(dance.character_pl)}</p>
                 <div class="dance-detail-meta">
-                    <span class="meta-item">📍 ${dance.origin.country}, ${dance.origin.region}</span>
-                    <span class="meta-item">📅 ${dance.origin.years}</span>
-                    <span class="meta-item">🏷️ ${dance.origin.period}</span>
+                    <span class="meta-item">${escapeHTML(dance.origin.country)}, ${escapeHTML(dance.origin.region)}</span>
+                    <span class="meta-item">${escapeHTML(dance.origin.years)}</span>
+                    <span class="meta-item">${escapeHTML(dance.origin.period)}</span>
                 </div>
             </div>
         </header>
@@ -322,27 +395,29 @@ function showDanceDetail(slug) {
                 <div class="characteristics-grid">
                     <div class="characteristic-item">
                         <h4>Muzyka</h4>
-                        <p>${dance.music.description_pl}</p>
-                        ${dance.music.examples ? `<p><strong>Przykłady:</strong> ${dance.music.examples.join(', ')}</p>` : ''}
+                        <p>${escapeHTML(dance.music.description_pl)}</p>
+                        ${dance.music.examples ? `<p><strong>Przykłady:</strong> ${dance.music.examples.map(escapeHTML).join(', ')}</p>` : ''}
                     </div>
                     <div class="characteristic-item">
                         <h4>Uczucie</h4>
-                        <p>${dance.feeling_pl}</p>
+                        <p>${escapeHTML(dance.feeling_pl)}</p>
                     </div>
                     <div class="characteristic-item">
                         <h4>Ramka</h4>
-                        <p>${dance.frame_pl}</p>
+                        <p>${escapeHTML(dance.frame_pl)}</p>
                     </div>
                     <div class="characteristic-item">
                         <h4>Podstawy</h4>
-                        <p>${dance.basics_pl}</p>
+                        <p>${escapeHTML(dance.basics_pl)}</p>
                     </div>
                 </div>
             </section>
             
             <section class="detail-section">
                 <h3>Wpływy</h3>
-                <p>${dance.influences.join(', ')}</p>
+                <div class="dance-card-tags">
+                    ${dance.influences.map(influence => `<span class="tag">${escapeHTML(influence)}</span>`).join('')}
+                </div>
             </section>
             
             ${dance.differences_pl && dance.differences_pl.length > 0 ? `
@@ -350,7 +425,7 @@ function showDanceDetail(slug) {
                 <h3>Różnice względem innych stylów</h3>
                 <ul class="differences-list">
                     ${dance.differences_pl.map(diff => `
-                        <li><strong>vs ${diff.vs}:</strong> ${diff.text}</li>
+                        <li><strong>vs ${escapeHTML(diff.vs)}:</strong> ${escapeHTML(diff.text)}</li>
                     `).join('')}
                 </ul>
             </section>
@@ -360,7 +435,7 @@ function showDanceDetail(slug) {
             <section class="detail-section">
                 <h3>Kontrowersje</h3>
                 <ul>
-                    ${dance.controversies_pl.map(controversy => `<li>${controversy}</li>`).join('')}
+                    ${dance.controversies_pl.map(controversy => `<li>${escapeHTML(controversy)}</li>`).join('')}
                 </ul>
             </section>
             ` : ''}
@@ -370,10 +445,10 @@ function showDanceDetail(slug) {
                 <div class="videos-grid">
                     ${dance.videos.map(video => `
                         <div class="video-item">
-                            <h4>${getVideoTypeLabel(video.type)}</h4>
-                            <p><strong>${video.title}</strong></p>
-                            <p>Autor: ${video.author} (${video.year})</p>
-                            <a href="${video.url}" target="_blank" rel="noopener noreferrer" class="video-link">
+                            <h4>${escapeHTML(getVideoTypeLabel(video.type))}</h4>
+                            <p><strong>${escapeHTML(video.title)}</strong></p>
+                            <p>Autor: ${escapeHTML(video.author)} (${escapeHTML(String(video.year))})</p>
+                            <a href="${escapeAttribute(video.url)}" target="_blank" rel="noopener noreferrer" class="video-link">
                                 Obejrzyj wideo
                             </a>
                         </div>
@@ -386,8 +461,8 @@ function showDanceDetail(slug) {
                 <ul class="sources-list">
                     ${dance.sources.map(source => `
                         <li>
-                            ${source.url ? `<a href="${source.url}" target="_blank" rel="noopener noreferrer">${source.title}</a>` : source.title}
-                            ${source.note ? `<br><small>${source.note}</small>` : ''}
+                            ${source.url ? `<a href="${escapeAttribute(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(source.title)}</a>` : escapeHTML(source.title)}
+                            ${source.note ? `<br><small>${escapeHTML(source.note)}</small>` : ''}
                         </li>
                     `).join('')}
                 </ul>
@@ -396,7 +471,7 @@ function showDanceDetail(slug) {
             <section class="detail-section">
                 <h3>Słowa kluczowe</h3>
                 <div class="dance-card-tags">
-                    ${dance.keywords_pl.map(keyword => `<span class="tag">${keyword}</span>`).join('')}
+                    ${dance.keywords_pl.map(keyword => `<span class="tag">${escapeHTML(keyword)}</span>`).join('')}
                 </div>
             </section>
         </div>
@@ -416,18 +491,19 @@ function getVideoTypeLabel(type) {
 function renderTimeline() {
     if (!timelineData) return;
     
-    elements.timeline.container.innerHTML = timelineData.map(period => `
+    elements.timeline.container.innerHTML = timelineData.map((period, index) => `
         <div class="timeline-item">
             <div class="timeline-marker"></div>
             <div class="timeline-content">
-                <h3 class="timeline-period">${period.period}</h3>
-                <p class="timeline-years">${period.years}</p>
+                <p class="timeline-index">${String(index + 1).padStart(2, '0')}</p>
+                <h3 class="timeline-period">${escapeHTML(period.period)}</h3>
+                <p class="timeline-years">${escapeHTML(period.years)}</p>
                 <ul class="timeline-events">
                     ${period.events.map(event => `
                         <li>
-                            <strong>${event.title}</strong><br>
-                            ${event.description}
-                            ${event.dances ? `<br><em>Tańce: ${event.dances.join(', ')}</em>` : ''}
+                            <strong>${escapeHTML(event.title)}</strong>
+                            <span>${escapeHTML(event.description)}</span>
+                            ${event.dances ? `<em>Tańce: ${event.dances.map(escapeHTML).join(', ')}</em>` : ''}
                         </li>
                     `).join('')}
                 </ul>
@@ -441,7 +517,7 @@ function populateCompareSelectors() {
     if (!dancesData) return;
     
     const options = dancesData.map(dance => 
-        `<option value="${dance.id}">${dance.names.pl}</option>`
+        `<option value="${escapeAttribute(dance.id)}">${escapeHTML(dance.names.pl)}</option>`
     ).join('');
     
     elements.compare.danceA.innerHTML = '<option value="">Wybierz taniec...</option>' + options;
@@ -453,7 +529,12 @@ function handleComparison() {
     const danceBId = elements.compare.danceB.value;
     
     if (!danceAId || !danceBId) {
-        elements.compare.result.innerHTML = '';
+        elements.compare.result.innerHTML = `
+            <div class="empty-panel">
+                <h3>Wybierz dwa style</h3>
+                <p>Porównanie pokaże pochodzenie, charakter, rodzinę tańca i najważniejsze wpływy.</p>
+            </div>
+        `;
         return;
     }
     
@@ -464,69 +545,69 @@ function handleComparison() {
     
     elements.compare.result.innerHTML = `
         <div class="comparison-card">
-            <h3>${danceA.names.pl}</h3>
+            <h3>${escapeHTML(danceA.names.pl)}</h3>
             <div class="comparison-details">
                 <div class="comparison-detail">
                     <strong>Pochodzenie:</strong>
-                    ${danceA.origin.country}, ${danceA.origin.region} (${danceA.origin.years})
+                    ${escapeHTML(danceA.origin.country)}, ${escapeHTML(danceA.origin.region)} (${escapeHTML(danceA.origin.years)})
                 </div>
                 <div class="comparison-detail">
                     <strong>Okres:</strong>
-                    ${danceA.origin.period}
+                    ${escapeHTML(danceA.origin.period)}
                 </div>
                 <div class="comparison-detail">
                     <strong>Klasyfikacja:</strong>
-                    ${danceA.classification.join(', ')}
+                    ${danceA.classification.map(escapeHTML).join(', ')}
                 </div>
                 <div class="comparison-detail">
                     <strong>Rodzina:</strong>
-                    ${danceA.family.join(', ')}
+                    ${danceA.family.map(escapeHTML).join(', ')}
                 </div>
                 <div class="comparison-detail">
                     <strong>Charakter:</strong>
-                    ${danceA.character_pl}
+                    ${escapeHTML(danceA.character_pl)}
                 </div>
                 <div class="comparison-detail">
                     <strong>Uczucie:</strong>
-                    ${danceA.feeling_pl}
+                    ${escapeHTML(danceA.feeling_pl)}
                 </div>
                 <div class="comparison-detail">
                     <strong>Wpływy:</strong>
-                    ${danceA.influences.join(', ')}
+                    ${danceA.influences.map(escapeHTML).join(', ')}
                 </div>
             </div>
         </div>
         
         <div class="comparison-card">
-            <h3>${danceB.names.pl}</h3>
+            <h3>${escapeHTML(danceB.names.pl)}</h3>
             <div class="comparison-details">
                 <div class="comparison-detail">
                     <strong>Pochodzenie:</strong>
-                    ${danceB.origin.country}, ${danceB.origin.region} (${danceB.origin.years})
+                    ${escapeHTML(danceB.origin.country)}, ${escapeHTML(danceB.origin.region)} (${escapeHTML(danceB.origin.years)})
                 </div>
                 <div class="comparison-detail">
                     <strong>Okres:</strong>
-                    ${danceB.origin.period}
+                    ${escapeHTML(danceB.origin.period)}
                 </div>
                 <div class="comparison-detail">
                     <strong>Klasyfikacja:</strong>
-                    ${danceB.classification.join(', ')}
+                    ${danceB.classification.map(escapeHTML).join(', ')}
                 </div>
                 <div class="comparison-detail">
                     <strong>Rodzina:</strong>
-                    ${danceB.family.join(', ')}
+                    ${danceB.family.map(escapeHTML).join(', ')}
                 </div>
                 <div class="comparison-detail">
                     <strong>Charakter:</strong>
-                    ${danceB.character_pl}
+                    ${escapeHTML(danceB.character_pl)}
                 </div>
                 <div class="comparison-detail">
                     <strong>Uczucie:</strong>
-                    ${danceB.feeling_pl}
+                    ${escapeHTML(danceB.feeling_pl)}
                 </div>
                 <div class="comparison-detail">
                     <strong>Wpływy:</strong>
-                    ${danceB.influences.join(', ')}
+                    ${danceB.influences.map(escapeHTML).join(', ')}
                 </div>
             </div>
         </div>
@@ -543,10 +624,10 @@ function handleComparison() {
     
     if (specificDifference) {
         elements.compare.result.innerHTML += `
-            <div class="comparison-card" style="grid-column: 1 / -1;">
+            <div class="comparison-card comparison-wide">
                 <h3>Kluczowe różnice</h3>
                 <div class="comparison-detail">
-                    ${specificDifference.text}
+                    ${escapeHTML(specificDifference.text)}
                 </div>
             </div>
         `;
@@ -591,8 +672,8 @@ function generateGlossary() {
             definition: "Styl pośredni między tradycyjną kizombą a urban kizz, zachowujący podstawowy charakter kizomby z subtelnymi elementami innych stylów."
         },
         {
-            term: "Konpa",
-            definition: "Haitański gatunek muzyczny powstały w latach 50., który wpłynął na rozwój zouk i kizomby."
+            term: "Kompa",
+            definition: "Haitański gatunek muzyczny i taniec społeczny znany też jako compas. Ma luźniejsze objęcie i karaibski groove, który wpłynął na rozwój zouk."
         },
         {
             term: "Zouk",
@@ -637,8 +718,12 @@ function showLoading(show) {
 
 function showError(message) {
     console.error(message);
-    // You could implement a toast notification system here
-    alert(message);
+    const main = document.querySelector('main');
+    const error = document.createElement('div');
+    error.className = 'error-panel';
+    error.setAttribute('role', 'alert');
+    error.innerHTML = `<strong>Nie udało się załadować danych.</strong><span>${escapeHTML(message)}</span>`;
+    main.prepend(error);
 }
 
 function debounce(func, wait) {
@@ -656,3 +741,23 @@ function debounce(func, wait) {
 // Make navigateTo available globally for onclick handlers
 window.navigateTo = navigateTo;
 
+function truncateText(value, maxLength) {
+    if (!value || value.length <= maxLength) {
+        return value || '';
+    }
+    return `${value.slice(0, maxLength).trim()}...`;
+}
+
+function escapeHTML(value) {
+    return String(value ?? '').replace(/[&<>"']/g, character => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    }[character]));
+}
+
+function escapeAttribute(value) {
+    return escapeHTML(value).replace(/`/g, '&#096;');
+}

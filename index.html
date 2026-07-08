@@ -2,19 +2,23 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kizomba i rodzina tańców – przewodnik</title>
-    <meta name="description" content="Interaktywne kompendium tańców związanych z kizombą - massemba, semba, kizomba, kuduro, tarraxinha, tarraxo, urban kizz, kizomba fusion, konpa">
-    <meta name="keywords" content="kizomba, semba, kuduro, tarraxinha, Angola, taniec, przewodnik">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>AfroPasso - z pasji do tańców afrykańskich</title>
+    <meta name="description" content="AfroPasso to interaktywny przewodnik po tańcach afrykańskich i afro-diasporycznych: massemba, semba, kizomba, kuduro, tarraxinha, tarraxo, urban kizz, kizomba fusion i kompa.">
+    <meta name="keywords" content="AfroPasso, kizomba, semba, kuduro, tarraxinha, Angola, taniec afrykański, przewodnik">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="Kizomba i rodzina tańców – przewodnik">
-    <meta property="og:description" content="Interaktywne kompendium tańców związanych z kizombą dla polskiej społeczności tanecznej">
+    <meta property="og:title" content="AfroPasso - z pasji do tańców afrykańskich">
+    <meta property="og:description" content="Tańce, które łączą ludzi i historie. Poznaj korzenie, rytmy i powiązania tańców afro-diasporycznych.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="">
+    <meta property="og:url" content="https://ikreacja.github.io/afropasso/">
     
     <!-- Prefers reduced motion -->
     <meta name="color-scheme" content="light">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png">
+    <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
     
     <link rel="stylesheet" href="styles.css">
     
@@ -23,8 +27,8 @@
     {
         "@context": "https://schema.org",
         "@type": "ItemList",
-        "name": "Kizomba i rodzina tańców – przewodnik",
-        "description": "Kompendium tańców związanych z kizombą",
+        "name": "AfroPasso",
+        "description": "Z pasji do tańców afrykańskich",
         "numberOfItems": 9,
         "itemListElement": [
             {
@@ -54,11 +58,19 @@
     <nav class="navbar" role="navigation" aria-label="Główna nawigacja">
         <div class="nav-container">
             <h1 class="nav-title">
-                <a href="#/" aria-label="Strona główna">Kizomba i rodzina tańców</a>
+                <a href="#/" aria-label="AfroPasso, strona główna">
+                    <span class="brand-mark" aria-hidden="true">
+                        <img src="assets/brand/afropasso-mark.png" alt="">
+                    </span>
+                    <span>
+                        <span class="brand-name">AfroPasso</span>
+                        <span class="brand-tagline">z pasji do tańców afrykańskich</span>
+                    </span>
+                </a>
             </h1>
             <ul class="nav-menu">
-                <li><a href="#/" class="nav-link active" data-route="home">Strona główna</a></li>
-                <li><a href="#/timeline" class="nav-link" data-route="timeline">Oś czasu</a></li>
+                <li><a href="#/" class="nav-link active" data-route="home">Biblioteka</a></li>
+                <li><a href="#/timeline" class="nav-link" data-route="timeline">Korzenie</a></li>
                 <li><a href="#/compare" class="nav-link" data-route="compare">Porównaj</a></li>
                 <li><a href="#/glossary" class="nav-link" data-route="glossary">Glosariusz</a></li>
             </ul>
@@ -72,78 +84,130 @@
             <!-- Hero Section -->
             <section class="hero" aria-labelledby="hero-title">
                 <div class="hero-content">
-                    <h2 id="hero-title">Odkryj bogactwo angolskich tańców</h2>
+                    <p class="hero-kicker">Witamy w AfroPasso</p>
+                    <h2 id="hero-title">Tańce, które łączą ludzi i historie</h2>
                     <p class="hero-subtitle">
-                        Interaktywny przewodnik po tańcach związanych z kizombą - 
-                        od tradycyjnych korzeni po współczesne interpretacje
+                        Ciepły, czytelny przewodnik po tańcach afrykańskich i afro-diasporycznych.
+                        Zacznij od rodziny kizomby: od massemby i semby po urban kizz, tarraxo i kompa.
                     </p>
+                    <div class="hero-actions" aria-label="Główne akcje">
+                        <a class="btn-primary" href="#dances-title">Przeglądaj tańce</a>
+                        <a class="btn-secondary" href="#/timeline">Zobacz korzenie</a>
+                    </div>
                 </div>
             </section>
 
-            <!-- Filters -->
-            <section class="filters" aria-labelledby="filters-title">
-                <h3 id="filters-title" class="sr-only">Filtry</h3>
-                <div class="filters-container">
-                    <div class="search-container">
-                        <label for="search-input" class="sr-only">Wyszukaj taniec</label>
-                        <input 
-                            type="text" 
-                            id="search-input" 
-                            placeholder="Wyszukaj taniec..." 
-                            aria-describedby="search-help"
-                        >
-                        <span id="search-help" class="sr-only">Wpisz nazwę tańca lub słowo kluczowe</span>
+            <section class="library-panel" aria-labelledby="explore-title">
+                <div class="section-heading">
+                    <p class="section-kicker">Biblioteka tańców</p>
+                    <h3 id="explore-title">Od klasycznych korzeni po współczesne interpretacje</h3>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters" aria-labelledby="filters-title">
+                    <h3 id="filters-title" class="sr-only">Filtry biblioteki tańców</h3>
+                    <div class="filters-container">
+                        <div class="search-container">
+                            <label for="search-input">Szukaj w bibliotece</label>
+                            <input
+                                type="search"
+                                id="search-input"
+                                placeholder="np. kizomba, Angola, zouk"
+                                aria-describedby="search-help"
+                            >
+                            <span id="search-help" class="sr-only">Wpisz nazwę tańca, kraj, wpływ muzyczny lub słowo kluczowe</span>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="country-filter">Pochodzenie</label>
+                            <select id="country-filter" aria-label="Filtruj według kraju pochodzenia">
+                                <option value="">Wszystkie</option>
+                                <option value="Angola">Angola</option>
+                                <option value="Haiti">Haiti</option>
+                                <option value="Francja">Francja</option>
+                                <option value="Portugalia">Portugalia</option>
+                                <option value="Europa">Europa</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="period-filter">Epoka</label>
+                            <select id="period-filter" aria-label="Filtruj według okresu powstania">
+                                <option value="">Wszystkie</option>
+                                <option value="przedkolonialny">Przedkolonialny</option>
+                                <option value="kolonialny">Kolonialny</option>
+                                <option value="pokolonialny">Pokolonialny</option>
+                                <option value="współczesny">Współczesny</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="type-filter">Charakter</label>
+                            <select id="type-filter" aria-label="Filtruj według rodzaju tańca">
+                                <option value="">Wszystkie</option>
+                                <option value="tradycyjny">Tradycyjny</option>
+                                <option value="współczesny">Współczesny</option>
+                                <option value="social">Social</option>
+                                <option value="fusion">Fusion</option>
+                                <option value="elektroniczny">Elektroniczny</option>
+                            </select>
+                        </div>
+
+                        <button id="clear-filters" class="btn-tertiary" aria-label="Wyczyść wszystkie filtry">
+                            Wyczyść
+                        </button>
                     </div>
-                    
-                    <div class="filter-group">
-                        <label for="country-filter">Kraj pochodzenia:</label>
-                        <select id="country-filter" aria-label="Filtruj według kraju pochodzenia">
-                            <option value="">Wszystkie</option>
-                            <option value="Angola">Angola</option>
-                            <option value="Haiti">Haiti</option>
-                            <option value="Francja">Francja</option>
-                            <option value="Portugalia">Portugalia</option>
-                            <option value="Europa">Europa</option>
-                        </select>
+                </div>
+
+                <div class="featured-dances" aria-labelledby="featured-dances-title">
+                    <h3 id="featured-dances-title" class="sr-only">Wyróżnione tańce AfroPasso</h3>
+                    <div id="featured-dances-container" class="featured-grid">
+                        <!-- Featured dance tiles will be populated by JavaScript -->
                     </div>
-                    
-                    <div class="filter-group">
-                        <label for="period-filter">Okres powstania:</label>
-                        <select id="period-filter" aria-label="Filtruj według okresu powstania">
-                            <option value="">Wszystkie</option>
-                            <option value="przedkolonialny">Przedkolonialny</option>
-                            <option value="kolonialny">Kolonialny</option>
-                            <option value="pokolonialny">Pokolonialny</option>
-                            <option value="współczesny">Współczesny</option>
-                        </select>
-                    </div>
-                    
-                    <div class="filter-group">
-                        <label for="type-filter">Rodzaj tańca:</label>
-                        <select id="type-filter" aria-label="Filtruj według rodzaju tańca">
-                            <option value="">Wszystkie</option>
-                            <option value="tradycyjny">Tradycyjny</option>
-                            <option value="współczesny">Współczesny</option>
-                            <option value="social">Social</option>
-                            <option value="fusion">Fusion</option>
-                            <option value="elektroniczny">Elektroniczny</option>
-                        </select>
-                    </div>
-                    
-                    <button id="clear-filters" class="btn-secondary" aria-label="Wyczyść wszystkie filtry">
-                        Wyczyść filtry
-                    </button>
+                </div>
+            </section>
+
+            <section class="dance-pillars" aria-labelledby="pillars-title">
+                <div>
+                    <p class="section-kicker">Perspektywa AfroPasso</p>
+                    <h3 id="pillars-title">Taniec to więcej niż kroki</h3>
+                </div>
+                <div class="pillars-grid" aria-label="Trzy perspektywy nauki tańca">
+                    <article class="pillar-card">
+                        <span class="pillar-icon" aria-hidden="true">
+                            <img src="assets/icons/pillar-roots.png" alt="">
+                        </span>
+                        <h4>Korzenie</h4>
+                        <p>Poznaj historie i tradycje, które dały początek tańcom.</p>
+                    </article>
+                    <article class="pillar-card">
+                        <span class="pillar-icon" aria-hidden="true">
+                            <img src="assets/icons/pillar-music.png" alt="">
+                        </span>
+                        <h4>Muzyka</h4>
+                        <p>Rytmy, instrumenty i brzmienia, które prowadzą ciało.</p>
+                    </article>
+                    <article class="pillar-card">
+                        <span class="pillar-icon" aria-hidden="true">
+                            <img src="assets/icons/pillar-community.png" alt="">
+                        </span>
+                        <h4>Społeczność</h4>
+                        <p>Ludzie, pasja i wspólne wydarzenia na żywo.</p>
+                    </article>
                 </div>
             </section>
 
             <!-- Dance Cards Grid -->
             <section class="dances-grid" aria-labelledby="dances-title">
-                <h3 id="dances-title" class="section-title">Tańce</h3>
+                <div class="section-heading library-heading">
+                    <p class="section-kicker">Pełny indeks</p>
+                    <h3 id="dances-title">Wszystkie style w bibliotece</h3>
+                </div>
                 <div id="dances-container" class="cards-grid" role="grid" aria-label="Siatka kart tańców">
                     <!-- Dance cards will be populated by JavaScript -->
                 </div>
                 <div id="no-results" class="no-results hidden" role="status" aria-live="polite">
-                    <p>Nie znaleziono tańców spełniających kryteria wyszukiwania.</p>
+                    <p>Nie ma stylu pasującego do tych filtrów. Wyczyść filtry albo wpisz inną nazwę.</p>
                 </div>
             </section>
         </div>
@@ -158,11 +222,52 @@
         <!-- Timeline View -->
         <div id="timeline-view" class="view">
             <section class="timeline-section" aria-labelledby="timeline-title">
-                <h2 id="timeline-title">Oś czasu rozwoju tańców</h2>
+                <p class="section-kicker">Korzenie i diaspora</p>
+                <h2 id="timeline-title">Mapa powiązań i oś czasu</h2>
                 <p class="timeline-intro">
-                    Poznaj historię i ewolucję tańców związanych z kizombą - 
-                    od tradycyjnych korzeni afrykańskich po współczesne interpretacje europejskie.
+                    Zobacz, jak style z Angoli, Haiti, Antyli, Portugalii i Francji tworzą wspólną opowieść
+                    o muzyce, migracji i parkietach social dance.
                 </p>
+                <div class="roots-map" aria-label="Mapa powiązań między korzeniami tańców i diasporą">
+                    <div class="map-copy">
+                        <h3>Korzenie, które wędrują</h3>
+                        <p>
+                            Główna oś prowadzi z Angoli: massemba, semba i kizomba. Obok niej kompa i zouk
+                            pomagają zrozumieć, skąd wzięły się muzyczne wpływy, które dotarły później do Europy.
+                        </p>
+                    </div>
+                    <svg class="africa-map" viewBox="0 0 760 420" role="img" aria-labelledby="map-title map-desc">
+                        <title id="map-title">Mapa korzeni AfroPasso</title>
+                        <desc id="map-desc">Stylizowana mapa pokazująca Angolę, Haiti, Portugalię, Francję i globalną diasporę taneczną.</desc>
+                        <path class="map-land africa" d="M341 54c37 8 59 30 63 64 24 6 44 21 49 47 6 31-16 50-14 76 2 27 28 43 26 76-2 41-45 52-71 30-26-23-48-9-72-33-20-20-12-43-30-62-19-21-48-22-58-51-10-30 11-55 22-77 16-32 44-78 85-70z"/>
+                        <path class="map-land europe" d="M414 38c28-19 76-11 93 15 16 24-3 54-33 58-31 4-67-9-79-28-9-15 2-33 19-45z"/>
+                        <path class="map-land americas" d="M118 89c34-29 88-29 113 0 21 24 12 67-20 84-34 18-87 9-110-19-17-20-5-47 17-65z"/>
+                        <path class="route route-primary" d="M355 224 C390 190 416 154 438 105"/>
+                        <path class="route route-secondary" d="M438 105 C362 122 278 119 195 132"/>
+                        <path class="route route-tertiary" d="M365 222 C424 245 494 255 622 240"/>
+                        <circle class="map-point angola" cx="359" cy="222" r="8"/>
+                        <circle class="map-point haiti" cx="195" cy="132" r="8"/>
+                        <circle class="map-point portugal" cx="438" cy="105" r="7"/>
+                        <circle class="map-point france" cx="474" cy="75" r="7"/>
+                        <circle class="map-point diaspora" cx="622" cy="240" r="8"/>
+                        <g class="map-label label-angola">
+                            <text x="378" y="218">Angola</text>
+                            <text x="378" y="238">Massemba, Semba, Kizomba</text>
+                        </g>
+                        <g class="map-label label-haiti">
+                            <text x="65" y="126">Haiti i Antyle</text>
+                            <text x="65" y="146">Kompa, Zouk</text>
+                        </g>
+                        <g class="map-label label-europe">
+                            <text x="493" y="77">Francja i Portugalia</text>
+                            <text x="493" y="97">Urban Kizz, Tarraxo</text>
+                        </g>
+                        <g class="map-label label-diaspora">
+                            <text x="580" y="270">Diaspora</text>
+                            <text x="580" y="290">globalne parkiety</text>
+                        </g>
+                    </svg>
+                </div>
                 <div id="timeline-container" class="timeline">
                     <!-- Timeline content will be populated by JavaScript -->
                 </div>
@@ -172,9 +277,10 @@
         <!-- Compare View -->
         <div id="compare-view" class="view">
             <section class="compare-section" aria-labelledby="compare-title">
+                <p class="section-kicker">Różnice w praktyce</p>
                 <h2 id="compare-title">Porównaj tańce</h2>
                 <p class="compare-intro">
-                    Wybierz dwa tańce, aby porównać ich charakterystyki, pochodzenie i różnice.
+                    Wybierz dwa style i zobacz różnice w pochodzeniu, charakterze, muzyce oraz wpływach.
                 </p>
                 
                 <div class="compare-selectors">
@@ -201,9 +307,10 @@
         <!-- Glossary View -->
         <div id="glossary-view" class="view">
             <section class="glossary-section" aria-labelledby="glossary-title">
+                <p class="section-kicker">Język i kontekst</p>
                 <h2 id="glossary-title">Glosariusz</h2>
                 <p class="glossary-intro">
-                    Słownik najważniejszych terminów związanych z tańcami kizomby i stylami pokrewnymi.
+                    Krótkie definicje terminów, nazw stylów i pojęć, które często pojawiają się w świecie AfroPasso.
                 </p>
                 <div id="glossary-container" class="glossary">
                     <!-- Glossary content will be populated by JavaScript -->
@@ -215,11 +322,10 @@
     <!-- Footer -->
     <footer class="footer" role="contentinfo">
         <div class="footer-content">
-            <p>&copy; 2025 Kizomba i rodzina tańców – przewodnik. 
-               Edukacyjny projekt dla polskiej społeczności tanecznej.</p>
+            <p><strong>AfroPasso</strong> - z pasji do tańców afrykańskich.</p>
             <p class="footer-note">
-                Źródła i materiały badawcze dostępne w poszczególnych kartach tańców.
-                Projekt stworzony z szacunkiem dla angolskiej kultury i tradycji.
+                Edukacyjny projekt dla polskiej społeczności tanecznej. Źródła i materiały badawcze
+                są dostępne w poszczególnych kartach tańców.
             </p>
         </div>
     </footer>
@@ -227,10 +333,9 @@
     <!-- Loading indicator -->
     <div id="loading" class="loading hidden" role="status" aria-live="polite">
         <div class="loading-spinner"></div>
-        <p>Ładowanie...</p>
+        <p>Ładuję bibliotekę AfroPasso...</p>
     </div>
 
     <script src="app.js"></script>
 </body>
 </html>
-

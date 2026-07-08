@@ -13,24 +13,37 @@
         "period": "przedkolonialny",
         "years": "XVII wiek"
       },
-      "classification": ["tradycyjny", "miejski"],
-      "family": ["rebita", "semba lineage"],
+      "classification": [
+        "tradycyjny",
+        "miejski"
+      ],
+      "family": [
+        "rebita",
+        "semba lineage"
+      ],
       "music": {
         "description_pl": "Wczesna miejska społeczna forma tańca z instrumentami europejskimi takimi jak akordeon wprowadzonymi przez Portugalczyków",
-        "examples": ["Novatos da Ilha de Luanda a Ultima Geração da Massemba"]
+        "examples": [
+          "Novatos da Ilha de Luanda a Ultima Geração da Massemba"
+        ]
       },
       "feeling_pl": "Dotyk brzuchów - charakterystyczny ruch taneczny, w którym partnerzy dotykają się brzuchami",
       "frame_pl": "Bliski kontakt, dotyk brzuchów jako główna cecha, prowadzenie przez mężczyznę",
       "basics_pl": "Charakterystyczny ruch 'dotyk brzuchów' (massemba w języku kimbundu), wczesna miejska forma społeczna",
       "character_pl": "Bezpośredni poprzednik semby, uznawany za wczesną miejską społeczną formę tańca",
-      "influences": ["tradycyjne tańce afrykańskie", "instrumenty portugalskie"],
+      "influences": [
+        "tradycyjne tańce afrykańskie",
+        "instrumenty portugalskie"
+      ],
       "differences_pl": [
         {
           "vs": "semba",
           "text": "Massemba to wcześniejsza forma, z której wyewoluowała semba. Była również nazywana rebita."
         }
       ],
-      "controversies_pl": ["Niektórzy badacze dyskutują o dokładnym pochodzeniu nazwy i jej związku z późniejszą sembą"],
+      "controversies_pl": [
+        "Niektórzy badacze dyskutują o dokładnym pochodzeniu nazwy i jej związku z późniejszą sembą"
+      ],
       "videos": [
         {
           "type": "essence",
@@ -71,7 +84,15 @@
           "note": "Archiwum tańców tradycyjnych"
         }
       ],
-      "keywords_pl": ["massemba", "rebita", "dotyk brzuchów", "Angola", "tradycyjny", "kimbundu", "semba poprzednik"]
+      "keywords_pl": [
+        "massemba",
+        "rebita",
+        "dotyk brzuchów",
+        "Angola",
+        "tradycyjny",
+        "kimbundu",
+        "semba poprzednik"
+      ]
     },
     {
       "id": "semba",
@@ -86,17 +107,32 @@
         "period": "kolonialny",
         "years": "lata 50. XX wieku"
       },
-      "classification": ["współczesny", "social"],
-      "family": ["massemba", "kizomba lineage"],
+      "classification": [
+        "współczesny",
+        "social"
+      ],
+      "family": [
+        "massemba",
+        "kizomba lineage"
+      ],
       "music": {
         "description_pl": "Żywy rytm, optymistyczne tempo, takt 2/4 z akcentowanym pierwszym uderzeniem, prowadzony przez gitarę",
-        "examples": ["Ngola Ritmos", "Liceu Vieira Dias", "Bonga", "Paulo Flores"]
+        "examples": [
+          "Ngola Ritmos",
+          "Liceu Vieira Dias",
+          "Bonga",
+          "Paulo Flores"
+        ]
       },
       "feeling_pl": "Szybki taniec tempowy, nieco zmysłowy z charakterystycznym 'bounce' i synkopowanym rytmem",
       "frame_pl": "Przedni nacisk brzuchów, mężczyzna chwyta kobietę za biodra i przyciąga blisko siebie",
       "basics_pl": "Mocny ruch krokowy podobny do wciskania się w piasek, kroki szybkie, liniowe lub wokół prowadzącego",
       "character_pl": "Ciągły ruch ciała, skupienie na kompasie i choreografii nóg, cielesna choreografia",
-      "influences": ["massemba", "karnawał angolski", "instrumenty portugalskie"],
+      "influences": [
+        "massemba",
+        "karnawał angolski",
+        "instrumenty portugalskie"
+      ],
       "differences_pl": [
         {
           "vs": "kizomba",
@@ -107,7 +143,9 @@
           "text": "Semba wyewoluowała z massemby, ale ma bardziej rozwinięte instrumentarium i strukturę muzyczną"
         }
       ],
-      "controversies_pl": ["Portugalczycy nazywali sembę 'angolskim merengue' jako część procesu folkloryzacji narzuconego przez państwo kolonialne"],
+      "controversies_pl": [
+        "Portugalczycy nazywali sembę 'angolskim merengue' jako część procesu folkloryzacji narzuconego przez państwo kolonialne"
+      ],
       "videos": [
         {
           "type": "essence",
@@ -148,7 +186,16 @@
           "note": "Archiwum zespołu założonego w 1947"
         }
       ],
-      "keywords_pl": ["semba", "Angola", "Ngola Ritmos", "Bonga", "Paulo Flores", "gitara", "rytm", "karnawał"]
+      "keywords_pl": [
+        "semba",
+        "Angola",
+        "Ngola Ritmos",
+        "Bonga",
+        "Paulo Flores",
+        "gitara",
+        "rytm",
+        "karnawał"
+      ]
     },
     {
       "id": "kizomba",
@@ -163,17 +210,33 @@
         "period": "pokolonialny",
         "years": "lata 80. XX wieku"
       },
-      "classification": ["współczesny", "social"],
-      "family": ["semba", "zouk lineage"],
+      "classification": [
+        "współczesny",
+        "social"
+      ],
+      "family": [
+        "semba",
+        "zouk lineage"
+      ],
       "music": {
         "description_pl": "Fuzja angolskiej semby z antylskim zouk, spowolniona kadencja z silniejszą linią basową i technologią MIDI",
-        "examples": ["Eduardo Paím", "Paulo Flores", "Kassav", "Carlos Ferreira"]
+        "examples": [
+          "Eduardo Paím",
+          "Paulo Flores",
+          "Kassav",
+          "Carlos Ferreira"
+        ]
       },
       "feeling_pl": "Wolne i płynne tempo, romantyczne i zmysłowe, skupione na połączeniu z partnerem",
       "frame_pl": "Bliskie i uziemione połączenie, intymny kontakt, minimalne chodzenie",
       "basics_pl": "Uproszczone i płynne kroki, ewolucja z semby pod wpływem zouk z Antyli Francuskich",
       "character_pl": "Nazwa oznacza 'imprezę' lub 'celebrację' w języku kimbundu, taniec społeczny i romantyczny",
-      "influences": ["semba", "zouk", "konpa", "technologia MIDI"],
+      "influences": [
+        "semba",
+        "zouk",
+        "kompa",
+        "technologia MIDI"
+      ],
       "differences_pl": [
         {
           "vs": "semba",
@@ -184,7 +247,9 @@
           "text": "Tradycyjna kizomba zachowuje angolskie korzenie, podczas gdy urban kizz to europejska adaptacja z elementami innych stylów"
         }
       ],
-      "controversies_pl": ["Eduardo Paím vs Paulo Flores - kto jest prawdziwym 'ojcem kizomby', debaty o wpływach zouk"],
+      "controversies_pl": [
+        "Eduardo Paím vs Paulo Flores - kto jest prawdziwym 'ojcem kizomby', debaty o wpływach zouk"
+      ],
       "videos": [
         {
           "type": "essence",
@@ -225,7 +290,16 @@
           "note": "Wpływ zouk z Antyli Francuskich"
         }
       ],
-      "keywords_pl": ["kizomba", "Eduardo Paím", "Paulo Flores", "zouk", "semba", "Angola", "impreza", "kimbundu"]
+      "keywords_pl": [
+        "kizomba",
+        "Eduardo Paím",
+        "Paulo Flores",
+        "zouk",
+        "semba",
+        "Angola",
+        "impreza",
+        "kimbundu"
+      ]
     },
     {
       "id": "kuduro",
@@ -240,17 +314,34 @@
         "period": "pokolonialny",
         "years": "koniec lat 80. XX wieku"
       },
-      "classification": ["współczesny", "elektroniczny"],
-      "family": ["house", "techno", "perkusje afrykańskie"],
+      "classification": [
+        "współczesny",
+        "elektroniczny"
+      ],
+      "family": [
+        "house",
+        "techno",
+        "perkusje afrykańskie"
+      ],
       "music": {
         "description_pl": "Energiczny gatunek muzyczno-taneczny, mieszanka afrykańskich perkusji z karaibskimi rytmami zouk béton i soca oraz europejską muzyką house i techno",
-        "examples": ["DJ Znobia", "DJ Madabaya", "Buraka Som Sistema"]
+        "examples": [
+          "DJ Znobia",
+          "DJ Madabaya",
+          "Buraka Som Sistema"
+        ]
       },
       "feeling_pl": "Bardzo energiczny, szybki, fizycznie wymagający, tempo 128-135 uderzeń na minutę",
       "frame_pl": "Taniec solowy lub w grupie, bez stałego partnera, skupiony na indywidualnej ekspresji",
       "basics_pl": "Nazwa oznacza 'twardy tyłek' w języku angielskim, charakterystyczne ruchy naśladujące osoby niepełnosprawne",
       "character_pl": "Powstał w kontekście wojny domowej w Angoli (1975-2002), forma radzenia sobie z traumą wojenną",
-      "influences": ["wojna domowa Angola", "house", "techno", "zouk béton", "soca"],
+      "influences": [
+        "wojna domowa Angola",
+        "house",
+        "techno",
+        "zouk béton",
+        "soca"
+      ],
       "differences_pl": [
         {
           "vs": "tarraxinha",
@@ -261,7 +352,9 @@
           "text": "Kuduro to taniec elektroniczny i energiczny, podczas gdy kizomba jest wolna i romantyczna"
         }
       ],
-      "controversies_pl": ["Naśladowanie ruchów osób niepełnosprawnych jako forma wyrażenia traumy wojennej - kontrowersyjny aspekt społeczny"],
+      "controversies_pl": [
+        "Naśladowanie ruchów osób niepełnosprawnych jako forma wyrażenia traumy wojennej - kontrowersyjny aspekt społeczny"
+      ],
       "videos": [
         {
           "type": "essence",
@@ -302,7 +395,16 @@
           "note": "Kontekst historyczny i społeczny"
         }
       ],
-      "keywords_pl": ["kuduro", "Angola", "Luanda", "DJ Znobia", "wojna domowa", "house", "techno", "energiczny"]
+      "keywords_pl": [
+        "kuduro",
+        "Angola",
+        "Luanda",
+        "DJ Znobia",
+        "wojna domowa",
+        "house",
+        "techno",
+        "energiczny"
+      ]
     },
     {
       "id": "tarraxinha",
@@ -317,28 +419,44 @@
         "period": "współczesny",
         "years": "początek lat 2000."
       },
-      "classification": ["współczesny", "intymny"],
-      "family": ["kuduro", "ghetto zouk"],
+      "classification": [
+        "współczesny",
+        "intymny"
+      ],
+      "family": [
+        "kuduro",
+        "ghetto zouk"
+      ],
       "music": {
         "description_pl": "Spowolnione kuduro, stworzone przez DJ-ów dla tych, którzy nie mogli tańczyć fizycznie wymagającego kuduro",
-        "examples": ["DJ Madabaya", "DJ Znobia", "Chiquinha (2003)"]
+        "examples": [
+          "DJ Madabaya",
+          "DJ Znobia",
+          "Chiquinha (2003)"
+        ]
       },
-      "feeling_pl": "Bardzo intymne, zmysłowe, praktycznie gra wstępna, bez chodzenia, skupienie na partnerze",
-      "frame_pl": "Bardzo bliski kontakt, taniec tylko z osobami, którymi jesteś zainteresowany romantycznie",
-      "basics_pl": "Brak chodzenia, rotacja nadgarstka jak śrubokrętem, delikatne prowadzenie plecami partnerki",
-      "character_pl": "Nazwa oznacza 'małą śrubę' w portugalskim, to co tańczą nastolatkowie w parach bez dorosłych",
-      "influences": ["kuduro", "ghetto zouk", "kultura młodzieżowa"],
+      "feeling_pl": "Bardzo bliskie, intymne i oszczędne w ruchu; skupione na mikro-izolacjach bioder, tułowia i reakcji partnerów na muzyczne pauzy.",
+      "frame_pl": "Bardzo bliski kontakt partnerów, często z połączeniem w okolicy bioder; rama jest kompaktowa, miękka i prowadzona subtelnymi impulsami ciała.",
+      "basics_pl": "Minimalne przemieszczanie lub brak chodzenia; małe rotacje, izolacje i pulsacje ciała prowadzone rytmem, zamiast dużych figur krokowych.",
+      "character_pl": "Nazwa oznacza „małą śrubę” w portugalskim; tarraxinha koncentruje się na bliskim kontakcie, mikro-ruchu i spokojnej interpretacji rytmu.",
+      "influences": [
+        "kuduro",
+        "ghetto zouk",
+        "kultura młodzieżowa"
+      ],
       "differences_pl": [
         {
           "vs": "kizomba",
-          "text": "Tarraxinha nie ma bezpośredniego związku z kizombą, to zupełnie inny taniec o charakterze intymnym"
+          "text": "Tarraxinha jest bardziej statyczna i intymna niż kizomba; zamiast płynnego chodzenia eksponuje mikro-ruch, izolacje i bardzo bliski kontakt."
         },
         {
           "vs": "kuduro",
-          "text": "Tarraxinha to spowolniona wersja kuduro, mniej energiczna, bardziej intymna"
+          "text": "Tarraxinha wyrosła z wolniejszego, bardziej intymnego odczuwania rytmu niż energetyczne kuduro."
         }
       ],
-      "controversies_pl": ["Krytykowana za zbyt zmysłowy charakter, implikacje społeczne - ludzie myślą, że partnerzy idą razem do domu"],
+      "controversies_pl": [
+        "Ze względu na bardzo bliski kontakt tarraxinha bywa różnie odbierana społecznie; w nauce wymaga szczególnej uważności na komfort, zgodę i granice partnerów."
+      ],
       "videos": [
         {
           "type": "essence",
@@ -379,7 +497,15 @@
           "note": "Wywiady z pionierami"
         }
       ],
-      "keywords_pl": ["tarraxinha", "Benguela", "DJ Madabaya", "DJ Znobia", "intymny", "spowolnione kuduro", "śruba"]
+      "keywords_pl": [
+        "tarraxinha",
+        "Benguela",
+        "DJ Madabaya",
+        "DJ Znobia",
+        "intymny",
+        "spowolnione kuduro",
+        "śruba"
+      ]
     },
     {
       "id": "tarraxo",
@@ -394,17 +520,31 @@
         "period": "współczesny",
         "years": "początek lat 2010."
       },
-      "classification": ["współczesny", "europejski"],
-      "family": ["tarraxinha", "ghetto zouk"],
+      "classification": [
+        "współczesny",
+        "europejski"
+      ],
+      "family": [
+        "tarraxinha",
+        "ghetto zouk"
+      ],
       "music": {
         "description_pl": "Ostrzejsza i mroczniejsza wersja tarraxinhy, bardziej skupiona na perkusji i rytmie, mniej na melodii",
-        "examples": ["DJ BeBeDeRa", "DJ Matabaya Moreira", "Fodencia"]
+        "examples": [
+          "DJ BeBeDeRa",
+          "DJ Matabaya Moreira",
+          "Fodencia"
+        ]
       },
       "feeling_pl": "Surowe, mroczne, celowo seksualne, 'brudne' brzmienie, czasem zakazywane w lokalach",
       "frame_pl": "Europejska adaptacja, bardziej oczyszczona niż oryginalna muzyka, relatywnie oddaleni partnerzy",
       "basics_pl": "Taniec pojawił się pod koniec lat 2010. w Europie, różni się od tarraxinhy większą swobodą ruchu",
       "character_pl": "Europejski produkt szkół tańca, oczyszczony z oryginalnej seksualności muzyki",
-      "influences": ["tarraxinha", "europejskie szkoły tańca", "komercjalizacja"],
+      "influences": [
+        "tarraxinha",
+        "europejskie szkoły tańca",
+        "komercjalizacja"
+      ],
       "differences_pl": [
         {
           "vs": "tarraxinha",
@@ -415,7 +555,9 @@
           "text": "Tarraxo jest jeszcze bardziej odległe od kizomby niż tarraxinha, to europejski produkt komercyjny"
         }
       ],
-      "controversies_pl": ["Fodencia oznacza 'pieprzenie' - muzyka była tak eksplicytna, że została zakazana w lokalach w Lizbonie"],
+      "controversies_pl": [
+        "Fodencia oznacza 'pieprzenie' - muzyka była tak eksplicytna, że została zakazana w lokalach w Lizbonie"
+      ],
       "videos": [
         {
           "type": "essence",
@@ -456,7 +598,15 @@
           "note": "Dokumentacja zakazanej muzyki"
         }
       ],
-      "keywords_pl": ["tarraxo", "Lizbona", "europejski", "DJ BeBeDeRa", "fodencia", "komercyjny", "szkoły tańca"]
+      "keywords_pl": [
+        "tarraxo",
+        "Lizbona",
+        "europejski",
+        "DJ BeBeDeRa",
+        "fodencia",
+        "komercyjny",
+        "szkoły tańca"
+      ]
     },
     {
       "id": "urban_kizz",
@@ -471,17 +621,34 @@
         "period": "współczesny",
         "years": "2012-2015"
       },
-      "classification": ["współczesny", "fusion"],
-      "family": ["kizomba", "hip-hop", "tango"],
+      "classification": [
+        "współczesny",
+        "fusion"
+      ],
+      "family": [
+        "kizomba",
+        "hip-hop",
+        "tango"
+      ],
       "music": {
         "description_pl": "Muzyka urban (hip hop, R&B, elektroniczne beaty) mieszana ze stylem kizomba, ghetto zouk",
-        "examples": ["Enah Lebon", "Curtis Seldon", "Moun Kizomba Full"]
+        "examples": [
+          "Enah Lebon",
+          "Curtis Seldon",
+          "Moun Kizomba Full"
+        ]
       },
       "feeling_pl": "Nowoczesne, dynamiczne, z elementami innych stylów tańca, bardziej teatralne niż tradycyjna kizomba",
       "frame_pl": "Zróżnicowane połączenia, od bliskich do oddalonych, z elementami solo i akrobatycznymi",
       "basics_pl": "Mieszanka kizomby z tango argentyńskim, hip-hopem i tańcami latynoskimi, kroki synkopowane",
       "character_pl": "Początkowo nazywane 'French Style' lub 'Kizomba 2.0', ostatecznie nazwane Urban Kizz w 2015",
-      "influences": ["kizomba", "tango argentyńskie", "hip-hop", "salsa", "bachata"],
+      "influences": [
+        "kizomba",
+        "tango argentyńskie",
+        "hip-hop",
+        "salsa",
+        "bachata"
+      ],
       "differences_pl": [
         {
           "vs": "kizomba",
@@ -492,7 +659,9 @@
           "text": "Urban Kizz jest bardziej radykalną adaptacją niż kizomba fusion, z większymi wpływami pozaafrykańskimi"
         }
       ],
-      "controversies_pl": ["Debaty o apropriację kulturową, nazywanie 'Kizomba 2.0' sugerowało, że to lepsza wersja tradycyjnej kizomby"],
+      "controversies_pl": [
+        "Debaty o apropriację kulturową, nazywanie 'Kizomba 2.0' sugerowało, że to lepsza wersja tradycyjnej kizomby"
+      ],
       "videos": [
         {
           "type": "essence",
@@ -533,7 +702,16 @@
           "note": "Dyskusje o nazwie i tożsamości"
         }
       ],
-      "keywords_pl": ["urban kizz", "Francja", "Paryż", "Enah Lebon", "Curtis Seldon", "fusion", "hip-hop", "europejski"]
+      "keywords_pl": [
+        "urban kizz",
+        "Francja",
+        "Paryż",
+        "Enah Lebon",
+        "Curtis Seldon",
+        "fusion",
+        "hip-hop",
+        "europejski"
+      ]
     },
     {
       "id": "kizomba_fusion",
@@ -548,17 +726,30 @@
         "period": "współczesny",
         "years": "2010-2015"
       },
-      "classification": ["współczesny", "fusion"],
-      "family": ["kizomba", "różne style"],
+      "classification": [
+        "współczesny",
+        "fusion"
+      ],
+      "family": [
+        "kizomba",
+        "różne style"
+      ],
       "music": {
         "description_pl": "Tradycyjna muzyka kizomba z elementami innych gatunków, zachowuje podstawowy charakter kizomby",
-        "examples": ["Albir", "Curtis", "Afro-Latin Connection"]
+        "examples": [
+          "Albir",
+          "Curtis",
+          "Afro-Latin Connection"
+        ]
       },
       "feeling_pl": "Punkt pośredni między tradycyjną kizombą a urban kizz, zachowuje romantyczny charakter",
       "frame_pl": "Głównie tradycyjne połączenie kizomby z subtelnymi elementami innych stylów",
       "basics_pl": "Zachowuje podstawy kizomby, dodając subtelne elementy z innych stylów tanecznych",
       "character_pl": "Punkt pośredni między kizombą a urban kizz, przypisywany Albirowi, Curtisowi i Afro-Latin Connection",
-      "influences": ["kizomba", "subtelne elementy innych stylów"],
+      "influences": [
+        "kizomba",
+        "subtelne elementy innych stylów"
+      ],
       "differences_pl": [
         {
           "vs": "kizomba",
@@ -569,7 +760,9 @@
           "text": "Kizomba Fusion jest bardziej konserwatywna niż Urban Kizz, zachowuje więcej tradycyjnych elementów"
         }
       ],
-      "controversies_pl": ["Debaty o tym, gdzie kończy się kizomba a zaczyna fusion, granice są płynne"],
+      "controversies_pl": [
+        "Debaty o tym, gdzie kończy się kizomba a zaczyna fusion, granice są płynne"
+      ],
       "videos": [
         {
           "type": "essence",
@@ -610,13 +803,20 @@
           "note": "Dokumentacja rozwoju stylu"
         }
       ],
-      "keywords_pl": ["kizomba fusion", "Albir", "Curtis", "Afro-Latin Connection", "punkt pośredni", "subtelne elementy"]
+      "keywords_pl": [
+        "kizomba fusion",
+        "Albir",
+        "Curtis",
+        "Afro-Latin Connection",
+        "punkt pośredni",
+        "subtelne elementy"
+      ]
     },
     {
-      "id": "konpa",
-      "slug": "konpa",
+      "id": "kompa",
+      "slug": "kompa",
       "names": {
-        "pl": "Konpa",
+        "pl": "Kompa",
         "en": ""
       },
       "origin": {
@@ -625,32 +825,49 @@
         "period": "współczesny",
         "years": "lata 50. XX wieku"
       },
-      "classification": ["współczesny", "karaibski"],
-      "family": ["méringue", "zouk lineage"],
+      "classification": [
+        "współczesny",
+        "karaibski"
+      ],
+      "family": [
+        "méringue",
+        "zouk lineage"
+      ],
       "music": {
-        "description_pl": "Nowoczesny gatunek muzyki tanecznej méringue z Haiti, stworzony przez Nemours Jean-Baptiste",
-        "examples": ["Nemours Jean-Baptiste", "Kassav", "T-Vice", "Sweet Micky"]
+        "description_pl": "Nowoczesny haitański gatunek muzyki tanecznej znany jako compas/kompa, wywodzący się z méringue i rozwinięty przez Nemours Jean-Baptiste",
+        "examples": [
+          "Nemours Jean-Baptiste",
+          "Kassav",
+          "T-Vice",
+          "Sweet Micky"
+        ]
       },
-      "feeling_pl": "Rytmiczny, karaibski, wpływowy na rozwój zouk i kizomby, dominował przed powstaniem zouk",
-      "frame_pl": "Taniec parowy, podobny do innych tańców karaibskich, prowadzenie przez mężczyznę",
-      "basics_pl": "Wywodzi się z méringue de salon, inspirowany contra dance z Europy, wpłynął na kizombę",
-      "character_pl": "Przed powstaniem zouk w latach 80., haitańskie konpa dominowało w muzyce karaibskiej",
-      "influences": ["méringue de salon", "contra dance europejski", "kultura haitańska"],
+      "feeling_pl": "Rytmiczny, karaibski i swobodny taniec społeczny, z płynnym ruchem ciała i luźniejszym objęciem niż w kizombie",
+      "frame_pl": "Taniec parowy z wygodną, bardziej otwartą ramą; objęcie jest swobodne i szersze, a prowadzenie zostawia miejsce na naturalny groove",
+      "basics_pl": "Wywodzi się z méringue de salon i haitańskiego compas; opiera się na miękkim kroku, rytmie bioder i socialowym dialogu partnerów",
+      "character_pl": "Haitański taniec i muzyka compas/kompa, którego swobodny groove wpłynął na karaibskie brzmienia, zouk i kontekst rozwoju kizomby",
+      "influences": [
+        "méringue de salon",
+        "contra dance europejski",
+        "kultura haitańska"
+      ],
       "differences_pl": [
         {
           "vs": "kizomba",
-          "text": "Konpa powstało w latach 50., podczas gdy kizomba to pochodna konpa z lat 70-80, konpa wpłynęło na kizombę"
+          "text": "Kompa ma luźniejsze, szersze objęcie i bardziej karaibski socialowy groove, podczas gdy kizomba jest zwykle bliższa, wolniejsza i bardziej uziemiona."
         },
         {
           "vs": "zouk",
-          "text": "Konpa dominowało przed powstaniem zouk w latach 80., zouk wyewoluował częściowo z konpa"
+          "text": "Kompa jest haitańskim punktem odniesienia sprzed popularności zouk; zouk rozwijał się częściowo w dialogu z karaibskim compas/kompa."
         }
       ],
-      "controversies_pl": ["Debaty o wpływie konpa na kizombę - niektórzy twierdzą, że kizomba to pochodna konpa"],
+      "controversies_pl": [
+        "Różne zapisy nazwy funkcjonują równolegle w źródłach, ale w AfroPasso używamy formy „kompa” jako czytelnej polskiej pisowni wymowy."
+      ],
       "videos": [
         {
           "type": "essence",
-          "title": "Konpa : Dancing to Rete La by Rutshelle : Gouye",
+          "title": "Kompa : Dancing to Rete La by Rutshelle : Gouye",
           "url": "https://www.youtube.com/watch?v=BAI4BjMuHuc",
           "author": "Haitian Dance Culture",
           "year": 2020
@@ -664,9 +881,9 @@
         },
         {
           "type": "lesson",
-          "title": "Learn to dance konpa class no.1: Basic steps",
+          "title": "Learn to dance kompa class no.1: Basic steps",
           "url": "https://www.youtube.com/watch?v=jBq609Fvzz0",
-          "author": "Konpa Dance Academy",
+          "author": "Kompa Dance Academy",
           "year": 2021
         }
       ],
@@ -674,20 +891,29 @@
         {
           "title": "Compas - Wikipedia",
           "url": "https://en.wikipedia.org/wiki/Compas",
-          "note": "Podstawowe informacje o konpa"
+          "note": "Podstawowe informacje o kompa"
         },
         {
-          "title": "The birth of Konpa! – WXPN",
+          "title": "The birth of Kompa! – WXPN",
           "url": "https://xpn.org/2021/07/26/birth-of-konpa/",
-          "note": "Historia powstania konpa"
+          "note": "Historia powstania kompa"
         },
         {
-          "title": "Reddit discussions about konpa influence",
+          "title": "Reddit discussions about kompa influence",
           "url": "https://www.reddit.com/r/haiti/comments/1jyhg6x/",
           "note": "Dyskusje o wpływie na kizombę"
         }
       ],
-      "keywords_pl": ["konpa", "Haiti", "Nemours Jean-Baptiste", "méringue", "karaibski", "wpływ na kizombę", "zouk"]
+      "keywords_pl": [
+        "kompa",
+        "compas",
+        "Haiti",
+        "Nemours Jean-Baptiste",
+        "méringue",
+        "karaibski",
+        "swobodne objęcie",
+        "zouk"
+      ]
     }
   ],
   "timeline": [
@@ -699,7 +925,9 @@
         {
           "title": "Tradycyjne tańce plemienne Angoli",
           "description": "Rozwój tradycyjnych tańców afrykańskich w regionie Angoli",
-          "dances": ["tradycyjne tańce afrykańskie"]
+          "dances": [
+            "tradycyjne tańce afrykańskie"
+          ]
         }
       ]
     },
@@ -711,7 +939,9 @@
         {
           "title": "Powstanie massemby",
           "description": "Rozwój massemby jako wczesnej miejskiej społecznej formy tańca z wpływami portugalskimi",
-          "dances": ["massemba"]
+          "dances": [
+            "massemba"
+          ]
         }
       ]
     },
@@ -723,17 +953,23 @@
         {
           "title": "Założenie Ngola Ritmos (1947)",
           "description": "Zespół Ngola Ritmos odegrał fundamentalną rolę w rozwoju nowoczesnej semby",
-          "dances": ["semba"]
+          "dances": [
+            "semba"
+          ]
         },
         {
           "title": "Popularyzacja semby (lata 50.)",
           "description": "Formalna popularyzacja semby, szczególnie w latach 50. XX wieku",
-          "dances": ["semba"]
+          "dances": [
+            "semba"
+          ]
         },
         {
-          "title": "Powstanie konpa na Haiti (lata 50.)",
-          "description": "Nemours Jean-Baptiste tworzy konpa, które później wpłynie na rozwój zouk i kizomby",
-          "dances": ["konpa"]
+          "title": "Powstanie kompa na Haiti (lata 50.)",
+          "description": "Nemours Jean-Baptiste tworzy kompa, które później wpłynie na rozwój zouk i kizomby",
+          "dances": [
+            "kompa"
+          ]
         }
       ]
     },
@@ -745,7 +981,10 @@
         {
           "title": "Niepodległość Angoli (1975)",
           "description": "Koniec portugalskiego kolonializmu, początek nowej ery dla angolskiej kultury",
-          "dances": ["semba", "massemba"]
+          "dances": [
+            "semba",
+            "massemba"
+          ]
         }
       ]
     },
@@ -757,17 +996,23 @@
         {
           "title": "Wpływ zouk z Antyli Francuskich (koniec lat 70.)",
           "description": "Zespół Kassav popularyzuje zouk, który wpływa na angolską muzykę",
-          "dances": ["kizomba"]
+          "dances": [
+            "kizomba"
+          ]
         },
         {
           "title": "Eduardo Paím założył zespół SOS (1982)",
           "description": "Eduardo Paím odegrał kluczową rolę w rozwoju stylu muzycznego kizomba",
-          "dances": ["kizomba"]
+          "dances": [
+            "kizomba"
+          ]
         },
         {
           "title": "Powstanie kuduro (koniec lat 80.)",
           "description": "Rozwój kuduro w Luandzie podczas wojny domowej w Angoli",
-          "dances": ["kuduro"]
+          "dances": [
+            "kuduro"
+          ]
         }
       ]
     },
@@ -779,17 +1024,23 @@
         {
           "title": "Album 'Luanda, Minha Banda' Eduardo Paím (1991)",
           "description": "Przełomowy album w historii kizomby",
-          "dances": ["kizomba"]
+          "dances": [
+            "kizomba"
+          ]
         },
         {
           "title": "Pierwsza generacja kuduro (lata 90.)",
           "description": "Rozwój pierwszej generacji kuduro z tempem 128-135 BPM",
-          "dances": ["kuduro"]
+          "dances": [
+            "kuduro"
+          ]
         },
         {
           "title": "Powstanie tarraxinhy (początek lat 2000.)",
           "description": "DJ Madabaya i DJ Znobia tworzą tarraxinhę jako spowolnione kuduro",
-          "dances": ["tarraxinha"]
+          "dances": [
+            "tarraxinha"
+          ]
         }
       ]
     },
@@ -801,22 +1052,30 @@
         {
           "title": "Festiwal Africadancar w Lizbonie (2008)",
           "description": "Pierwszy festiwal kizomby w Europie, początek europejskiej ekspansji",
-          "dances": ["kizomba"]
+          "dances": [
+            "kizomba"
+          ]
         },
         {
           "title": "Powstanie tarraxo w Lizbonie (początek lat 2010.)",
           "description": "DJ BeBeDeRa i DJ Matabaya Moreira tworzą tarraxo",
-          "dances": ["tarraxo"]
+          "dances": [
+            "tarraxo"
+          ]
         },
         {
           "title": "Rozwój French Style/Urban Kiz (2012-2014)",
           "description": "Enah Lebon i Curtis Seldon rozwijają nowy styl w Paryżu",
-          "dances": ["urban_kizz"]
+          "dances": [
+            "urban_kizz"
+          ]
         },
         {
           "title": "Oficjalne wprowadzenie nazwy Urban Kiz (2015)",
           "description": "Eddy Vents, Moun, Enah, Curtis oficjalnie wprowadzają nazwę Urban Kiz",
-          "dances": ["urban_kizz"]
+          "dances": [
+            "urban_kizz"
+          ]
         }
       ]
     },
@@ -828,20 +1087,25 @@
         {
           "title": "Globalne rozprzestrzenienie Urban Kiz (2016-2018)",
           "description": "Urban Kiz rozprzestrzenia się na całym świecie",
-          "dances": ["urban_kizz"]
+          "dances": [
+            "urban_kizz"
+          ]
         },
         {
           "title": "Rozwój Kizomba Fusion",
           "description": "Powstanie stylu pośredniego między tradycyjną kizombą a urban kiz",
-          "dances": ["kizomba_fusion"]
+          "dances": [
+            "kizomba_fusion"
+          ]
         },
         {
           "title": "Trzecia generacja kuduro (współczesność)",
           "description": "Większa różnorodność stylów i międzynarodowe rozprzestrzenienie kuduro",
-          "dances": ["kuduro"]
+          "dances": [
+            "kuduro"
+          ]
         }
       ]
     }
   ]
 }
-
