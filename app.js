@@ -54,6 +54,7 @@ function initializeElements() {
     
     // Views
     elements.views.home = document.getElementById('home-view');
+    elements.views.dances = document.getElementById('dances-view');
     elements.views.dance = document.getElementById('dance-view');
     elements.views.timeline = document.getElementById('timeline-view');
     elements.views.compare = document.getElementById('compare-view');
@@ -198,6 +199,9 @@ function handleRoute(path) {
     // Handle specific routes
     switch (currentRoute) {
         case 'home':
+            renderLibraryPreview();
+            break;
+        case 'dances':
             renderDanceCards();
             break;
         case 'dance':
@@ -344,6 +348,8 @@ function danceCardHTML(dance, index) {
         </article>
     `;
 }
+
+function renderLibraryPreview() {}
 
 function renderDanceCards() {
     if (!dancesData) return;
