@@ -7,6 +7,8 @@ let schoolsData = null;
 let filteredEvents = [];
 let currentRoute = 'home';
 
+const EVENT_SUBMIT_FORM_URL = 'https://forms.gle/REPLACE-WITH-REAL-FORM';
+
 // DOM elements
 const elements = {
     loading: null,
@@ -37,6 +39,18 @@ const elements = {
         danceA: null,
         danceB: null,
         result: null
+    },
+    events: {
+        cityFilter: null,
+        styleFilter: null,
+        typeFilter: null,
+        clearFilters: null,
+        filterStatus: null,
+        featuredContainer: null,
+        listContainer: null,
+        emptyState: null,
+        submitLinks: null,
+        schoolsContainer: null
     },
     glossary: {
         container: null
@@ -94,6 +108,19 @@ function initializeElements() {
     
     // Glossary
     elements.glossary.container = document.getElementById('glossary-container');
+
+    // Events view
+    elements.events.cityFilter = document.getElementById('event-city-filter');
+    elements.events.styleFilter = document.getElementById('event-style-filter');
+    elements.events.typeFilter = document.getElementById('event-type-filter');
+    elements.events.clearFilters = document.getElementById('event-clear-filters');
+    elements.events.filterStatus = document.getElementById('event-filter-status');
+    elements.events.featuredContainer = document.getElementById('featured-events-container');
+    elements.events.listContainer = document.getElementById('events-list-container');
+    elements.events.emptyState = document.getElementById('events-empty');
+    elements.events.submitLinks = document.querySelectorAll('.submit-event-cta');
+    elements.events.schoolsContainer = document.getElementById('schools-container');
+    elements.views.events = document.getElementById('events-view');
 }
 
 // Setup event listeners
@@ -113,6 +140,13 @@ function setupEventListeners() {
     // Compare selectors
     elements.compare.danceA.addEventListener('change', handleComparison);
     elements.compare.danceB.addEventListener('change', handleComparison);
+
+    // Event filters
+    elements.events.cityFilter.addEventListener('change', handleEventFilters);
+    elements.events.styleFilter.addEventListener('change', handleEventFilters);
+    elements.events.typeFilter.addEventListener('change', handleEventFilters);
+    elements.events.clearFilters.addEventListener('click', clearEventFilters);
+    elements.events.submitLinks.forEach(link => { link.href = EVENT_SUBMIT_FORM_URL; });
     
     // Fragment navigation (link clicks + browser back/forward) — hashchange fires
     // in all browsers for both, unlike popstate which is not guaranteed on hash links.
@@ -229,6 +263,9 @@ function handleRoute(path) {
             break;
         case 'dances':
             renderDanceCards();
+            break;
+        case 'events':
+            renderEventsPage();
             break;
         case 'dance':
             if (params[0]) {
@@ -880,6 +917,198 @@ function generateGlossary() {
             <h3 class="glossary-term">${item.term}</h3>
             <p class="glossary-definition">${item.definition}</p>
         </div>
+    `).join('');
+}
+
+// ===== Events hub =====
+
+const EVENT_TYPE_LABELS = { social: 'potańcówka', warsztaty: 'warsztaty', festiwal: 'festiwal' };
+const eventMonthFormatter = new Intl.DateTimeFormat('pl-PL', { month: 'long', year: 'numeric' });
+const eventWeekdayFormatter = new Intl.DateTimeFormat('pl-PL', { weekday: 'short' });
+
+function parseEventDate(value) {
+    const date = new Date(`${value}T00:00:00`);
+    return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function getUpcomingEvents() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return eventsData
+        .filter(event => {
+            const end = parseEventDate(event.date_end || event.date_start);
+            if (!end || !parseEventDate(event.date_start)) {
+                console.warn(`Pomijam wydarzenie z niepoprawną datą: ${event.id}`);
+                return false;
+            }
+            return end >= today;
+        })
+        .sort((a, b) => a.date_start.localeCompare(b.date_start));
+}
+
+function handleEventFilters() {
+    const city = elements.events.cityFilter.value;
+    const style = elements.events.styleFilter.value;
+    const type = elements.events.typeFilter.value;
+
+    filteredEvents = getUpcomingEvents().filter(event =>
+        (!city || event.city === city) &&
+        (!style || event.styles.includes(style)) &&
+        (!type || event.type === type)
+    );
+
+    renderFeaturedEvents();
+    renderEventsList();
+    updateEventFilterStatus(Boolean(city || style || type));
+}
+
+function clearEventFilters() {
+    elements.events.cityFilter.value = '';
+    elements.events.styleFilter.value = '';
+    elements.events.typeFilter.value = '';
+    handleEventFilters();
+}
+
+function renderEventsPage() {
+    if (!eventsData) {
+        elements.events.listContainer.innerHTML =
+            '<p class="events-error">Błąd podczas ładowania wydarzeń. Spróbuj odświeżyć stronę.</p>';
+        return;
+    }
+    populateEventFilterOptions();
+    handleEventFilters();
+    renderSchools();
+}
+
+function populateEventFilterOptions() {
+    const upcoming = getUpcomingEvents();
+    const selectedCity = elements.events.cityFilter.value;
+    const selectedStyle = elements.events.styleFilter.value;
+
+    const cities = [...new Set(upcoming.map(event => event.city))].sort((a, b) => a.localeCompare(b, 'pl'));
+    elements.events.cityFilter.innerHTML = '<option value="">Wszystkie</option>' +
+        cities.map(city => `<option value="${escapeAttribute(city)}">${escapeHTML(city)}</option>`).join('');
+    elements.events.cityFilter.value = cities.includes(selectedCity) ? selectedCity : '';
+
+    const styleSlugs = [...new Set(upcoming.flatMap(event => event.styles))];
+    const styles = styleSlugs
+        .map(slug => ({ slug, name: (dancesData.find(dance => dance.slug === slug) || {}).names?.pl || slug }))
+        .sort((a, b) => a.name.localeCompare(b.name, 'pl'));
+    elements.events.styleFilter.innerHTML = '<option value="">Wszystkie</option>' +
+        styles.map(style => `<option value="${escapeAttribute(style.slug)}">${escapeHTML(style.name)}</option>`).join('');
+    elements.events.styleFilter.value = styleSlugs.includes(selectedStyle) ? selectedStyle : '';
+}
+
+function renderFeaturedEvents() {
+    const featured = filteredEvents.filter(event => event.featured).slice(0, 3);
+    elements.events.featuredContainer.innerHTML = featured.map(event => `
+        <a class="featured-tile featured-event-tile" href="${escapeAttribute(event.url)}" target="_blank" rel="noopener"
+           ${event.image ? `style="--tile-image: url('${escapeAttribute(event.image)}')"` : ''}>
+            <div class="featured-tile-content">
+                <p class="featured-country">${escapeHTML(formatEventDateLabel(event))} · ${escapeHTML(event.city)}</p>
+                <h4>${escapeHTML(event.title)}</h4>
+                <p class="featured-character">${escapeHTML(EVENT_TYPE_LABELS[event.type] || event.type)}</p>
+                <span>Zobacz wydarzenie</span>
+            </div>
+        </a>
+    `).join('');
+}
+
+function renderEventsList() {
+    const container = elements.events.listContainer;
+    if (filteredEvents.length === 0) {
+        container.innerHTML = '';
+        elements.events.emptyState.classList.remove('hidden');
+        return;
+    }
+    elements.events.emptyState.classList.add('hidden');
+
+    let currentMonth = '';
+    let html = '';
+    for (const event of filteredEvents) {
+        const monthKey = event.date_start.slice(0, 7);
+        if (monthKey !== currentMonth) {
+            currentMonth = monthKey;
+            const label = eventMonthFormatter.format(parseEventDate(event.date_start));
+            html += `<h3 class="month-heading">${escapeHTML(label.charAt(0).toUpperCase() + label.slice(1))}</h3>`;
+        }
+        html += eventRowHTML(event);
+    }
+    container.innerHTML = html;
+}
+
+function eventRowHTML(event) {
+    const start = parseEventDate(event.date_start);
+    const end = event.date_end && event.date_end !== event.date_start ? parseEventDate(event.date_end) : null;
+    const dayLabel = end ? `${start.getDate()}–${end.getDate()}` : String(start.getDate());
+    const weekday = end
+        ? `${eventWeekdayFormatter.format(start)}–${eventWeekdayFormatter.format(end)}`
+        : eventWeekdayFormatter.format(start);
+    const styleNames = event.styles
+        .map(slug => (dancesData.find(dance => dance.slug === slug) || {}).names?.pl || slug)
+        .join(', ');
+    const meta = [event.city, EVENT_TYPE_LABELS[event.type] || event.type, styleNames].filter(Boolean).join(' · ');
+    const details = [event.time, event.venue, event.price].filter(Boolean).join(' · ');
+
+    return `
+        <article class="event-row">
+            <div class="event-date-block" aria-hidden="true">
+                <span class="event-day">${escapeHTML(dayLabel)}</span>
+                <span class="event-weekday">${escapeHTML(weekday)}</span>
+            </div>
+            <div class="event-row-body">
+                <h4 class="event-title">${escapeHTML(event.title)}</h4>
+                <p class="event-meta">${escapeHTML(meta)}</p>
+                ${details ? `<p class="event-details">${escapeHTML(details)}</p>` : ''}
+            </div>
+            <a class="event-link" href="${escapeAttribute(event.url)}" target="_blank" rel="noopener">Szczegóły</a>
+        </article>
+    `;
+}
+
+function formatEventDateLabel(event) {
+    const start = parseEventDate(event.date_start);
+    const day = String(start.getDate());
+    const month = String(start.getMonth() + 1).padStart(2, '0');
+    if (event.date_end && event.date_end !== event.date_start) {
+        const end = parseEventDate(event.date_end);
+        return `${day}–${end.getDate()}.${month}`;
+    }
+    return `${day}.${month}`;
+}
+
+function updateEventFilterStatus(hasFilters) {
+    const status = elements.events.filterStatus;
+    if (!hasFilters) {
+        status.textContent = '';
+        status.classList.add('hidden');
+        return;
+    }
+    status.textContent = formatEventFilterStatus(filteredEvents.length);
+    status.classList.remove('hidden');
+}
+
+function formatEventFilterStatus(count) {
+    if (count === 0) return 'Żadne wydarzenie nie pasuje do filtrów.';
+    if (count === 1) return '1 wydarzenie pasuje do filtrów.';
+    const few = count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 12 || count % 100 > 14);
+    return few ? `${count} wydarzenia pasują do filtrów.` : `${count} wydarzeń pasuje do filtrów.`;
+}
+
+function renderSchools() {
+    if (!schoolsData || !elements.events.schoolsContainer) return;
+    if (schoolsData.length === 0) {
+        elements.events.schoolsContainer.innerHTML =
+            '<p class="schools-empty">Wkrótce dodamy szkoły i regularne zajęcia. Prowadzisz takie? Zgłoś się!</p>';
+        return;
+    }
+    elements.events.schoolsContainer.innerHTML = schoolsData.map(school => `
+        <article class="school-card">
+            <h4>${escapeHTML(school.name)}</h4>
+            <p class="school-meta">${escapeHTML(school.city)} · ${escapeHTML(school.schedule_pl)}</p>
+            <p class="school-styles">${escapeHTML(school.styles.map(slug => (dancesData.find(dance => dance.slug === slug) || {}).names?.pl || slug).join(', '))}</p>
+            <a class="card-link" href="${escapeAttribute(school.url)}" target="_blank" rel="noopener">Zapisy i informacje</a>
+        </article>
     `).join('');
 }
 
