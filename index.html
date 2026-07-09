@@ -70,6 +70,7 @@
             </h1>
             <ul class="nav-menu">
                 <li><a href="#/dances" class="nav-link" data-route="dances">Wszystkie tańce</a></li>
+                <li><a href="#/events" class="nav-link" data-route="events">Społeczność</a></li>
                 <li><a href="#/timeline" class="nav-link" data-route="timeline">Korzenie</a></li>
                 <li><a href="#/compare" class="nav-link" data-route="compare">Porównaj</a></li>
                 <li><a href="#/glossary" class="nav-link" data-route="glossary">Glosariusz</a></li>
@@ -227,6 +228,65 @@
                         <p>Nie ma stylu pasującego do tych filtrów. Wyczyść filtry albo wpisz inną nazwę.</p>
                     </div>
                 </div>
+            </section>
+        </div>
+
+        <!-- Events / Community View -->
+        <div id="events-view" class="view">
+            <section class="events-section" aria-labelledby="events-title">
+                <div class="section-heading">
+                    <p class="section-kicker">Hub wydarzeń</p>
+                    <h2 id="events-title">Społeczność</h2>
+                    <p class="events-intro">Potańcówki, warsztaty i festiwale tańców afro w Polsce — w jednym miejscu, zawsze aktualne.</p>
+                </div>
+
+                <div class="filters" aria-labelledby="event-filters-title">
+                    <h3 id="event-filters-title" class="sr-only">Filtry wydarzeń</h3>
+                    <div class="filters-container events-filters-container">
+                        <div class="filter-group">
+                            <label for="event-city-filter">Miasto</label>
+                            <select id="event-city-filter" aria-label="Filtruj według miasta">
+                                <option value="">Wszystkie</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="event-style-filter">Styl tańca</label>
+                            <select id="event-style-filter" aria-label="Filtruj według stylu tańca">
+                                <option value="">Wszystkie</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="event-type-filter">Typ</label>
+                            <select id="event-type-filter" aria-label="Filtruj według typu wydarzenia">
+                                <option value="">Wszystkie</option>
+                                <option value="social">Potańcówka / social</option>
+                                <option value="warsztaty">Warsztaty</option>
+                                <option value="festiwal">Festiwal</option>
+                            </select>
+                        </div>
+                        <button id="event-clear-filters" class="btn-tertiary" aria-label="Wyczyść filtry wydarzeń">Wyczyść</button>
+                    </div>
+                    <p id="event-filter-status" class="filter-status hidden" role="status"></p>
+                </div>
+
+                <div id="featured-events-container" class="featured-events-grid"></div>
+                <div id="events-list-container" class="events-list"></div>
+                <div id="events-empty" class="no-results hidden" role="status" aria-live="polite">
+                    <p>Nie znamy nadchodzących wydarzeń pasujących do tych filtrów.</p>
+                    <a class="btn-primary submit-event-cta" href="#" target="_blank" rel="noopener">Zgłoś wydarzenie</a>
+                </div>
+                <div class="events-submit">
+                    <p>Organizujesz potańcówkę, warsztaty albo festiwal?</p>
+                    <a id="submit-event-link" class="btn-secondary submit-event-cta" href="#" target="_blank" rel="noopener">Zgłoś wydarzenie</a>
+                </div>
+            </section>
+
+            <section class="schools-section" aria-labelledby="schools-title">
+                <div class="section-heading">
+                    <p class="section-kicker">Regularne zajęcia</p>
+                    <h3 id="schools-title">Gdzie tańczyć regularnie</h3>
+                </div>
+                <div id="schools-container" class="schools-grid"></div>
             </section>
         </div>
 
