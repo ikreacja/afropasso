@@ -18,6 +18,8 @@ const elements = {
         periodFilter: null,
         typeFilter: null,
         clearFilters: null,
+        filterStatus: null,
+        featuredSection: null,
         featuredContainer: null,
         dancesContainer: null,
         noResults: null
@@ -68,6 +70,8 @@ function initializeElements() {
     elements.home.periodFilter = document.getElementById('period-filter');
     elements.home.typeFilter = document.getElementById('type-filter');
     elements.home.clearFilters = document.getElementById('clear-filters');
+    elements.home.filterStatus = document.getElementById('filter-status');
+    elements.home.featuredSection = document.querySelector('.featured-dances');
     elements.home.featuredContainer = document.getElementById('featured-dances-container');
     elements.home.dancesContainer = document.getElementById('dances-container');
     elements.home.noResults = document.getElementById('no-results');
@@ -250,9 +254,15 @@ function renderFeaturedDances() {
     if (!dancesData || !elements.home.featuredContainer) return;
 
     const featuredSlugs = ['kizomba', 'semba', 'tarraxinha', 'tarraxo', 'kizomba-fusion', 'urban-kizz', 'kuduro', 'kompa'];
+    const matchingSlugs = new Set(filteredDances.map(dance => dance.slug));
     const featured = featuredSlugs
         .map(slug => dancesData.find(dance => dance.slug === slug))
-        .filter(Boolean);
+        .filter(Boolean)
+        .filter(dance => matchingSlugs.has(dance.slug));
+
+    if (elements.home.featuredSection) {
+        elements.home.featuredSection.classList.toggle('hidden', featured.length === 0);
+    }
 
     elements.home.featuredContainer.innerHTML = featured.map((dance, index) => `
         <article class="featured-tile ${index === 0 ? 'featured-large' : ''}" style="--tile-position: ${getFeaturedPosition(dance.slug)}; --tile-image: url('${escapeAttribute(getFeaturedImage(dance.slug))}')" onclick="navigateTo('/dance/${escapeAttribute(dance.slug)}')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ') navigateTo('/dance/${escapeAttribute(dance.slug)}')">
@@ -287,6 +297,7 @@ function getFeaturedImage(slug) {
 
 function getDanceImage(slug) {
     const images = {
+        'massemba': 'assets/dances/massemba.png',
         'kizomba': 'assets/hero-dance-workshop.png',
         'semba': 'assets/dances/semba.png',
         'tarraxinha': 'assets/dances/tarraxinha.png',
@@ -301,6 +312,7 @@ function getDanceImage(slug) {
 
 function getFeaturedPosition(slug) {
     const positions = {
+        'massemba': '58% 50%',
         'kizomba': '58% 50%',
         'semba': '48% 50%',
         'tarraxinha': '62% 50%',
@@ -314,21 +326,8 @@ function getFeaturedPosition(slug) {
 }
 
 // Dance cards rendering
-function renderDanceCards() {
-    if (!dancesData) return;
-    
-    const container = elements.home.dancesContainer;
-    const noResults = elements.home.noResults;
-    
-    if (filteredDances.length === 0) {
-        container.innerHTML = '';
-        noResults.classList.remove('hidden');
-        return;
-    }
-    
-    noResults.classList.add('hidden');
-    
-    container.innerHTML = filteredDances.map((dance, index) => `
+function danceCardHTML(dance, index) {
+    return `
         <article class="dance-card" onclick="navigateTo('/dance/${escapeAttribute(dance.slug)}')"
                  role="button" tabindex="0" style="--i: ${index}"
                  onkeydown="if(event.key==='Enter'||event.key===' ') navigateTo('/dance/${escapeAttribute(dance.slug)}')">
@@ -351,7 +350,24 @@ function renderDanceCards() {
                 </footer>
             </div>
         </article>
-    `).join('');
+    `;
+}
+
+function renderDanceCards() {
+    if (!dancesData) return;
+
+    const container = elements.home.dancesContainer;
+    const noResults = elements.home.noResults;
+
+    if (filteredDances.length === 0) {
+        container.innerHTML = '';
+        noResults.classList.remove('hidden');
+        return;
+    }
+
+    noResults.classList.add('hidden');
+
+    container.innerHTML = filteredDances.map((dance, index) => danceCardHTML(dance, index)).join('');
 }
 
 function formatOrigin(dance) {
@@ -387,8 +403,10 @@ function handleFilters() {
         
         return matchesSearch && matchesCountry && matchesPeriod && matchesType;
     });
-    
+
     renderDanceCards();
+    renderFeaturedDances();
+    updateFilterStatus();
 }
 
 function clearFilters() {
@@ -398,6 +416,42 @@ function clearFilters() {
     elements.home.typeFilter.value = '';
     filteredDances = [...dancesData];
     renderDanceCards();
+    renderFeaturedDances();
+    updateFilterStatus();
+}
+
+function hasActiveFilters() {
+    return Boolean(
+        elements.home.searchInput.value.trim() ||
+        elements.home.countryFilter.value ||
+        elements.home.periodFilter.value ||
+        elements.home.typeFilter.value
+    );
+}
+
+function updateFilterStatus() {
+    const status = elements.home.filterStatus;
+    if (!status) return;
+
+    if (!hasActiveFilters()) {
+        status.textContent = '';
+        status.classList.add('hidden');
+        return;
+    }
+
+    status.textContent = formatFilterStatus(filteredDances.length);
+    status.classList.remove('hidden');
+}
+
+function formatFilterStatus(count) {
+    if (count === 0) {
+        return 'Żaden styl nie pasuje do filtrów.';
+    }
+    if (count === 1) {
+        return '1 styl pasuje do filtrów.';
+    }
+    const few = count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 12 || count % 100 > 14);
+    return few ? `${count} style pasują do filtrów.` : `${count} stylów pasuje do filtrów.`;
 }
 
 // Dance detail view
