@@ -21,7 +21,8 @@ const elements = {
         filterStatus: null,
         featuredContainer: null,
         dancesContainer: null,
-        noResults: null
+        noResults: null,
+        previewContainer: null
     },
     dance: {
         detail: null
@@ -74,6 +75,7 @@ function initializeElements() {
     elements.home.featuredContainer = document.getElementById('featured-dances-container');
     elements.home.dancesContainer = document.getElementById('dances-container');
     elements.home.noResults = document.getElementById('no-results');
+    elements.home.previewContainer = document.getElementById('library-preview-container');
     
     // Dance detail
     elements.dance.detail = document.getElementById('dance-detail');
@@ -152,6 +154,7 @@ async function loadData() {
         populateCompareSelectors();
         handleComparison();
         renderFeaturedDances();
+        renderLibraryPreview();
         
         // Initialize glossary
         generateGlossary();
@@ -349,7 +352,13 @@ function danceCardHTML(dance, index) {
     `;
 }
 
-function renderLibraryPreview() {}
+function renderLibraryPreview() {
+    if (!dancesData || !elements.home.previewContainer) return;
+    elements.home.previewContainer.innerHTML = dancesData
+        .slice(0, 6)
+        .map((dance, index) => danceCardHTML(dance, index))
+        .join('');
+}
 
 function renderDanceCards() {
     if (!dancesData) return;

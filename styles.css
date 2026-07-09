@@ -613,6 +613,13 @@ select {
     border-bottom: 1px solid var(--sand-line);
 }
 
+.filter-status {
+    margin: var(--space-3) 0 0;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--muted);
+}
+
 .featured-grid {
     display: grid;
     grid-template-columns: 1.25fr 0.86fr 0.96fr;
@@ -1653,6 +1660,12 @@ select {
 
 .glossary-definition {
     color: var(--muted);
+}
+
+.library-preview-action {
+    margin-top: var(--space-5);
+    display: flex;
+    justify-content: center;
 }
 
 .no-results {
