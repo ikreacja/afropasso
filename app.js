@@ -2,6 +2,9 @@
 let dancesData = null;
 let timelineData = null;
 let filteredDances = [];
+let eventsData = null;
+let schoolsData = null;
+let filteredEvents = [];
 let currentRoute = 'home';
 
 // DOM elements
@@ -45,6 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initializeElements();
     setupEventListeners();
     await loadData();
+    await loadEventsData();
     initializeRouter();
     showLoading(false);
 });
@@ -163,6 +167,24 @@ async function loadData() {
     } catch (error) {
         console.error('Error loading data:', error);
         showError('Błąd podczas ładowania danych. Spróbuj odświeżyć stronę.');
+    }
+}
+
+async function loadEventsData() {
+    try {
+        const [eventsResponse, schoolsResponse] = await Promise.all([
+            fetch('./data/events.json'),
+            fetch('./data/schools.json')
+        ]);
+        if (!eventsResponse.ok || !schoolsResponse.ok) {
+            throw new Error(`HTTP ${eventsResponse.status}/${schoolsResponse.status}`);
+        }
+        eventsData = (await eventsResponse.json()).events;
+        schoolsData = (await schoolsResponse.json()).schools;
+    } catch (error) {
+        console.error('Error loading events:', error);
+        eventsData = null;
+        schoolsData = null;
     }
 }
 
