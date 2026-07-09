@@ -19,7 +19,6 @@ const elements = {
         typeFilter: null,
         clearFilters: null,
         filterStatus: null,
-        featuredSection: null,
         featuredContainer: null,
         dancesContainer: null,
         noResults: null
@@ -71,7 +70,6 @@ function initializeElements() {
     elements.home.typeFilter = document.getElementById('type-filter');
     elements.home.clearFilters = document.getElementById('clear-filters');
     elements.home.filterStatus = document.getElementById('filter-status');
-    elements.home.featuredSection = document.querySelector('.featured-dances');
     elements.home.featuredContainer = document.getElementById('featured-dances-container');
     elements.home.dancesContainer = document.getElementById('dances-container');
     elements.home.noResults = document.getElementById('no-results');
@@ -254,15 +252,9 @@ function renderFeaturedDances() {
     if (!dancesData || !elements.home.featuredContainer) return;
 
     const featuredSlugs = ['kizomba', 'semba', 'tarraxinha', 'tarraxo', 'kizomba-fusion', 'urban-kizz', 'kuduro', 'kompa'];
-    const matchingSlugs = new Set(filteredDances.map(dance => dance.slug));
     const featured = featuredSlugs
         .map(slug => dancesData.find(dance => dance.slug === slug))
-        .filter(Boolean)
-        .filter(dance => matchingSlugs.has(dance.slug));
-
-    if (elements.home.featuredSection) {
-        elements.home.featuredSection.classList.toggle('hidden', featured.length === 0);
-    }
+        .filter(Boolean);
 
     elements.home.featuredContainer.innerHTML = featured.map((dance, index) => `
         <article class="featured-tile ${index === 0 ? 'featured-large' : ''}" style="--tile-position: ${getFeaturedPosition(dance.slug)}; --tile-image: url('${escapeAttribute(getFeaturedImage(dance.slug))}')" onclick="navigateTo('/dance/${escapeAttribute(dance.slug)}')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ') navigateTo('/dance/${escapeAttribute(dance.slug)}')">
@@ -405,7 +397,6 @@ function handleFilters() {
     });
 
     renderDanceCards();
-    renderFeaturedDances();
     updateFilterStatus();
 }
 
@@ -416,7 +407,6 @@ function clearFilters() {
     elements.home.typeFilter.value = '';
     filteredDances = [...dancesData];
     renderDanceCards();
-    renderFeaturedDances();
     updateFilterStatus();
 }
 
