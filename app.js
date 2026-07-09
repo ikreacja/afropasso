@@ -110,8 +110,9 @@ function setupEventListeners() {
     elements.compare.danceA.addEventListener('change', handleComparison);
     elements.compare.danceB.addEventListener('change', handleComparison);
     
-    // Browser back/forward
-    window.addEventListener('popstate', handlePopState);
+    // Fragment navigation (link clicks + browser back/forward) — hashchange fires
+    // in all browsers for both, unlike popstate which is not guaranteed on hash links.
+    window.addEventListener('hashchange', handleHashChange);
 
     if (elements.scrollTopButton) {
         elements.scrollTopButton.addEventListener('click', scrollToTop);
@@ -183,7 +184,7 @@ function navigateTo(path) {
     handleRoute(path);
 }
 
-function handlePopState() {
+function handleHashChange() {
     const hash = window.location.hash.slice(1) || '/';
     handleRoute(hash);
 }
