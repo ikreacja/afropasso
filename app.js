@@ -925,6 +925,7 @@ function generateGlossary() {
 const EVENT_TYPE_LABELS = { social: 'potańcówka', warsztaty: 'warsztaty', festiwal: 'festiwal' };
 const eventMonthFormatter = new Intl.DateTimeFormat('pl-PL', { month: 'long', year: 'numeric' });
 const eventWeekdayFormatter = new Intl.DateTimeFormat('pl-PL', { weekday: 'short' });
+const eventFullDateFormatter = new Intl.DateTimeFormat('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
 
 function parseEventDate(value) {
     const date = new Date(`${value}T00:00:00`);
@@ -1018,6 +1019,17 @@ function renderEventsList() {
     const container = elements.events.listContainer;
     if (filteredEvents.length === 0) {
         container.innerHTML = '';
+        const hasFilters = Boolean(
+            elements.events.cityFilter.value ||
+            elements.events.styleFilter.value ||
+            elements.events.typeFilter.value
+        );
+        const paragraph = elements.events.emptyState.querySelector('p');
+        if (paragraph) {
+            paragraph.textContent = hasFilters
+                ? 'Nie znamy nadchodzących wydarzeń pasujących do tych filtrów.'
+                : 'Nie mamy jeszcze żadnych nadchodzących wydarzeń. Zajrzyj wkrótce albo zgłoś swoje poniżej.';
+        }
         elements.events.emptyState.classList.remove('hidden');
         return;
     }
@@ -1040,11 +1052,19 @@ function renderEventsList() {
 function eventRowHTML(event) {
     const start = parseEventDate(event.date_start);
     const end = event.date_end && event.date_end !== event.date_start ? parseEventDate(event.date_end) : null;
-    const dayLabel = end ? `${start.getDate()}–${end.getDate()}` : String(start.getDate());
+    const crossMonth = end && (end.getMonth() !== start.getMonth() || end.getFullYear() !== start.getFullYear());
+    const dayLabel = end
+        ? (crossMonth
+            ? `${start.getDate()}.${String(start.getMonth() + 1).padStart(2, '0')}–${end.getDate()}.${String(end.getMonth() + 1).padStart(2, '0')}`
+            : `${start.getDate()}–${end.getDate()}`)
+        : String(start.getDate());
     const weekday = end
         ? `${eventWeekdayFormatter.format(start)}–${eventWeekdayFormatter.format(end)}`
         : eventWeekdayFormatter.format(start);
-    const styleNames = event.styles
+    const fullDate = end
+        ? `${eventFullDateFormatter.format(start)} – ${eventFullDateFormatter.format(end)}`
+        : eventFullDateFormatter.format(start);
+    const styleNames = (event.styles || [])
         .map(slug => (dancesData.find(dance => dance.slug === slug) || {}).names?.pl || slug)
         .join(', ');
     const meta = [event.city, EVENT_TYPE_LABELS[event.type] || event.type, styleNames].filter(Boolean).join(' · ');
@@ -1057,6 +1077,7 @@ function eventRowHTML(event) {
                 <span class="event-weekday">${escapeHTML(weekday)}</span>
             </div>
             <div class="event-row-body">
+                <span class="sr-only">${escapeHTML(fullDate)}</span>
                 <h4 class="event-title">${escapeHTML(event.title)}</h4>
                 <p class="event-meta">${escapeHTML(meta)}</p>
                 ${details ? `<p class="event-details">${escapeHTML(details)}</p>` : ''}
@@ -1072,6 +1093,10 @@ function formatEventDateLabel(event) {
     const month = String(start.getMonth() + 1).padStart(2, '0');
     if (event.date_end && event.date_end !== event.date_start) {
         const end = parseEventDate(event.date_end);
+        const endMonth = String(end.getMonth() + 1).padStart(2, '0');
+        if (end.getMonth() !== start.getMonth() || end.getFullYear() !== start.getFullYear()) {
+            return `${day}.${month}–${end.getDate()}.${endMonth}`;
+        }
         return `${day}–${end.getDate()}.${month}`;
     }
     return `${day}.${month}`;
