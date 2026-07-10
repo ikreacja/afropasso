@@ -274,11 +274,11 @@
                 <div id="events-list-container" class="events-list"></div>
                 <div id="events-empty" class="no-results hidden" role="status" aria-live="polite">
                     <p>Nie znamy nadchodzących wydarzeń pasujących do tych filtrów.</p>
-                    <a class="btn-primary submit-event-cta" href="#" target="_blank" rel="noopener">Zgłoś wydarzenie</a>
+                    <button type="button" class="btn-primary submit-event-cta">Zgłoś wydarzenie</button>
                 </div>
                 <div class="events-submit">
                     <p>Organizujesz potańcówkę, warsztaty albo festiwal?</p>
-                    <a id="submit-event-link" class="btn-secondary submit-event-cta" href="#" target="_blank" rel="noopener">Zgłoś wydarzenie</a>
+                    <button type="button" class="btn-secondary submit-event-cta">Zgłoś wydarzenie</button>
                 </div>
             </section>
 
@@ -289,6 +289,54 @@
                 </div>
                 <div id="schools-container" class="schools-grid"></div>
             </section>
+
+            <dialog id="event-submit-dialog" class="submit-dialog" aria-labelledby="submit-dialog-title">
+                <form id="event-submit-form" method="dialog" class="submit-form" novalidate>
+                    <div class="submit-dialog-head">
+                        <h2 id="submit-dialog-title">Zgłoś wydarzenie</h2>
+                        <button type="button" class="submit-dialog-close" data-close aria-label="Zamknij">&times;</button>
+                    </div>
+                    <p class="submit-intro">Dodamy je po weryfikacji. Pola z gwiazdką są wymagane.</p>
+
+                    <label>Nazwa wydarzenia *<input type="text" name="title" maxlength="200" required></label>
+                    <label>Typ *
+                        <select name="type" required>
+                            <option value="">— wybierz —</option>
+                            <option value="social">Potańcówka / social</option>
+                            <option value="warsztaty">Warsztaty</option>
+                            <option value="festiwal">Festiwal</option>
+                        </select>
+                    </label>
+                    <label>Miasto *<input type="text" name="city" maxlength="100" required></label>
+                    <div class="submit-row">
+                        <label>Data od *<input type="date" name="date_start" required></label>
+                        <label>Data do<input type="date" name="date_end"></label>
+                    </div>
+                    <div class="submit-row">
+                        <label>Godzina<input type="text" name="time" placeholder="np. 21:00" maxlength="20"></label>
+                        <label>Cena<input type="text" name="price" placeholder="np. 30 zł" maxlength="40"></label>
+                    </div>
+                    <label>Miejsce<input type="text" name="venue" maxlength="120"></label>
+                    <fieldset class="submit-styles">
+                        <legend>Style tańca *</legend>
+                        <div id="submit-styles-options" class="submit-styles-options"></div>
+                    </fieldset>
+                    <label>Link do wydarzenia *<input type="url" name="url" maxlength="500" placeholder="https://..." required></label>
+                    <label>Organizator<input type="text" name="organizer" maxlength="120"></label>
+                    <label>Twój e-mail (kontakt, nie publikujemy) *<input type="email" name="contactEmail" maxlength="200" required></label>
+                    <label>Dodatkowe informacje<textarea name="notes" rows="3" maxlength="1000"></textarea></label>
+
+                    <input type="text" name="_hp" class="submit-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+                    <p id="submit-error" class="submit-error hidden" role="alert"></p>
+                    <p id="submit-success" class="submit-success hidden" role="status">Dziękujemy! Zgłoszenie czeka na weryfikację.</p>
+
+                    <div class="submit-actions">
+                        <button type="button" class="btn-tertiary" data-close>Anuluj</button>
+                        <button type="submit" class="btn-primary" id="submit-send">Wyślij zgłoszenie</button>
+                    </div>
+                </form>
+            </dialog>
         </div>
 
         <!-- Etykieta / Dance Floor Etiquette View -->
@@ -565,5 +613,6 @@
     </div>
 
     <script src="app.js"></script>
+    <script type="module" src="event-submit.js"></script>
 </body>
 </html>

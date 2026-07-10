@@ -7,8 +7,6 @@ let schoolsData = null;
 let filteredEvents = [];
 let currentRoute = 'home';
 
-const EVENT_SUBMIT_FORM_URL = 'https://forms.gle/REPLACE-WITH-REAL-FORM';
-
 // DOM elements
 const elements = {
     loading: null,
@@ -49,7 +47,6 @@ const elements = {
         featuredContainer: null,
         listContainer: null,
         emptyState: null,
-        submitLinks: null,
         schoolsContainer: null
     },
     glossary: {
@@ -119,7 +116,6 @@ function initializeElements() {
     elements.events.featuredContainer = document.getElementById('featured-events-container');
     elements.events.listContainer = document.getElementById('events-list-container');
     elements.events.emptyState = document.getElementById('events-empty');
-    elements.events.submitLinks = document.querySelectorAll('.submit-event-cta');
     elements.events.schoolsContainer = document.getElementById('schools-container');
     elements.views.events = document.getElementById('events-view');
 }
@@ -147,8 +143,7 @@ function setupEventListeners() {
     elements.events.styleFilter.addEventListener('change', handleEventFilters);
     elements.events.typeFilter.addEventListener('change', handleEventFilters);
     elements.events.clearFilters.addEventListener('click', clearEventFilters);
-    elements.events.submitLinks.forEach(link => { link.href = EVENT_SUBMIT_FORM_URL; });
-    
+
     // Fragment navigation (link clicks + browser back/forward) — hashchange fires
     // in all browsers for both, unlike popstate which is not guaranteed on hash links.
     window.addEventListener('hashchange', handleHashChange);
