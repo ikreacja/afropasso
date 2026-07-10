@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /submissions/{id} {
+      allow create: if isValidSubmission(request.resource.data);
+      allow read, update, delete: if false;
+    }
+    function isValidSubmission(d) {
+      return d.status == 'pending'
+        && d._hp == ''
+        && d.title is string && d.title.size() > 0 && d.title.size() <= 200
+        && d.type in ['social', 'warsztaty', 'festiwal']
+        && d.city is string && d.city.size() > 0 && d.city.size() <= 100
+        && d.date_start is string && d.date_start.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}')
+        && d.url is string && d.url.size() > 0 && d.url.size() <= 500
+        && d.contactEmail is string && d.contactEmail.size() > 0 && d.contactEmail.size() <= 200
+        && d.styles is list && d.styles.size() > 0 && d.styles.size() <= 12
+        && d.submittedAt == request.time;
+    }
+  }
+}

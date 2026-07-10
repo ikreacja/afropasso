@@ -3,3 +3,6 @@
 node_modules/
 npm-debug.log*
 tmp/
+.superpowers/
+tools/node_modules/
+tools/service-account.json

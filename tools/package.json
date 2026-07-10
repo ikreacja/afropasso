@@ -1,0 +1,9 @@
+{
+    "name": "afropasso-tools",
+    "private": true,
+    "version": "1.0.0",
+    "description": "Curator tooling for AfroPasso (not part of the served static site).",
+    "dependencies": {
+        "firebase-admin": "^12.7.0"
+    }
+}
