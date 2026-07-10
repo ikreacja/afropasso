@@ -74,6 +74,7 @@ function initializeElements() {
     // Views
     elements.views.home = document.getElementById('home-view');
     elements.views.dances = document.getElementById('dances-view');
+    elements.views.etykieta = document.getElementById('etykieta-view');
     elements.views.dance = document.getElementById('dance-view');
     elements.views.timeline = document.getElementById('timeline-view');
     elements.views.compare = document.getElementById('compare-view');
@@ -266,6 +267,9 @@ function handleRoute(path) {
             break;
         case 'events':
             renderEventsPage();
+            break;
+        case 'etykieta':
+            // Static editorial content — nothing to render
             break;
         case 'dance':
             if (params[0]) {
