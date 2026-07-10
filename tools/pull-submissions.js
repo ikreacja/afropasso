@@ -31,8 +31,13 @@ function getDb() {
 }
 
 async function getPending(db) {
-    const snap = await db.collection('submissions').where('status', '==', 'pending').orderBy('submittedAt').get();
-    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    // Sort client-side (equality filter + orderBy on another field would need a
+    // composite index; avoiding it keeps setup zero-config).
+    const snap = await db.collection('submissions').where('status', '==', 'pending').get();
+    return snap.docs
+        .map(d => ({ id: d.id, ...d.data() }))
+        .sort((a, b) => (a.submittedAt && a.submittedAt.toMillis ? a.submittedAt.toMillis() : 0)
+                       - (b.submittedAt && b.submittedAt.toMillis ? b.submittedAt.toMillis() : 0));
 }
 
 async function main() {

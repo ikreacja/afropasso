@@ -19,6 +19,11 @@ let firebaseWrite = null; // cached bound writer once SDK is initialised
 
 function q(sel, root = document) { return root.querySelector(sel); }
 
+function esc(value) {
+    return String(value).replace(/[&<>"']/g, c =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
 async function loadStyleOptions() {
     if (stylesLoaded) return;
     const container = q('#submit-styles-options');
@@ -26,7 +31,7 @@ async function loadStyleOptions() {
         const res = await fetch('./data/dances.json');
         const dances = (await res.json()).dances;
         container.innerHTML = dances.map(d =>
-            `<label class="submit-style-option"><input type="checkbox" name="styles" value="${d.slug}"> ${d.names.pl}</label>`
+            `<label class="submit-style-option"><input type="checkbox" name="styles" value="${esc(d.slug)}"> ${esc(d.names.pl)}</label>`
         ).join('');
         stylesLoaded = true;
     } catch (e) {
@@ -109,7 +114,8 @@ async function handleSubmit(event) {
         return;
     }
     errorEl.classList.add('hidden');
-    delete payload._hp;
+    // Keep `_hp: ''` on the payload — the Firestore rule requires the field to be
+    // present and empty (`d._hp == ''`); deleting it would make every write fail.
 
     const sendBtn = q('#submit-send');
     sendBtn.disabled = true;

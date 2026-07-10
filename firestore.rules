@@ -6,8 +6,11 @@ service cloud.firestore {
       allow read, update, delete: if false;
     }
     function isValidSubmission(d) {
-      return d.status == 'pending'
-        && d._hp == ''
+      return d.keys().hasOnly(['status', '_hp', 'title', 'type', 'city', 'date_start',
+              'styles', 'url', 'contactEmail', 'organizer', 'notes',
+              'date_end', 'time', 'venue', 'price', 'submittedAt'])
+        && d.status == 'pending'
+        && d.get('_hp', '') == ''
         && d.title is string && d.title.size() > 0 && d.title.size() <= 200
         && d.type in ['social', 'warsztaty', 'festiwal']
         && d.city is string && d.city.size() > 0 && d.city.size() <= 100
@@ -15,6 +18,12 @@ service cloud.firestore {
         && d.url is string && d.url.size() > 0 && d.url.size() <= 500
         && d.contactEmail is string && d.contactEmail.size() > 0 && d.contactEmail.size() <= 200
         && d.styles is list && d.styles.size() > 0 && d.styles.size() <= 12
+        && (!('organizer' in d) || (d.organizer is string && d.organizer.size() <= 200))
+        && (!('notes' in d) || (d.notes is string && d.notes.size() <= 2000))
+        && (!('date_end' in d) || (d.date_end is string && d.date_end.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}')))
+        && (!('time' in d) || (d.time is string && d.time.size() <= 40))
+        && (!('venue' in d) || (d.venue is string && d.venue.size() <= 200))
+        && (!('price' in d) || (d.price is string && d.price.size() <= 80))
         && d.submittedAt == request.time;
     }
   }
