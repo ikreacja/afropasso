@@ -1,15 +1,14 @@
 // AfroPasso — on-site event submission form. Writes to Firestore `submissions`
 // (intake only). Lazy-loads the Firebase Web SDK from CDN on first real send.
 // Public config below is safe to commit (Firebase web config is not a secret).
-
-const FIREBASE_CONFIG = {
-    // TODO(owner): paste your project's firebaseConfig here after registering a Web App.
-    apiKey: 'REPLACE_ME',
-    authDomain: 'REPLACE_ME.firebaseapp.com',
-    projectId: 'REPLACE_ME',
-    storageBucket: 'REPLACE_ME.appspot.com',
-    messagingSenderId: 'REPLACE_ME',
-    appId: 'REPLACE_ME'
+const firebaseConfig = {
+  apiKey: "AIzaSyBX-M3QCafT1kZYs64ICHgk1-G3Vp_3VZA",
+  authDomain: "afropasso.firebaseapp.com",
+  projectId: "afropasso",
+  storageBucket: "afropasso.firebasestorage.app",
+  messagingSenderId: "729726122022",
+  appId: "1:729726122022:web:c695ec4c290e9e52f64ee7",
+  measurementId: "G-7Q0NTQYCCP"
 };
 const SDK = 'https://www.gstatic.com/firebasejs/10.12.0';
 const EVENT_TYPES = new Set(['social', 'warsztaty', 'festiwal']);
@@ -81,7 +80,7 @@ async function sendToBackend(payload) {
     if (!firebaseWrite) {
         const { initializeApp } = await import(`${SDK}/firebase-app.js`);
         const { getFirestore, collection, addDoc, serverTimestamp } = await import(`${SDK}/firebase-firestore.js`);
-        const db = getFirestore(initializeApp(FIREBASE_CONFIG));
+        const db = getFirestore(initializeApp(firebaseConfig));
         firebaseWrite = (p) => addDoc(collection(db, 'submissions'),
             { ...p, status: 'pending', submittedAt: serverTimestamp() });
     }
