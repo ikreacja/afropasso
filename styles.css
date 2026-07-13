@@ -786,7 +786,7 @@ select {
     transform: translateX(0.28rem);
 }
 
-/* ===== Discovery guide section (static, lighter motion than featured-tiles) ===== */
+/* ===== Discovery guide section (static markup, same JS motion as featured-tiles) ===== */
 
 .guide-grid {
     display: grid;
@@ -877,6 +877,51 @@ select {
 .guide-tile:hover .tile-arrow,
 .guide-tile:focus-visible .tile-arrow {
     transform: translateX(0.28rem);
+}
+
+/* The JS (featured-motion.js) adds .featured-motion-on to the grid when it
+   takes over - same class name as the featured-tiles grid, scoped separately
+   here since it's added to a different element (.guide-grid, not .featured-grid). */
+.guide-grid.featured-motion-on {
+    perspective: 900px;
+}
+
+.guide-grid.featured-motion-on .guide-tile {
+    transform-style: preserve-3d;
+    transition: filter 180ms var(--ease-micro);
+}
+
+/* Warm light sheen that follows the cursor (positioned via --mx/--my). */
+.guide-tile::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), oklch(97% 0.021 79 / 0.16), transparent 65%);
+    transition: opacity 260ms var(--ease-micro);
+}
+
+.guide-grid.featured-motion-on .guide-tile:hover::after {
+    opacity: 1;
+}
+
+/* Text must stay above the sheen layer. */
+.guide-grid.featured-motion-on .guide-tile-content {
+    z-index: 2;
+}
+
+/* The CSS-only lift stays ONLY when the motion layer is not active (no JS / no GSAP). */
+.guide-grid.featured-motion-on .guide-tile:hover,
+.guide-grid.featured-motion-on .guide-tile:focus-visible {
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .guide-tile::after {
+        content: none;
+    }
 }
 
 /* ===== Featured tiles motion support (featured-motion.js) ===== */
