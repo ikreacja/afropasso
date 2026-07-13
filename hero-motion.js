@@ -437,11 +437,10 @@
                 }
             },
             {
-                root: document.querySelector('#home-view .dances-grid'),
+                root: document.querySelector('#home-view .guide-panel'),
                 targets: function (el) {
-                    return [el.querySelector('.library-heading')]
-                        .concat(Array.prototype.slice.call(el.querySelectorAll('#library-preview-container > *')))
-                        .concat([el.querySelector('.library-preview-action')]);
+                    return [el.querySelector('.section-heading')]
+                        .concat(Array.prototype.slice.call(el.querySelectorAll('.guide-grid > *')));
                 }
             }
         ];
