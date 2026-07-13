@@ -61,7 +61,7 @@ No existing photo assets fit these five (abstract) concepts, and this session ha
 4. **Porównaj** — *"Two dance couples in the same warm-lit wooden-floor studio, performing visibly different dance holds side by side — one pair in a close, intimate embrace, the other in a more open, dynamic stance — natural photographic contrast between the two styles, documentary photography, warm earthy color grading, 16:9, no text."*
 5. **Glosariusz** — *"Candid documentary photograph of a dance instructor demonstrating a small footwork detail to attentive students gathered in a circle, focus on hands and feet mid-explanation, warm-lit wooden studio, warm earthy color grading, 16:9, no text."*
 
-Until real images exist, tiles fall back to the existing `assets/hero-dance-workshop.png` (same fallback the featured-tile media layer already uses), so the section ships complete and never shows a broken image.
+Until real images exist, each tile's `background-image` 404s silently and the tile shows its solid dark fallback color (`oklch(14% 0.04 48)`, the same tone `.featured-tile` itself falls back to) with the heading/teaser text still fully readable — CSS has no way to substitute a different image on a 404 the way an `<img onerror>` handler could, so this dark-tile state (not the `assets/hero-dance-workshop.png` hero photo) is what actually ships until the five files exist. Either way the section ships complete and never shows a broken-image icon.
 
 ## 8. Technical changes
 
