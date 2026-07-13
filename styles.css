@@ -656,7 +656,7 @@ select {
 
 .featured-grid {
     display: grid;
-    grid-template-columns: 1.25fr 0.86fr 0.96fr;
+    grid-template-columns: 1.25fr 0.9fr 0.9fr;
     grid-auto-rows: 250px;
     gap: var(--space-3);
     padding-top: var(--space-5);
@@ -737,7 +737,7 @@ select {
     line-height: 1.56;
 }
 
-.featured-tile:not(.featured-large) span {
+.featured-tile:not(.featured-large) .featured-tile-content > span {
     margin-top: var(--space-4);
 }
 
@@ -767,33 +767,22 @@ select {
     line-height: 1.58;
 }
 
-.featured-tile span {
+.featured-tile-content > span {
     display: inline-flex;
-    align-items: center;
-    gap: 0.46rem;
+    align-items: baseline;
+    gap: 0.4rem;
     margin-top: var(--space-5);
     color: oklch(82% 0.14 76);
     font-weight: 760;
 }
 
-.featured-tile span::after {
-    content: "→";
-    width: 1.35rem;
-    height: 1.35rem;
-    display: inline-grid;
-    place-items: center;
-    border: 1px solid currentColor;
-    border-radius: 50%;
-    font-size: 0.78rem;
-    line-height: 1;
-    transition: transform 180ms var(--ease-micro), background-color 180ms var(--ease-micro), color 180ms var(--ease-micro);
+.tile-arrow {
+    transition: transform 180ms var(--ease-micro);
 }
 
-.featured-tile:hover span::after,
-.featured-tile:focus span::after {
-    background: currentColor;
-    color: var(--ink);
-    transform: translateX(0.16rem);
+.featured-tile:hover .tile-arrow,
+.featured-tile:focus .tile-arrow {
+    transform: translateX(0.28rem);
 }
 
 /* ===== Featured tiles motion support (featured-motion.js) ===== */
@@ -2915,4 +2904,254 @@ select {
 
 @media (max-width: 760px) {
     .submit-row { grid-template-columns: 1fr; }
+}
+
+/* -------------------------------------------------------------------- */
+/* Passo companion (bottom-left mascot)                                 */
+/* -------------------------------------------------------------------- */
+
+.passo-companion {
+    position: fixed;
+    left: clamp(1rem, 2vw, 1.5rem);
+    bottom: clamp(1rem, 2vw, 1.5rem);
+    z-index: 60; /* above nav (50), below native <dialog> top layer */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    /* entrance state (until .is-in) */
+    opacity: 0;
+    transform: translateY(0.8rem) scale(0.96);
+    transition: opacity 420ms var(--ease-out), transform 420ms var(--ease-out);
+}
+
+.passo-companion.is-in {
+    opacity: 1;
+    transform: none;
+}
+
+.passo-avatar {
+    align-self: flex-start;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    line-height: 0;
+    cursor: pointer;
+    border-radius: 50%;
+    filter: drop-shadow(0 0.4rem 0.8rem oklch(30% 0.05 55 / 0.28));
+    transition: transform 200ms var(--ease-micro);
+    animation: passo-bob 3.4s ease-in-out infinite;
+}
+
+.passo-avatar img {
+    display: block;
+    width: clamp(64px, 9vw, 80px);
+    height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
+    transition: width 280ms var(--ease-out);
+}
+
+.passo-avatar:hover,
+.passo-avatar:focus-visible {
+    transform: translateY(-0.2rem) scale(1.04);
+    outline: none;
+}
+
+.passo-avatar:focus-visible {
+    outline: 3px solid var(--clay);
+    outline-offset: 3px;
+}
+
+@keyframes passo-bob {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    30%      { transform: translateY(-0.66rem) rotate(-3deg); }
+    60%      { transform: translateY(-0.28rem) rotate(2deg); }
+}
+
+/* "Click me" hint — a call-to-action pill beside Passo, shown only while the
+   bubble is closed. Decorative for screen readers (the avatar button carries
+   the real label); a mouse click on it opens the bubble via JS. */
+.passo-hint {
+    position: absolute;
+    left: calc(clamp(64px, 9vw, 80px) + 0.85rem);
+    bottom: 1.5rem;
+    white-space: nowrap;
+    padding: 0.4rem 0.72rem;
+    background: var(--clay);
+    color: var(--paper);
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-paper);
+    cursor: pointer;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(-0.4rem);
+    transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out);
+}
+
+.passo-hint::before {
+    content: "";
+    position: absolute;
+    left: -0.32rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 0.34rem solid transparent;
+    border-bottom: 0.34rem solid transparent;
+    border-right: 0.34rem solid var(--clay);
+}
+
+.passo-companion.is-in[data-open="false"] .passo-hint {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+    transition-delay: 550ms;
+}
+
+.passo-bubble {
+    position: relative;
+    max-width: min(20rem, calc(100vw - 2rem));
+    padding: var(--space-4) var(--space-4) var(--space-3);
+    background: var(--surface);
+    border: 1px solid var(--sand-line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    color: var(--ink);
+    /* closed state */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(0.4rem) scale(0.98);
+    transform-origin: bottom left;
+    transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out), visibility 220ms;
+}
+
+.passo-companion[data-open="true"] .passo-bubble {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+}
+
+/* little tail pointing down toward the avatar */
+.passo-bubble::after {
+    content: "";
+    position: absolute;
+    left: 1.75rem;
+    bottom: -0.5rem;
+    width: 1rem;
+    height: 1rem;
+    background: var(--surface);
+    border-right: 1px solid var(--sand-line);
+    border-bottom: 1px solid var(--sand-line);
+    transform: rotate(45deg);
+}
+
+.passo-bubble-text {
+    margin: 0 0 var(--space-3);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--ink);
+    padding-right: var(--space-4); /* room for the close button */
+}
+
+.passo-bubble-close {
+    position: absolute;
+    top: 0.35rem;
+    right: 0.5rem;
+    padding: 0.15rem 0.4rem;
+    border: none;
+    background: none;
+    font-size: 1.2rem;
+    line-height: 1;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: color 160ms var(--ease-micro);
+}
+
+.passo-bubble-close:hover,
+.passo-bubble-close:focus-visible {
+    color: var(--ink);
+    outline: none;
+}
+
+.passo-bubble-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.passo-bubble-links a {
+    padding: 0.32rem 0.7rem;
+    background: var(--paper-soft);
+    border: 1px solid var(--sand-line);
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    transition: background-color 160ms var(--ease-micro), color 160ms var(--ease-micro);
+}
+
+.passo-bubble-links a:hover,
+.passo-bubble-links a:focus-visible {
+    background: var(--clay);
+    color: var(--paper);
+    outline: none;
+}
+
+.passo-hide {
+    margin-top: var(--space-3);
+    padding: 0;
+    border: none;
+    background: none;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+    transition: color 160ms var(--ease-micro);
+}
+
+.passo-hide:hover,
+.passo-hide:focus-visible {
+    color: var(--clay);
+    outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .passo-companion,
+    .passo-bubble,
+    .passo-hint,
+    .passo-avatar img { transition: none; }
+    .passo-avatar,
+    .passo-companion[data-open="true"] .passo-avatar img { animation: none; }
+    .passo-avatar:hover,
+    .passo-avatar:focus-visible { transform: none; }
+}
+
+/* On roomy desktop screens, opening the bubble also enlarges Passo so the
+   artwork can be appreciated at a larger scale. Small/touch screens keep the
+   compact avatar (no room to grow without covering content). */
+@media (min-width: 1200px) and (pointer: fine) {
+    .passo-companion[data-open="true"] .passo-avatar {
+        animation: none; /* settle the bob while presented larger */
+    }
+    .passo-companion[data-open="true"] .passo-avatar img {
+        width: 140px;
+        transform-origin: bottom center;
+        /* springy pop + rhythmic tilt as it grows — it's a drum, let it bounce */
+        animation: passo-grow 640ms var(--ease-out) both;
+    }
+}
+
+@keyframes passo-grow {
+    0%   { transform: scale(0.8) rotate(-5deg); }
+    50%  { transform: scale(1.08) rotate(4deg); }
+    72%  { transform: scale(0.96) rotate(-2deg); }
+    88%  { transform: scale(1.02) rotate(1deg); }
+    100% { transform: scale(1) rotate(0); }
 }

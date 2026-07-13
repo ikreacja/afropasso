@@ -148,13 +148,15 @@
         });
     }
     function initDrift(tiles) {
-        /* Columns drift at slightly different speeds while the section scrolls
-           by - depth without spectacle. Large tile (col 1) rises gently,
-           middle column stays, right column sinks. */
-        var drifts = [-3, 0, 3, -1.5, 0, 3, -1.5, 0];
+        /* Each column drifts as one rigid unit at a slightly different speed -
+           depth without spectacle. Col 1 rises gently, middle holds, col 3 sinks.
+           Fixed pixels (not yPercent) so tiles of different heights in the same
+           column shift by the same amount and their vertical gap stays even. */
+        var columnDrift = [-6, 0, 6];               /* px, per grid column */
+        var tileColumn = [0, 1, 2, 1, 2, 0, 1, 2];  /* grid column of each tile, in DOM order */
         tiles.forEach(function (tile, index) {
             var tween = gsap.to(tile, {
-                yPercent: drifts[index % drifts.length],
+                y: columnDrift[tileColumn[index % tileColumn.length]],
                 ease: 'none',
                 scrollTrigger: {
                     trigger: grid,

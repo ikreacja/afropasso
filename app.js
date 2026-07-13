@@ -314,6 +314,8 @@ function showView(viewName) {
     }
 }
 
+const TILE_ARROW_ICON = ' <span class="tile-arrow" aria-hidden="true">&rarr;</span>';
+
 function renderFeaturedDances() {
     if (!dancesData || !elements.home.featuredContainer) return;
 
@@ -330,7 +332,7 @@ function renderFeaturedDances() {
                 <p class="featured-country">${escapeHTML(formatOrigin(dance))}</p>
                 <p class="featured-character">${escapeHTML(formatClassification(dance))}</p>
                 <p class="featured-description">${escapeHTML(getFeaturedDescription(dance))}</p>
-                <span>Przejdź do karty</span>
+                <span>Przejdź do karty${TILE_ARROW_ICON}</span>
             </div>
         </article>
     `).join('');
@@ -1247,7 +1249,7 @@ function renderFeaturedEvents() {
                 <p class="featured-country">${escapeHTML(formatEventDateLabel(event))} · ${escapeHTML(event.city)}</p>
                 <h4>${escapeHTML(event.title)}</h4>
                 <p class="featured-character">${escapeHTML(EVENT_TYPE_LABELS[event.type] || event.type)}</p>
-                <span>Zobacz wydarzenie</span>
+                <span>Zobacz wydarzenie${TILE_ARROW_ICON}</span>
             </div>
         </a>
     `).join('');
