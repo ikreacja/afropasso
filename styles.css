@@ -372,6 +372,37 @@ select {
     pointer-events: none;
 }
 
+/* WebGL "living photo" layer (hero-motion.js). The canvas replaces the CSS
+   background photo; the scrim gradients move to ::before so text stays
+   readable above the animated image. Without JS/WebGL none of this applies. */
+.hero-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.hero--gl {
+    background: var(--paper);
+}
+
+.hero--gl::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg, oklch(97% 0.021 79 / 0.99) 0%, oklch(97% 0.021 79 / 0.94) 31%, oklch(97% 0.021 79 / 0.72) 43%, oklch(97% 0.021 79 / 0.28) 55%, transparent 72%),
+        linear-gradient(180deg, oklch(97% 0.021 79 / 0.3), oklch(97% 0.021 79 / 0.08));
+}
+
+.hero h2 .hw {
+    display: inline-block;
+}
+
 .hero-content {
     position: relative;
     z-index: 3;
@@ -381,7 +412,6 @@ select {
 
 .hero-kicker,
 .section-kicker,
-.timeline-index,
 .dance-card-number {
     color: var(--clay);
     font-size: 0.78rem;
@@ -641,13 +671,20 @@ select {
     border-radius: var(--radius-md);
     overflow: hidden;
     cursor: pointer;
+    background: oklch(14% 0.04 48);
+    color: var(--paper);
+    transition: transform 180ms var(--ease-micro), filter 180ms var(--ease-micro);
+}
+
+.featured-tile-media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
     background:
         linear-gradient(90deg, oklch(14% 0.04 48 / 0.84), oklch(14% 0.04 48 / 0.46), transparent 78%),
         var(--tile-image, url("assets/hero-dance-workshop.png"));
     background-position: var(--tile-position, 50% 50%);
     background-size: cover;
-    color: var(--paper);
-    transition: transform 180ms var(--ease-micro), filter 180ms var(--ease-micro);
 }
 
 .featured-tile:hover,
@@ -757,6 +794,50 @@ select {
     background: currentColor;
     color: var(--ink);
     transform: translateX(0.16rem);
+}
+
+/* ===== Featured tiles motion support (featured-motion.js) ===== */
+/* The JS adds .featured-motion-on to the grid when it takes over. */
+.featured-grid.featured-motion-on {
+    perspective: 900px;
+}
+
+.featured-grid.featured-motion-on .featured-tile {
+    transform-style: preserve-3d;
+    transition: filter 180ms var(--ease-micro);
+}
+
+/* Warm light sheen that follows the cursor (positioned via --mx/--my). */
+.featured-tile::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), oklch(97% 0.021 79 / 0.16), transparent 65%);
+    transition: opacity 260ms var(--ease-micro);
+}
+
+.featured-grid.featured-motion-on .featured-tile:hover::after {
+    opacity: 1;
+}
+
+/* Text must stay above the sheen layer. */
+.featured-grid.featured-motion-on .featured-tile-content {
+    z-index: 2;
+}
+
+/* The old lift stays ONLY when the motion layer is not active (no JS / no GSAP). */
+.featured-grid.featured-motion-on .featured-tile:hover,
+.featured-grid.featured-motion-on .featured-tile:focus {
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .featured-tile::after {
+        content: none;
+    }
 }
 
 .dance-pillars {
@@ -1171,7 +1252,6 @@ select {
 .detail-section,
 .compare-selector,
 .comparison-card,
-.glossary-item,
 .empty-panel,
 .error-panel {
     border: 1px solid var(--sand-line);
@@ -1206,8 +1286,7 @@ select {
 }
 
 .characteristic-item,
-.comparison-detail,
-.timeline-events li {
+.comparison-detail {
     padding: var(--space-4);
     border: 1px solid oklch(78% 0.064 74 / 0.48);
     border-radius: var(--radius-md);
@@ -1327,8 +1406,7 @@ select {
 }
 
 .differences-list,
-.sources-list,
-.timeline-events {
+.sources-list {
     display: grid;
     gap: var(--space-3);
     list-style: none;
@@ -1426,39 +1504,54 @@ select {
     font-size: 1.12rem;
 }
 
-.roots-map {
-    display: grid;
-    grid-template-columns: 0.72fr 1.28fr;
-    gap: var(--space-5);
-    margin-top: var(--space-7);
-    padding: clamp(1.25rem, 4vw, 2.5rem);
-    border: 1px solid var(--sand-line);
-    border-radius: var(--radius-xl);
+/* ===== Lineage map prologue (full-bleed) ===== */
+.lineage-map {
+    width: 100vw;
+    margin: var(--space-7) calc(50% - 50vw) 0;
+    border-block: 1px solid var(--sand-line);
     background:
-        radial-gradient(circle at 72% 25%, oklch(68% 0.132 76 / 0.22), transparent 18rem),
+        radial-gradient(circle at 72% 25%, oklch(68% 0.132 76 / 0.2), transparent 24rem),
+        radial-gradient(circle at 12% 85%, oklch(45% 0.074 139 / 0.1), transparent 20rem),
         var(--surface);
-    box-shadow: var(--shadow-paper);
+}
+
+/* Added by lineage-motion.js: extra scroll room for the scrubbed route drawing. */
+.lineage-map--scrub {
+    height: 220vh;
+}
+
+.lineage-map-sticky {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3rem) var(--page-gutter);
+    display: grid;
+    grid-template-columns: minmax(240px, 0.62fr) 1.38fr;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: center;
+}
+
+.lineage-map--scrub .lineage-map-sticky {
+    position: sticky;
+    top: clamp(3.5rem, 9vh, 6rem);
 }
 
 .map-copy h3 {
     font-size: clamp(2rem, 4vw, 3.4rem);
-    letter-spacing: -0.05em;
+    letter-spacing: -0.04em;
 }
 
 .map-copy p {
     margin-top: var(--space-4);
+    max-width: 34ch;
     color: var(--muted);
 }
 
 .africa-map {
     width: 100%;
     min-height: 320px;
+    max-height: 72vh;
     border-radius: var(--radius-lg);
-    background:
-        linear-gradient(90deg, oklch(78% 0.064 74 / 0.17) 1px, transparent 1px),
-        linear-gradient(180deg, oklch(78% 0.064 74 / 0.17) 1px, transparent 1px),
-        oklch(94% 0.034 79);
-    background-size: 36px 36px;
+    background: oklch(94% 0.034 79);
 }
 
 .map-land {
@@ -1473,9 +1566,9 @@ select {
 
 .route {
     fill: none;
-    stroke-width: 4;
+    stroke-width: 4.5;
     stroke-linecap: round;
-    stroke-dasharray: 9 12;
+    opacity: 0.92;
 }
 
 .route-primary {
@@ -1519,63 +1612,245 @@ select {
 }
 
 .timeline {
-    display: grid;
-    gap: var(--space-4);
-    margin-top: var(--space-7);
+    margin-top: var(--space-6);
 }
 
-.timeline-item {
-    display: grid;
-    grid-template-columns: 32px minmax(0, 1fr);
-    gap: var(--space-4);
+/* ===== Lineage thread: chapters along a center spine ===== */
+.lineage {
+    position: relative;
 }
 
-.timeline-marker {
-    width: 18px;
-    height: 18px;
-    margin-top: var(--space-5);
+/* Static spine (no-JS / reduced-motion). Hidden when the SVG thread draws. */
+.lineage::before {
+    content: "";
+    position: absolute;
+    top: 1rem;
+    bottom: 2rem;
+    left: 50%;
+    width: 3px;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: linear-gradient(180deg, var(--ochre), var(--clay));
+    opacity: 0.5;
+}
+
+.lineage--drawn::before {
+    content: none;
+}
+
+.lineage-thread {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.lineage-thread-path {
+    fill: none;
+    stroke: var(--ochre);
+    stroke-width: 3;
+    stroke-linecap: round;
+}
+
+.lineage-chapters {
+    display: grid;
+    gap: clamp(3rem, 7vw, 5.5rem);
+    padding: var(--space-6) 0 var(--space-8);
+    list-style: none;
+}
+
+.lineage-chapter {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(3.5rem, 7vw, 6rem) minmax(0, 1fr);
+    align-items: start;
+}
+
+.lineage-node {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+    margin-top: 0.5rem;
+    width: 20px;
+    height: 20px;
     border: 4px solid var(--paper);
     border-radius: 50%;
-    background: var(--clay);
+    background: var(--sand);
     box-shadow: 0 0 0 1px var(--sand-line);
+    transition: background-color 320ms var(--ease-micro), transform 320ms var(--ease-micro);
+    z-index: 1;
 }
 
-.timeline-content {
-    padding: var(--space-5);
+.lineage-node.is-active {
+    background: var(--clay);
+    transform: scale(1.2);
+}
+
+.lineage-era {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: end;
+    max-width: 24rem;
+    text-align: right;
+}
+
+.lineage-body {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: start;
+    max-width: 32rem;
+    width: 100%;
+    display: grid;
+    gap: var(--space-4);
+}
+
+.lineage-chapter:nth-child(even) .lineage-era {
+    grid-column: 3;
+    justify-self: start;
+    text-align: left;
+}
+
+.lineage-chapter:nth-child(even) .lineage-body {
+    grid-column: 1;
+    justify-self: end;
+}
+
+.lineage-era-index {
+    color: var(--ochre);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+}
+
+.lineage-era h3 {
+    margin-top: var(--space-2);
+    font-size: clamp(1.6rem, 3.2vw, 2.7rem);
+    letter-spacing: -0.03em;
+}
+
+.lineage-era-years {
+    margin-top: var(--space-2);
+    color: var(--clay);
+    font-weight: 850;
+}
+
+.lineage-event {
+    padding: var(--space-4) var(--space-5);
     border: 1px solid var(--sand-line);
     border-radius: var(--radius-lg);
     background: var(--surface);
     box-shadow: var(--shadow-paper);
 }
 
-.timeline-period {
-    margin-top: var(--space-1);
-    font-size: clamp(1.45rem, 3vw, 2.3rem);
-    letter-spacing: -0.04em;
+.lineage-event h4 {
+    font-size: 1.12rem;
+    line-height: 1.3;
 }
 
-.timeline-years {
-    margin-top: var(--space-1);
-    color: var(--clay);
-    font-weight: 850;
-}
-
-.timeline-events {
-    margin-top: var(--space-4);
-}
-
-.timeline-events li {
-    display: grid;
-    gap: var(--space-2);
-}
-
-.timeline-events strong {
-    color: var(--ink);
-}
-
-.timeline-events span,
-.timeline-events em {
+.lineage-event p {
+    margin-top: var(--space-2);
     color: var(--muted);
+}
+
+.lineage-births {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}
+
+.lineage-birth {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 0.4rem 1.1rem 0.4rem 0.4rem;
+    border: 1px solid var(--sand);
+    border-radius: 999px;
+    background: var(--surface-warm);
+    text-decoration: none;
+    transition: transform 200ms var(--ease-micro), border-color 200ms var(--ease-micro), box-shadow 200ms var(--ease-micro);
+}
+
+.lineage-birth:hover,
+.lineage-birth:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--clay);
+    box-shadow: var(--shadow-paper);
+}
+
+.lineage-birth:focus-visible {
+    outline: 2px solid var(--clay);
+    outline-offset: 2px;
+}
+
+.lineage-birth-img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-position: center 20%;
+    background-size: cover;
+    box-shadow: inset 0 0 0 2px oklch(97% 0.021 79 / 0.65);
+}
+
+.lineage-birth-label {
+    display: grid;
+    line-height: 1.25;
+}
+
+.lineage-birth-label em {
+    color: var(--ochre);
+    font-size: 0.7rem;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.lineage-birth-label strong {
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 1.08rem;
+}
+
+.lineage-rail {
+    position: fixed;
+    top: 50%;
+    right: clamp(0.6rem, 1.6vw, 1.6rem);
+    display: grid;
+    gap: 0.45rem;
+    transform: translateY(-50%);
+    z-index: 4;
+}
+
+.lineage-rail button {
+    width: 1.3rem;
+    height: 1.3rem;
+    display: grid;
+    place-items: center;
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.lineage-rail button span {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--sand);
+    box-shadow: 0 0 0 1px var(--sand-line);
+    transition: transform 200ms var(--ease-micro), background-color 200ms var(--ease-micro);
+}
+
+.lineage-rail button:hover span,
+.lineage-rail button:focus-visible span {
+    background: var(--ochre);
+    transform: scale(1.3);
+}
+
+.lineage-rail button.is-active span {
+    background: var(--clay);
+    transform: scale(1.35);
 }
 
 .compare-selectors {
@@ -1644,26 +1919,243 @@ select {
     grid-column: 1 / -1;
 }
 
+/* ===== Glossary: expandable bento grid ===== */
 .glossary {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--space-4);
     margin-top: var(--space-6);
+    padding: 0;
+    list-style: none;
 }
 
-.glossary-item {
+.glossary-cell--featured {
+    grid-column: span 2;
+}
+
+.glossary-tile {
+    width: 100%;
+    height: 100%;
+    min-height: 8.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    position: relative;
     padding: var(--space-5);
+    border: 1px solid var(--sand-line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-paper);
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: transform 200ms var(--ease-micro), border-color 200ms var(--ease-micro), background-color 200ms var(--ease-micro);
 }
 
-.glossary-term {
-    margin-bottom: var(--space-3);
+.glossary-tile:hover,
+.glossary-tile:focus-visible {
+    transform: translateY(-3px);
+    background: var(--surface-warm);
+    border-color: var(--sand);
+}
+
+.glossary-tile:focus-visible {
+    outline: 2px solid var(--clay);
+    outline-offset: 2px;
+}
+
+.glossary-tile.is-open {
+    opacity: 0.35;
+}
+
+.glossary-tile-cat {
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.glossary-tile--taniec .glossary-tile-cat {
+    background: oklch(49% 0.135 33 / 0.12);
     color: var(--clay);
-    font-size: 1.45rem;
-    letter-spacing: -0.03em;
 }
 
-.glossary-definition {
+.glossary-tile--muzyka .glossary-tile-cat {
+    background: oklch(68% 0.132 76 / 0.2);
+    color: oklch(45% 0.1 66);
+}
+
+.glossary-tile--historia .glossary-tile-cat {
+    background: oklch(45% 0.074 139 / 0.14);
+    color: var(--palm);
+}
+
+.glossary-tile--jezyk .glossary-tile-cat {
+    background: var(--paper-soft);
     color: var(--muted);
+}
+
+.glossary-tile-term {
+    margin-top: auto;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 1.8vw, 1.7rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-wrap: balance;
+}
+
+.glossary-tile-more {
+    position: absolute;
+    right: var(--space-4);
+    bottom: var(--space-4);
+    width: 1.6rem;
+    height: 1.6rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--paper-soft);
+    color: var(--muted);
+    font-size: 1.1rem;
+    line-height: 1;
+    transition: transform 220ms var(--ease-micro), background-color 220ms var(--ease-micro), color 220ms var(--ease-micro);
+}
+
+.glossary-tile:hover .glossary-tile-more,
+.glossary-tile:focus-visible .glossary-tile-more {
+    transform: rotate(90deg);
+    background: var(--clay);
+    color: var(--paper);
+}
+
+.glossary-dialog {
+    max-width: min(34rem, calc(100vw - 2rem));
+    width: 100%;
+    margin: auto; /* the global reset removes the UA centering */
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+}
+
+.glossary-dialog::backdrop {
+    background: oklch(21% 0.026 55 / 0.38);
+}
+
+.glossary-dialog[open]::backdrop {
+    animation: glossary-backdrop-in 260ms var(--ease-micro) both;
+}
+
+.glossary-dialog.is-closing::backdrop {
+    animation: glossary-backdrop-out 260ms var(--ease-micro) both;
+}
+
+@keyframes glossary-backdrop-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes glossary-backdrop-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.glossary-dialog-card {
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    border: 1px solid var(--sand-line);
+    border-radius: var(--radius-xl);
+    background: var(--surface);
+    box-shadow: var(--shadow-soft);
+    transform-origin: top left;
+}
+
+.glossary-dialog-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+}
+
+.glossary-dialog-cat {
+    color: var(--clay);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.glossary-dialog-close {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--sand-line);
+    border-radius: 50%;
+    background: var(--paper-soft);
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 1.3rem;
+    line-height: 1;
+    transition: background-color 160ms var(--ease-micro), color 160ms var(--ease-micro);
+}
+
+.glossary-dialog-close:hover,
+.glossary-dialog-close:focus-visible {
+    background: var(--clay);
+    color: var(--paper);
+}
+
+.glossary-dialog-close:focus-visible {
+    outline: 2px solid var(--clay);
+    outline-offset: 2px;
+}
+
+.glossary-dialog-card h3 {
+    margin-top: var(--space-4);
+    color: var(--clay);
+    font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+    letter-spacing: -0.02em;
+}
+
+.glossary-dialog-card #glossary-dialog-definition {
+    margin-top: var(--space-4);
+    max-width: 62ch;
+    color: var(--ink);
+    font-size: 1.06rem;
+}
+
+.glossary-dialog-links {
+    margin-top: var(--space-5);
+}
+
+@media (max-width: 1120px) {
+    .glossary {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+    .glossary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .glossary-tile {
+        min-height: 7rem;
+        padding: var(--space-4);
+    }
+}
+
+@media (max-width: 520px) {
+    .glossary {
+        grid-template-columns: 1fr;
+    }
+
+    .glossary-cell--featured {
+        grid-column: auto;
+    }
 }
 
 .library-preview-action {
@@ -1992,8 +2484,13 @@ select {
         padding-bottom: var(--space-1);
     }
 
-    .roots-map {
+    .lineage-map-sticky {
         grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+
+    .lineage-rail {
+        display: none;
     }
 
     .hero {
@@ -2063,6 +2560,17 @@ select {
         inset: auto 0 0 0;
     }
 
+    .hero--gl {
+        background: var(--paper);
+    }
+
+    .hero--gl::before {
+        content: "";
+        background:
+            linear-gradient(180deg, oklch(97% 0.021 79 / 0.98) 0%, oklch(97% 0.021 79 / 0.9) 42%, oklch(97% 0.021 79 / 0.42) 70%, transparent 100%),
+            linear-gradient(90deg, oklch(97% 0.021 79 / 0.96) 0%, oklch(97% 0.021 79 / 0.72) 52%, transparent 100%);
+    }
+
     .hero-content {
         margin-left: 0;
     }
@@ -2101,10 +2609,6 @@ select {
         min-height: auto;
     }
 
-    .roots-map {
-        padding: var(--space-4);
-    }
-
     .africa-map {
         min-height: 260px;
     }
@@ -2117,14 +2621,43 @@ select {
         font-size: 11px;
     }
 
-    .timeline-item {
-        grid-template-columns: 22px minmax(0, 1fr);
-        gap: var(--space-3);
+    .lineage-map--scrub {
+        height: 190vh;
     }
 
-    .timeline-content,
+    .lineage::before {
+        left: 1.1rem;
+        transform: none;
+    }
+
+    .lineage-chapter,
+    .lineage-chapter:nth-child(even) {
+        grid-template-columns: 2.25rem minmax(0, 1fr);
+    }
+
+    .lineage-node {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .lineage-era,
+    .lineage-chapter:nth-child(even) .lineage-era {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: start;
+        text-align: left;
+    }
+
+    .lineage-body,
+    .lineage-chapter:nth-child(even) .lineage-body {
+        grid-column: 2;
+        grid-row: 2;
+        justify-self: stretch;
+        max-width: none;
+        margin-top: var(--space-4);
+    }
+
     .comparison-card,
-    .glossary-item,
     .detail-section {
         padding: var(--space-4);
     }

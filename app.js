@@ -324,6 +324,7 @@ function renderFeaturedDances() {
 
     elements.home.featuredContainer.innerHTML = featured.map((dance, index) => `
         <article class="featured-tile ${index === 0 ? 'featured-large' : ''}" style="--tile-position: ${getFeaturedPosition(dance.slug)}; --tile-image: url('${escapeAttribute(getFeaturedImage(dance.slug))}')" onclick="navigateTo('/dance/${escapeAttribute(dance.slug)}')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ') navigateTo('/dance/${escapeAttribute(dance.slug)}')">
+            <span class="featured-tile-media" aria-hidden="true"></span>
             <div class="featured-tile-content">
                 <h4>${escapeHTML(dance.names.pl)}</h4>
                 <p class="featured-country">${escapeHTML(formatOrigin(dance))}</p>
@@ -697,29 +698,86 @@ function getVideoTypeLabel(type) {
     return labels[type] || type;
 }
 
-// Timeline rendering
+// Timeline rendering: the "lineage thread". Chapters alternate around a
+// center spine; the first appearance of each dance grows a "birth" branch
+// tile linking to its card. The page is complete without JS motion —
+// lineage-motion.js only adds the scroll choreography on top.
 function renderTimeline() {
     if (!timelineData) return;
-    
-    elements.timeline.container.innerHTML = timelineData.map((period, index) => `
-        <div class="timeline-item">
-            <div class="timeline-marker"></div>
-            <div class="timeline-content">
-                <p class="timeline-index">${String(index + 1).padStart(2, '0')}</p>
-                <h3 class="timeline-period">${escapeHTML(period.period)}</h3>
-                <p class="timeline-years">${escapeHTML(period.years)}</p>
-                <ul class="timeline-events">
-                    ${period.events.map(event => `
-                        <li>
-                            <strong>${escapeHTML(event.title)}</strong>
-                            <span>${escapeHTML(event.description)}</span>
-                            ${event.dances ? `<em>Tańce: ${event.dances.map(escapeHTML).join(', ')}</em>` : ''}
-                        </li>
-                    `).join('')}
-                </ul>
+
+    const danceById = new Map((dancesData || []).map(dance => [dance.id, dance]));
+    const bornDances = new Set();
+
+    const chaptersHTML = timelineData.map((period, index) => {
+        const births = [];
+        const eventsHTML = period.events.map(event => {
+            (event.dances || []).forEach(ref => {
+                const dance = danceById.get(ref);
+                if (dance && !bornDances.has(dance.id)) {
+                    bornDances.add(dance.id);
+                    births.push(dance);
+                }
+            });
+            return `
+                <article class="lineage-event">
+                    <h4>${escapeHTML(event.title)}</h4>
+                    <p>${escapeHTML(event.description)}</p>
+                </article>
+            `;
+        }).join('');
+
+        const birthsHTML = births.length ? `
+            <div class="lineage-births">
+                ${births.map(dance => `
+                    <a class="lineage-birth" href="#/dance/${escapeAttribute(dance.slug)}">
+                        <span class="lineage-birth-img" style="background-image: url('${escapeAttribute(getFeaturedImage(dance.slug))}')" aria-hidden="true"></span>
+                        <span class="lineage-birth-label">
+                            <em>Nowy styl</em>
+                            <strong>${escapeHTML(dance.names.pl)}</strong>
+                        </span>
+                    </a>
+                `).join('')}
             </div>
+        ` : '';
+
+        return `
+            <li class="lineage-chapter" id="lineage-era-${escapeAttribute(period.id)}" data-era-index="${index}">
+                <span class="lineage-node" aria-hidden="true"></span>
+                <header class="lineage-era">
+                    <p class="lineage-era-index" aria-hidden="true">${String(index + 1).padStart(2, '0')}</p>
+                    <h3>${escapeHTML(period.period)}</h3>
+                    <p class="lineage-era-years">${escapeHTML(period.years)}</p>
+                </header>
+                <div class="lineage-body">
+                    ${eventsHTML}
+                    ${birthsHTML}
+                </div>
+            </li>
+        `;
+    }).join('');
+
+    elements.timeline.container.innerHTML = `
+        <div class="lineage">
+            <ol class="lineage-chapters">
+                ${chaptersHTML}
+            </ol>
         </div>
-    `).join('');
+    `;
+
+    const rail = document.getElementById('lineage-rail');
+    if (rail) {
+        rail.innerHTML = timelineData.map((period, index) => `
+            <button type="button" data-era-target="lineage-era-${escapeAttribute(period.id)}"
+                aria-label="Przejdź do epoki: ${escapeAttribute(period.period)}">
+                <span></span>
+            </button>
+        `).join('');
+        rail.addEventListener('click', event => {
+            const button = event.target.closest('[data-era-target]');
+            const target = button && document.getElementById(button.dataset.eraTarget);
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+    }
 }
 
 // Compare functionality
@@ -844,79 +902,260 @@ function handleComparison() {
     }
 }
 
-// Glossary generation
+// Glossary: expandable bento grid. Tiles show only the term (plus a category
+// chip); clicking morphs the tile into a centered <dialog> with the full
+// definition. Falls back to instant open/close under prefers-reduced-motion.
+
+const GLOSSARY_CATEGORIES = {
+    taniec: 'Taniec',
+    muzyka: 'Muzyka',
+    historia: 'Ludzie i historia',
+    jezyk: 'Język'
+};
+
+const glossaryTerms = [
+    {
+        id: 'kizomba',
+        term: 'Kizomba',
+        category: 'taniec',
+        featured: true,
+        definition: "Romantyczny taniec powstały z fuzji angolskiej semby i antylskiego zouk. Nazwa oznacza 'imprezę' w języku kimbundu.",
+        danceSlug: 'kizomba'
+    },
+    {
+        id: 'semba',
+        term: 'Semba',
+        category: 'taniec',
+        featured: true,
+        definition: 'Energiczny taniec z Angoli, podstawa dla kizomby. Charakteryzuje się szybkim tempem i żywym rytmem.',
+        danceSlug: 'semba'
+    },
+    {
+        id: 'massemba',
+        term: 'Massemba',
+        category: 'taniec',
+        definition: "Tradycyjny angolski taniec, poprzednik semby. Nazwa pochodzi z języka kimbundu i oznacza 'dotyk brzuchów'.",
+        danceSlug: 'massemba'
+    },
+    {
+        id: 'kuduro',
+        term: 'Kuduro',
+        category: 'taniec',
+        definition: 'Energiczny gatunek muzyczno-taneczny z Angoli, mieszanka afrykańskich perkusji z europejską muzyką elektroniczną.',
+        danceSlug: 'kuduro'
+    },
+    {
+        id: 'tarraxinha',
+        term: 'Tarraxinha',
+        category: 'taniec',
+        definition: "Intymny taniec z Angoli, powstały jako spowolniona wersja kuduro. Nazwa oznacza 'małą śrubę' w portugalskim.",
+        danceSlug: 'tarraxinha'
+    },
+    {
+        id: 'tarraxo',
+        term: 'Tarraxo',
+        category: 'taniec',
+        definition: 'Europejska adaptacja tarraxinhy, powstała w Lizbonie. Ostrzejsza i mroczniejsza wersja oryginalnego tańca.',
+        danceSlug: 'tarraxo'
+    },
+    {
+        id: 'urban-kizz',
+        term: 'Urban Kizz',
+        category: 'taniec',
+        definition: 'Nowoczesny styl powstały we Francji, łączący kizombę z elementami hip-hopu, tango i innych stylów tanecznych.',
+        danceSlug: 'urban-kizz'
+    },
+    {
+        id: 'kizomba-fusion',
+        term: 'Kizomba Fusion',
+        category: 'taniec',
+        definition: 'Styl pośredni między tradycyjną kizombą a urban kizz, zachowujący podstawowy charakter kizomby z subtelnymi elementami innych stylów.',
+        danceSlug: 'kizomba-fusion'
+    },
+    {
+        id: 'kompa',
+        term: 'Kompa',
+        category: 'taniec',
+        featured: true,
+        definition: 'Haitański gatunek muzyczny i taniec społeczny znany też jako compas. Ma luźniejsze objęcie i karaibski groove, który wpłynął na rozwój zouk.',
+        danceSlug: 'kompa'
+    },
+    {
+        id: 'zouk',
+        term: 'Zouk',
+        category: 'muzyka',
+        definition: 'Gatunek muzyczny z Antyli Francuskich, który wpłynął na powstanie kizomby w latach 80.'
+    },
+    {
+        id: 'ghetto-zouk',
+        term: 'Ghetto Zouk',
+        category: 'muzyka',
+        definition: 'Styl muzyczny będący mieszanką zouk z elementami R&B i hip-hopu, często używany w urban kizz.'
+    },
+    {
+        id: 'rebita',
+        term: 'Rebita',
+        category: 'taniec',
+        definition: 'Inna nazwa dla massemby, tradycyjnego angolskiego tańca miejskiego.',
+        danceSlug: 'massemba'
+    },
+    {
+        id: 'kimbundu',
+        term: 'Kimbundu',
+        category: 'jezyk',
+        definition: 'Język bantu używany w Angoli, z którego pochodzą nazwy wielu tańców (kizomba, massemba).'
+    },
+    {
+        id: 'ngola-ritmos',
+        term: 'Ngola Ritmos',
+        category: 'historia',
+        definition: 'Legendarny angolski zespół założony w 1947 roku, który odegrał kluczową rolę w rozwoju semby.'
+    },
+    {
+        id: 'eduardo-paim',
+        term: 'Eduardo Paím',
+        category: 'historia',
+        definition: 'Angolski muzyk uznawany za jednego z ojców kizomby, założyciel zespołu SOS.'
+    }
+];
+
 function generateGlossary() {
-    if (!dancesData) return;
-    
-    const glossaryTerms = [
-        {
-            term: "Massemba",
-            definition: "Tradycyjny angolski taniec, poprzednik semby. Nazwa pochodzi z języka kimbundu i oznacza 'dotyk brzuchów'."
-        },
-        {
-            term: "Semba",
-            definition: "Energiczny taniec z Angoli, podstawa dla kizomby. Charakteryzuje się szybkim tempem i żywym rytmem."
-        },
-        {
-            term: "Kizomba",
-            definition: "Romantyczny taniec powstały z fuzji angolskiej semby i antylskiego zouk. Nazwa oznacza 'imprezę' w języku kimbundu."
-        },
-        {
-            term: "Kuduro",
-            definition: "Energiczny gatunek muzyczno-taneczny z Angoli, mieszanka afrykańskich perkusji z europejską muzyką elektroniczną."
-        },
-        {
-            term: "Tarraxinha",
-            definition: "Intymny taniec z Angoli, powstały jako spowolniona wersja kuduro. Nazwa oznacza 'małą śrubę' w portugalskim."
-        },
-        {
-            term: "Tarraxo",
-            definition: "Europejska adaptacja tarraxinhy, powstała w Lizbonie. Ostrzejsza i mroczniejsza wersja oryginalnego tańca."
-        },
-        {
-            term: "Urban Kizz",
-            definition: "Nowoczesny styl powstały we Francji, łączący kizombę z elementami hip-hopu, tango i innych stylów tanecznych."
-        },
-        {
-            term: "Kizomba Fusion",
-            definition: "Styl pośredni między tradycyjną kizombą a urban kizz, zachowujący podstawowy charakter kizomby z subtelnymi elementami innych stylów."
-        },
-        {
-            term: "Kompa",
-            definition: "Haitański gatunek muzyczny i taniec społeczny znany też jako compas. Ma luźniejsze objęcie i karaibski groove, który wpłynął na rozwój zouk."
-        },
-        {
-            term: "Zouk",
-            definition: "Gatunek muzyczny z Antyli Francuskich, który wpłynął na powstanie kizomby w latach 80."
-        },
-        {
-            term: "Ghetto Zouk",
-            definition: "Styl muzyczny będący mieszanką zouk z elementami R&B i hip-hopu, często używany w urban kizz."
-        },
-        {
-            term: "Rebita",
-            definition: "Inna nazwa dla massemby, tradycyjnego angolskiego tańca miejskiego."
-        },
-        {
-            term: "Kimbundu",
-            definition: "Język bantu używany w Angoli, z którego pochodzą nazwy wielu tańców (kizomba, massemba)."
-        },
-        {
-            term: "Ngola Ritmos",
-            definition: "Legendarny angolski zespół założony w 1947 roku, który odegrał kluczową rolę w rozwoju semby."
-        },
-        {
-            term: "Eduardo Paím",
-            definition: "Angolski muzyk uznawany za jednego z ojców kizomby, założyciel zespołu SOS."
-        }
-    ];
-    
-    elements.glossary.container.innerHTML = glossaryTerms.map(item => `
-        <div class="glossary-item">
-            <h3 class="glossary-term">${item.term}</h3>
-            <p class="glossary-definition">${item.definition}</p>
-        </div>
+    const container = elements.glossary.container;
+    if (!container) return;
+
+    container.innerHTML = glossaryTerms.map(item => `
+        <li class="glossary-cell${item.featured ? ' glossary-cell--featured' : ''}">
+            <button type="button"
+                class="glossary-tile glossary-tile--${item.category}"
+                data-glossary-id="${item.id}"
+                aria-haspopup="dialog">
+                <span class="glossary-tile-cat">${GLOSSARY_CATEGORIES[item.category]}</span>
+                <span class="glossary-tile-term">${item.term}</span>
+                <span class="glossary-tile-more" aria-hidden="true">+</span>
+            </button>
+        </li>
     `).join('');
+
+    container.addEventListener('click', event => {
+        const tile = event.target.closest('.glossary-tile');
+        if (tile) openGlossaryEntry(tile);
+    });
+
+    setupGlossaryDialog();
+}
+
+const glossaryDialogState = { tile: null, animating: false };
+
+function glossaryReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function setupGlossaryDialog() {
+    const dialog = document.getElementById('glossary-dialog');
+    if (!dialog) return;
+
+    dialog.addEventListener('cancel', event => {
+        event.preventDefault();
+        closeGlossaryEntry();
+    });
+    dialog.addEventListener('click', event => {
+        if (event.target.closest('a')) {
+            // Navigating to a dance card: close instantly, let the hash change route.
+            dialog.close();
+            if (glossaryDialogState.tile) {
+                glossaryDialogState.tile.classList.remove('is-open');
+                glossaryDialogState.tile = null;
+            }
+            return;
+        }
+        if (event.target === dialog) closeGlossaryEntry();
+    });
+    dialog.querySelector('.glossary-dialog-close').addEventListener('click', () => {
+        closeGlossaryEntry();
+    });
+}
+
+function openGlossaryEntry(tile) {
+    const dialog = document.getElementById('glossary-dialog');
+    const item = glossaryTerms.find(entry => entry.id === tile.dataset.glossaryId);
+    if (!dialog || !item || glossaryDialogState.animating || dialog.open) return;
+
+    dialog.querySelector('#glossary-dialog-cat').textContent = GLOSSARY_CATEGORIES[item.category];
+    dialog.querySelector('#glossary-dialog-term').textContent = item.term;
+    dialog.querySelector('#glossary-dialog-definition').textContent = item.definition;
+    const links = dialog.querySelector('#glossary-dialog-links');
+    if (item.danceSlug) {
+        links.innerHTML = `<a class="video-link" href="#/dance/${item.danceSlug}">Zobacz kartę tańca <span aria-hidden="true">→</span></a>`;
+        links.hidden = false;
+    } else {
+        links.innerHTML = '';
+        links.hidden = true;
+    }
+
+    glossaryDialogState.tile = tile;
+    tile.classList.add('is-open');
+    dialog.showModal();
+
+    if (glossaryReducedMotion() || typeof dialog.animate !== 'function') return;
+
+    // FLIP morph: start from the tile's rect, settle into the dialog's rect.
+    const card = dialog.querySelector('.glossary-dialog-card');
+    const from = tile.getBoundingClientRect();
+    const to = card.getBoundingClientRect();
+    if (!to.width || !to.height) return;
+    glossaryDialogState.animating = true;
+    card.animate([
+        {
+            transform: `translate(${from.left - to.left}px, ${from.top - to.top}px) scale(${from.width / to.width}, ${from.height / to.height})`
+        },
+        { transform: 'none' }
+    ], { duration: 380, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' }).finished.finally(() => {
+        glossaryDialogState.animating = false;
+    });
+    card.querySelectorAll('.glossary-dialog-head, #glossary-dialog-term, #glossary-dialog-definition, .glossary-dialog-links').forEach((el, index) => {
+        el.animate(
+            [{ opacity: 0 }, { opacity: 1 }],
+            { duration: 300, delay: 120 + index * 40, fill: 'backwards', easing: 'ease-out' }
+        );
+    });
+}
+
+function closeGlossaryEntry() {
+    const dialog = document.getElementById('glossary-dialog');
+    if (!dialog || !dialog.open || glossaryDialogState.animating) return;
+    const tile = glossaryDialogState.tile;
+
+    const finish = () => {
+        dialog.close();
+        if (tile) {
+            tile.classList.remove('is-open');
+            tile.focus({ preventScroll: true });
+        }
+        glossaryDialogState.tile = null;
+    };
+
+    if (glossaryReducedMotion() || typeof dialog.animate !== 'function' || !tile) {
+        finish();
+        return;
+    }
+
+    const card = dialog.querySelector('.glossary-dialog-card');
+    const from = card.getBoundingClientRect();
+    const to = tile.getBoundingClientRect();
+    glossaryDialogState.animating = true;
+    const morph = card.animate([
+        { transform: 'none', opacity: 1 },
+        {
+            transform: `translate(${to.left - from.left}px, ${to.top - from.top}px) scale(${to.width / from.width}, ${to.height / from.height})`,
+            opacity: 0.35
+        }
+    ], { duration: 300, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' });
+    dialog.classList.add('is-closing');
+    morph.finished.finally(() => {
+        glossaryDialogState.animating = false;
+        dialog.classList.remove('is-closing');
+        finish();
+    });
 }
 
 // ===== Events hub =====
