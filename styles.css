@@ -816,9 +816,8 @@ select {
 }
 
 .guide-tile:hover,
-.guide-tile:focus {
+.guide-tile:focus-visible {
     filter: saturate(1.08) contrast(1.03);
-    outline: none;
     transform: translateY(-2px);
 }
 
@@ -876,7 +875,7 @@ select {
 }
 
 .guide-tile:hover .tile-arrow,
-.guide-tile:focus .tile-arrow {
+.guide-tile:focus-visible .tile-arrow {
     transform: translateX(0.28rem);
 }
 
