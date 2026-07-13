@@ -299,6 +299,7 @@ select {
 .library-panel,
 .dances-grid,
 .dance-pillars,
+.guide-panel,
 .events-section,
 .schools-section,
 .timeline-section,
@@ -782,6 +783,100 @@ select {
 
 .featured-tile:hover .tile-arrow,
 .featured-tile:focus .tile-arrow {
+    transform: translateX(0.28rem);
+}
+
+/* ===== Discovery guide section (static, lighter motion than featured-tiles) ===== */
+
+.guide-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr 0.9fr;
+    grid-auto-rows: 220px;
+    gap: var(--space-3);
+    padding-top: var(--space-5);
+}
+
+.guide-large {
+    grid-row: span 2;
+}
+
+.guide-tile {
+    position: relative;
+    display: flex;
+    align-items: end;
+    min-height: 100%;
+    padding: clamp(1.2rem, 2.2vw, 1.9rem);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: pointer;
+    background: oklch(14% 0.04 48);
+    color: var(--paper);
+    text-decoration: none;
+    transition: transform 180ms var(--ease-micro), filter 180ms var(--ease-micro);
+}
+
+.guide-tile:hover,
+.guide-tile:focus {
+    filter: saturate(1.08) contrast(1.03);
+    outline: none;
+    transform: translateY(-2px);
+}
+
+.guide-tile-media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+        linear-gradient(90deg, oklch(14% 0.04 48 / 0.84), oklch(14% 0.04 48 / 0.46), transparent 78%),
+        var(--guide-image, url("assets/hero-dance-workshop.png"));
+    background-position: 50% 50%;
+    background-size: cover;
+}
+
+.guide-tile--events .guide-tile-media { --guide-image: url("assets/guide/spolecznosc.png"); }
+.guide-tile--etykieta .guide-tile-media { --guide-image: url("assets/guide/etykieta.png"); }
+.guide-tile--timeline .guide-tile-media { --guide-image: url("assets/guide/korzenie.png"); }
+.guide-tile--compare .guide-tile-media { --guide-image: url("assets/guide/porownaj.png"); }
+.guide-tile--glossary .guide-tile-media { --guide-image: url("assets/guide/glosariusz.png"); }
+
+.guide-tile-content {
+    max-width: 24rem;
+    position: relative;
+    z-index: 1;
+}
+
+.guide-tile-content h4 {
+    margin-top: 0;
+    color: var(--paper);
+    font-size: clamp(1.35rem, 2vw, 1.9rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+}
+
+.guide-large .guide-tile-content h4 {
+    font-size: clamp(1.65rem, 3vw, 2.4rem);
+}
+
+.guide-tile-content p {
+    max-width: 26ch;
+    margin-top: var(--space-3);
+    color: oklch(95% 0.02 79);
+    font-size: 0.94rem;
+    line-height: 1.56;
+}
+
+.guide-tile-content > span {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin-top: var(--space-4);
+    color: oklch(82% 0.14 76);
+    font-weight: 760;
+    font-size: 0.95rem;
+}
+
+.guide-tile:hover .tile-arrow,
+.guide-tile:focus .tile-arrow {
     transform: translateX(0.28rem);
 }
 
@@ -2587,6 +2682,15 @@ select {
     }
 
     .featured-large {
+        grid-row: span 1;
+    }
+
+    .guide-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 220px;
+    }
+
+    .guide-large {
         grid-row: span 1;
     }
 
