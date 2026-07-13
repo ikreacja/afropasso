@@ -24,8 +24,7 @@ const elements = {
         filterStatus: null,
         featuredContainer: null,
         dancesContainer: null,
-        noResults: null,
-        previewContainer: null
+        noResults: null
     },
     dance: {
         detail: null
@@ -91,8 +90,7 @@ function initializeElements() {
     elements.home.featuredContainer = document.getElementById('featured-dances-container');
     elements.home.dancesContainer = document.getElementById('dances-container');
     elements.home.noResults = document.getElementById('no-results');
-    elements.home.previewContainer = document.getElementById('library-preview-container');
-    
+
     // Dance detail
     elements.dance.detail = document.getElementById('dance-detail');
     
@@ -189,8 +187,7 @@ async function loadData() {
         populateCompareSelectors();
         handleComparison();
         renderFeaturedDances();
-        renderLibraryPreview();
-        
+
         // Initialize glossary
         generateGlossary();
         
@@ -255,7 +252,7 @@ function handleRoute(path) {
     // Handle specific routes
     switch (currentRoute) {
         case 'home':
-            renderLibraryPreview();
+            // Featured tiles and the guide panel are static/rendered once in loadData()
             break;
         case 'dances':
             renderDanceCards();
@@ -412,14 +409,6 @@ function danceCardHTML(dance, index) {
             </div>
         </article>
     `;
-}
-
-function renderLibraryPreview() {
-    if (!dancesData || !elements.home.previewContainer) return;
-    elements.home.previewContainer.innerHTML = dancesData
-        .slice(0, 6)
-        .map((dance, index) => danceCardHTML(dance, index))
-        .join('');
 }
 
 function renderDanceCards() {
