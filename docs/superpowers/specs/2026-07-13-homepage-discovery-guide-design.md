@@ -74,7 +74,7 @@ Until real images exist, each tile's `background-image` 404s silently and the ti
   - No changes to `danceCardHTML()` or other shared card logic — `.dances-grid`/`.cards-grid` CSS classes stay, since `#/dances` (the real library page) still uses them.
 - **`styles.css`:**
   - New `.guide-grid` / `.guide-tile` / `.guide-tile-media` / `.guide-large` rules, modeled on `.featured-grid`/`.featured-tile`/`.featured-tile-media` but without the motion-support hooks (`.featured-motion-on`, `.tile-arrow` sheen, etc.) — those stay scoped to featured-tiles only. Reuse the `.tile-arrow` CTA-arrow pattern (plain text arrow, baseline-aligned) already fixed on featured-tiles for the "Przejdź do..." links here too, for visual consistency.
-  - Remove the `.library-preview-action` rule (only used by the deleted section). Keep everything `.dances-grid`/`.cards-grid` related — the `#/dances` library page still depends on it.
+  - Keep the `.library-preview-action` rule — the relocated "Zobacz wszystkie tańce" button reuses this exact class in its new position under the featured-tiles grid. Keep everything `.dances-grid`/`.cards-grid` related too — the `#/dances` library page still depends on it.
 - **`hero-motion.js`:**
   - Add one entry to the `groups` array in `setupReveals()` targeting `#home-view .guide-panel`, following the exact same shape as the existing `.dance-pillars` group (heading + each grid child).
 - **`AGENTS.md`:**
