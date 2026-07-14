@@ -326,6 +326,10 @@ select {
     padding-top: clamp(2.75rem, 6vw, 5rem);
 }
 
+#etykieta-view {
+    padding-top: 0;
+}
+
 @keyframes view-in {
     from {
         opacity: 0;
@@ -2903,20 +2907,31 @@ select {
 }
 
 .etykieta-section .section-heading {
+    position: relative;
+    z-index: 3;
     max-width: none;
     width: 100vw;
+    min-height: clamp(460px, 44vw, 680px);
     margin-top: 0;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
     padding:
         clamp(3rem, 6vw, 5rem)
         max(var(--page-gutter), calc((100vw - var(--page-max)) / 2 + var(--page-gutter)))
-        clamp(2.5rem, 5vw, 4rem);
+        clamp(5rem, 12vw, 9rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     background:
         linear-gradient(90deg, oklch(97% 0.021 79 / 0.97) 0%, oklch(97% 0.021 79 / 0.9) 32%, oklch(97% 0.021 79 / 0.55) 46%, transparent 68%),
-        linear-gradient(180deg, oklch(97% 0.021 79 / 0.18), oklch(97% 0.021 79 / 0.04)),
-        url("assets/patterns/etykieta-linie-kontaktu-background.png") center right / cover no-repeat,
+        url("assets/hero/korzenie-hero-bg.png") right top / cover no-repeat,
         var(--paper);
+}
+
+.etykieta-section .section-heading + .etykieta-tldr {
+    position: relative;
+    z-index: 4;
+    margin-top: clamp(-6rem, -8vw, -4rem);
 }
 
 .etykieta-section .section-heading h2 {
@@ -3045,11 +3060,16 @@ select {
 
 @media (max-width: 980px) {
     .etykieta-section .section-heading {
-        background-position: 62% center;
+        min-height: clamp(420px, 58vw, 560px);
+        background-position: 62% top;
     }
 
     .etykieta-section .section-heading h2 {
         max-width: 20ch;
+    }
+
+    .etykieta-section .section-heading + .etykieta-tldr {
+        margin-top: clamp(-4rem, -6vw, -2.5rem);
     }
 }
 
@@ -3059,18 +3079,24 @@ select {
     }
 
     .etykieta-section .section-heading {
+        min-height: clamp(520px, 130vw, 720px);
         padding:
             clamp(2.5rem, 12vw, 4rem)
-            var(--page-gutter);
+            var(--page-gutter)
+            clamp(4rem, 20vw, 6rem);
         background:
-            linear-gradient(180deg, oklch(97% 0.021 79 / 0.98) 0%, oklch(97% 0.021 79 / 0.92) 44%, oklch(97% 0.021 79 / 0.5) 70%, oklch(97% 0.021 79 / 0.22) 100%),
+            linear-gradient(180deg, oklch(97% 0.021 79 / 0.98) 0%, oklch(97% 0.021 79 / 0.9) 30%, oklch(97% 0.021 79 / 0.55) 52%, oklch(97% 0.021 79 / 0.3) 100%),
             linear-gradient(90deg, oklch(97% 0.021 79 / 0.94) 0%, oklch(97% 0.021 79 / 0.6) 55%, transparent 100%),
-            url("assets/patterns/etykieta-linie-kontaktu-background.png") 68% center / cover no-repeat,
+            url("assets/hero/korzenie-hero-bg.png") 68% top / cover no-repeat,
             var(--paper);
     }
 
     .etykieta-section .section-heading h2 {
         max-width: 18ch;
+    }
+
+    .etykieta-section .section-heading + .etykieta-tldr {
+        margin-top: var(--space-6);
     }
 }
 
