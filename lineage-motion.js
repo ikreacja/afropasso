@@ -38,7 +38,7 @@
 
         section.classList.add('lineage-map--scrub');
 
-        var routes = ['.route-primary', '.route-secondary', '.route-tertiary']
+        var routes = ['.route-primary', '.route-secondary', '.route-tertiary', '.route-quaternary']
             .map(function (sel) { return svg.querySelector(sel); })
             .filter(Boolean);
         routes.forEach(function (route) {
@@ -79,6 +79,9 @@
             tl.to(routes[1], { strokeDashoffset: 0, duration: 1 }, 1.55)
                 .to(point('haiti'), pop, 2.45)
                 .to(label('label-haiti'), rise, 2.55);
+        }
+        if (routes[3]) {
+            tl.to(routes[3], { strokeDashoffset: 0, duration: 1 }, 1.55);
         }
         if (routes[2]) {
             tl.to(routes[2], { strokeDashoffset: 0, duration: 1 }, 2.8)

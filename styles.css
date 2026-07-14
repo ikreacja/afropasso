@@ -1637,10 +1637,11 @@ select {
     width: 100vw;
     margin: var(--space-7) calc(50% - 50vw) 0;
     border-block: 1px solid var(--sand-line);
-    background:
-        radial-gradient(circle at 72% 25%, oklch(68% 0.132 76 / 0.2), transparent 24rem),
-        radial-gradient(circle at 12% 85%, oklch(45% 0.074 139 / 0.1), transparent 20rem),
-        var(--surface);
+    background-color: #fbf5ea;
+    background-image: url("assets/patterns/korzenie-background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 /* Added by lineage-motion.js: extra scroll room for the scrubbed route drawing. */
@@ -1680,16 +1681,26 @@ select {
     max-height: 72vh;
     border-radius: var(--radius-lg);
     background: oklch(94% 0.034 79);
+    overflow: hidden;
 }
 
 .map-land {
     fill: oklch(79% 0.055 78);
     stroke: oklch(47% 0.034 63 / 0.5);
-    stroke-width: 2;
+    stroke-width: 1.1;
+    stroke-linejoin: round;
 }
 
 .map-land.africa {
     fill: oklch(68% 0.132 76 / 0.32);
+}
+
+.map-land.europe {
+    fill: oklch(45% 0.074 139 / 0.26);
+}
+
+.map-land.americas {
+    fill: oklch(49% 0.135 33 / 0.22);
 }
 
 .route {
@@ -1709,6 +1720,10 @@ select {
 
 .route-tertiary {
     stroke: var(--ochre);
+}
+
+.route-quaternary {
+    stroke: var(--clay);
 }
 
 .map-point {
