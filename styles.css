@@ -2965,6 +2965,49 @@ select {
     max-width: 22ch;
 }
 
+#dances-view .library-panel {
+    margin-top: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+}
+
+#dances-view .library-panel .filters {
+    padding-left: clamp(1.25rem, 3vw, 2.25rem);
+    padding-right: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+#dances-view .library-panel .dances-grid {
+    padding: 0 clamp(1.25rem, 3vw, 2.25rem) clamp(1.25rem, 3vw, 2.25rem);
+}
+
+#dances-view .library-panel .section-heading {
+    position: relative;
+    z-index: 3;
+    max-width: none;
+    width: 100vw;
+    min-height: clamp(460px, 44vw, 680px);
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding:
+        clamp(3rem, 6vw, 5rem)
+        max(var(--page-gutter), calc((100vw - var(--page-max)) / 2 + var(--page-gutter)))
+        clamp(5rem, 12vw, 9rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background:
+        linear-gradient(90deg, oklch(97% 0.021 79 / 0.97) 0%, oklch(97% 0.021 79 / 0.9) 32%, oklch(97% 0.021 79 / 0.55) 46%, transparent 68%),
+        url("assets/hero/biblioteka-hero-bg.png") right top / cover no-repeat,
+        var(--paper);
+}
+
+#dances-view .library-panel .section-heading h2 {
+    max-width: 22ch;
+}
+
 .etykieta-intro {
     max-width: 68ch;
     margin-top: var(--space-4);
@@ -3107,6 +3150,15 @@ select {
     .compare-section .section-heading h2 {
         max-width: 20ch;
     }
+
+    #dances-view .library-panel .section-heading {
+        min-height: clamp(420px, 58vw, 560px);
+        background-position: 62% top;
+    }
+
+    #dances-view .library-panel .section-heading h2 {
+        max-width: 20ch;
+    }
 }
 
 @media (max-width: 720px) {
@@ -3149,6 +3201,23 @@ select {
     }
 
     .compare-section .section-heading h2 {
+        max-width: 18ch;
+    }
+
+    #dances-view .library-panel .section-heading {
+        min-height: clamp(520px, 130vw, 720px);
+        padding:
+            clamp(2.5rem, 12vw, 4rem)
+            var(--page-gutter)
+            clamp(4rem, 20vw, 6rem);
+        background:
+            linear-gradient(180deg, oklch(97% 0.021 79 / 0.98) 0%, oklch(97% 0.021 79 / 0.9) 30%, oklch(97% 0.021 79 / 0.55) 52%, oklch(97% 0.021 79 / 0.3) 100%),
+            linear-gradient(90deg, oklch(97% 0.021 79 / 0.94) 0%, oklch(97% 0.021 79 / 0.6) 55%, transparent 100%),
+            url("assets/hero/biblioteka-hero-bg.png") 68% top / cover no-repeat,
+            var(--paper);
+    }
+
+    #dances-view .library-panel .section-heading h2 {
         max-width: 18ch;
     }
 }
