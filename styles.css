@@ -2576,6 +2576,13 @@ select {
     color: oklch(86% 0.075 139);
 }
 
+.footer-coffee {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-3);
+}
+
 .scroll-top-button {
     position: fixed;
     right: clamp(1rem, 2vw, 1.5rem);
