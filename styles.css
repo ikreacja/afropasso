@@ -326,7 +326,8 @@ select {
     padding-top: clamp(2.75rem, 6vw, 5rem);
 }
 
-#etykieta-view {
+#etykieta-view,
+#compare-view {
     padding-top: 0;
 }
 
@@ -2938,6 +2939,32 @@ select {
     max-width: 22ch;
 }
 
+.compare-section .section-heading {
+    position: relative;
+    z-index: 3;
+    max-width: none;
+    width: 100vw;
+    min-height: clamp(460px, 44vw, 680px);
+    margin-top: 0;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding:
+        clamp(3rem, 6vw, 5rem)
+        max(var(--page-gutter), calc((100vw - var(--page-max)) / 2 + var(--page-gutter)))
+        clamp(5rem, 12vw, 9rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background:
+        linear-gradient(90deg, oklch(97% 0.021 79 / 0.97) 0%, oklch(97% 0.021 79 / 0.9) 32%, oklch(97% 0.021 79 / 0.55) 46%, transparent 68%),
+        url("assets/hero/porownaj-hero-bg.png") right top / cover no-repeat,
+        var(--paper);
+}
+
+.compare-section .section-heading h2 {
+    max-width: 22ch;
+}
+
 .etykieta-intro {
     max-width: 68ch;
     margin-top: var(--space-4);
@@ -3071,6 +3098,15 @@ select {
     .etykieta-section .section-heading + .etykieta-tldr {
         margin-top: clamp(-4rem, -6vw, -2.5rem);
     }
+
+    .compare-section .section-heading {
+        min-height: clamp(420px, 58vw, 560px);
+        background-position: 62% top;
+    }
+
+    .compare-section .section-heading h2 {
+        max-width: 20ch;
+    }
 }
 
 @media (max-width: 720px) {
@@ -3097,6 +3133,23 @@ select {
 
     .etykieta-section .section-heading + .etykieta-tldr {
         margin-top: var(--space-6);
+    }
+
+    .compare-section .section-heading {
+        min-height: clamp(520px, 130vw, 720px);
+        padding:
+            clamp(2.5rem, 12vw, 4rem)
+            var(--page-gutter)
+            clamp(4rem, 20vw, 6rem);
+        background:
+            linear-gradient(180deg, oklch(97% 0.021 79 / 0.98) 0%, oklch(97% 0.021 79 / 0.9) 30%, oklch(97% 0.021 79 / 0.55) 52%, oklch(97% 0.021 79 / 0.3) 100%),
+            linear-gradient(90deg, oklch(97% 0.021 79 / 0.94) 0%, oklch(97% 0.021 79 / 0.6) 55%, transparent 100%),
+            url("assets/hero/porownaj-hero-bg.png") 68% top / cover no-repeat,
+            var(--paper);
+    }
+
+    .compare-section .section-heading h2 {
+        max-width: 18ch;
     }
 }
 
