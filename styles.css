@@ -1643,10 +1643,6 @@ select {
     margin: var(--space-7) calc(50% - 50vw) 0;
     border-block: 1px solid var(--sand-line);
     background-color: #fbf5ea;
-    background-image: url("assets/patterns/korzenie-background.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 /* Added by lineage-motion.js: extra scroll room for the scrubbed route drawing. */
@@ -1655,6 +1651,7 @@ select {
 }
 
 .lineage-map-sticky {
+    position: relative;
     max-width: 1280px;
     margin: 0 auto;
     padding: clamp(1.5rem, 4vw, 3rem) var(--page-gutter);
@@ -1662,6 +1659,30 @@ select {
     grid-template-columns: minmax(240px, 0.62fr) 1.38fr;
     gap: clamp(1.5rem, 4vw, 3.5rem);
     align-items: center;
+}
+
+/* Full-bleed background: breaks out of the panel's max-width to span the whole
+   viewport, yet lives inside the (sticky) panel so it stays behind the map for
+   the entire scrubbed scroll instead of scrolling away with the tall wrapper. */
+.lineage-map-sticky::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 100%;
+    z-index: 0;
+    background-image: url("assets/patterns/korzenie-background-v2.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    pointer-events: none;
+}
+
+.lineage-map-sticky > * {
+    position: relative;
+    z-index: 1;
 }
 
 .lineage-map--scrub .lineage-map-sticky {
@@ -1684,6 +1705,7 @@ select {
     width: 100%;
     min-height: 320px;
     max-height: 72vh;
+    border: 1px solid var(--sand-line);
     border-radius: var(--radius-lg);
     background: oklch(94% 0.034 79);
     overflow: hidden;
@@ -2576,11 +2598,201 @@ select {
     color: oklch(86% 0.075 139);
 }
 
-.footer-coffee {
-    grid-column: 1 / -1;
+.coffee-widget {
+    position: fixed;
+    left: 50%;
+    bottom: clamp(1rem, 2vw, 1.5rem);
+    z-index: 65; /* above .passo-companion (60) so it always stays clickable */
+    transform: translateX(-50%);
+}
+
+.coffee-widget-card {
+    position: relative;
+    width: min(310px, calc(100vw - 2rem));
+    padding: 1.1rem 1.3rem 1.3rem;
+    border: 1px solid var(--sand-line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: 0 0.75rem 1.5rem oklch(30% 0.05 55 / 0.2);
+    text-align: center;
+}
+
+.coffee-widget-collapse {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    width: 1.15rem;
+    height: 1.15rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--sand-line);
+    border-radius: 50%;
+    background: var(--surface-warm);
+    color: var(--muted);
+    font-size: 0.75rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 160ms var(--ease-micro), color 160ms var(--ease-micro);
+}
+
+.coffee-widget-collapse:hover,
+.coffee-widget-collapse:focus-visible {
+    background: var(--ink);
+    color: var(--paper);
+    outline: none;
+}
+
+.coffee-widget-heading {
     display: flex;
+    align-items: center;
     justify-content: center;
-    margin-top: var(--space-3);
+    gap: 0.4rem;
+    margin-right: 1.2rem;
+}
+
+.coffee-widget-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.coffee-widget-info {
+    position: relative;
+    flex-shrink: 0;
+    display: inline-grid;
+    place-items: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border: 1px solid var(--sand-line);
+    border-radius: 50%;
+    background: var(--surface-warm);
+    color: var(--muted);
+    font-size: 1.15rem;
+    font-weight: 800;
+    font-style: italic;
+    cursor: help;
+    transition: background-color 160ms var(--ease-micro), color 160ms var(--ease-micro);
+}
+
+.coffee-widget-info:hover,
+.coffee-widget-info:focus-visible {
+    background: var(--ink);
+    color: var(--paper);
+    outline: none;
+}
+
+.coffee-widget-info::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 0.55rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 13rem;
+    max-width: 70vw;
+    padding: 0.65rem 0.8rem;
+    border-radius: var(--radius-md);
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.78rem;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.45;
+    text-align: left;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 160ms var(--ease-micro);
+    z-index: 5;
+}
+
+.coffee-widget-info:hover::after,
+.coffee-widget-info:focus-visible::after {
+    opacity: 1;
+}
+
+.coffee-widget-tiers {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.85rem;
+    justify-content: center;
+}
+
+.coffee-widget-tier {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 0.4rem;
+    border: 1px solid var(--sand-line);
+    border-radius: var(--radius-md);
+    background: var(--surface-warm);
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 750;
+    font-size: 0.92rem;
+    transition: transform 160ms var(--ease-micro), background-color 160ms var(--ease-micro), border-color 160ms var(--ease-micro), color 160ms var(--ease-micro);
+}
+
+.coffee-widget-tier img {
+    width: 28px;
+    height: 28px;
+}
+
+.coffee-widget-tier:hover,
+.coffee-widget-tier:focus-visible {
+    background: var(--clay);
+    border-color: var(--clay);
+    color: var(--paper);
+    text-decoration: none;
+    transform: translateY(-2px);
+    outline: none;
+}
+
+.coffee-widget-expand {
+    margin-left: 0.15rem;
+    font-size: 0.6rem;
+    opacity: 0.72;
+}
+
+.coffee-widget-toggle {
+    display: none;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 44px;
+    margin: 0 auto;
+    padding: 0.8rem 1.25rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    background: var(--palm);
+    color: var(--paper);
+    font-family: inherit;
+    font-weight: 720;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 0.5rem 1rem oklch(30% 0.05 55 / 0.18);
+    animation: coffee-bob 2.8s ease-in-out infinite;
+    transition: background-color 160ms var(--ease-micro);
+}
+
+.coffee-widget-toggle:hover,
+.coffee-widget-toggle:focus-visible {
+    background: var(--palm-dark);
+    animation-play-state: paused;
+    transform: translateY(-2px);
+    outline: none;
+}
+
+@keyframes coffee-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-0.4rem); }
+}
+
+.coffee-widget.is-collapsed .coffee-widget-card {
+    display: none;
+}
+
+.coffee-widget.is-collapsed .coffee-widget-toggle {
+    display: inline-flex;
 }
 
 .scroll-top-button {
