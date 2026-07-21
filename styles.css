@@ -1820,6 +1820,10 @@ select {
     stroke: var(--clay);
 }
 
+.route-brazil {
+    stroke: var(--clay-dark);
+}
+
 .map-point {
     fill: var(--clay);
     stroke: var(--paper);
@@ -1829,6 +1833,10 @@ select {
 .map-point.haiti,
 .map-point.diaspora {
     fill: var(--palm);
+}
+
+.map-point.brazil {
+    fill: var(--clay-dark);
 }
 
 .map-point.portugal,

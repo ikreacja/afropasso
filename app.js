@@ -1201,6 +1201,36 @@ const glossaryTerms = [
         category: 'instrument',
         definition: 'Angolski łuk muzyczny pokrewny berimbau, używany m.in. w tradycyjnej perkusji show „Raiz da alma” Paulo Floresa.'
     },
+    {
+        id: 'marimba',
+        term: 'Marimba',
+        category: 'instrument',
+        definition: 'Tradycyjny ksylofon; obok sanzy jeden z melodycznych instrumentów ludu Mbundu obecnych w sembie.'
+    },
+    {
+        id: 'dilongas',
+        term: 'Dilongas',
+        category: 'instrument',
+        definition: 'Bębny basowe używane w tradycyjnej perkusji semby.'
+    },
+    {
+        id: 'puita',
+        term: 'Puita',
+        category: 'instrument',
+        definition: 'Bęben tarciowy (typu cuíca) dający charakterystyczny „mówiący” dźwięk; element tradycyjnej perkusji semby.'
+    },
+    {
+        id: 'mukindo',
+        term: 'Mukindo',
+        category: 'instrument',
+        definition: 'Tradycyjny angolski instrument perkusyjny, wykorzystywany m.in. w show „Raiz da alma” Paulo Floresa.'
+    },
+    {
+        id: 'pandeiro',
+        term: 'Pandeiro',
+        category: 'instrument',
+        definition: 'Ręczny bębenek obręczowy z brzękadłami (typu tamburyn), perkusjonalium obecne w sembie.'
+    },
 
     // — Ludzie i zespoły —
     {
@@ -1270,6 +1300,12 @@ const glossaryTerms = [
         term: 'Folkloryzacja',
         category: 'kultura',
         definition: 'Kolonialny proces kategoryzowania i kontrolowania muzyki nie-Europejczyków — np. opisywanie semby jako „angolskiego merengue”.'
+    },
+    {
+        id: 'trzy-generacje-kuduro',
+        term: 'Trzy generacje kuduro',
+        category: 'kultura',
+        definition: 'Periodyzacja kuduro: I generacja (lata 90., młodzież klasy średniej, tempo 128–135 BPM, rzadkie wokale), II (faza eksperymentu muzycznego) i III (współczesna różnorodność stylów i międzynarodowy zasięg).'
     }
 ];
 

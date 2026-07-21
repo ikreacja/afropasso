@@ -6,8 +6,10 @@ formy taneczne"* (Google Doc, właściciel irek.kr@gmail.com), zweryfikowane 202
 Ten plik jest **roboczą bazą terminów** do stopniowego uzupełniania glosariusza na stronie
 (`glossaryTerms` w `app.js`).
 
-**Status wdrożenia (2026-07-21):** dodano 26 haseł — glosariusz na stronie liczy teraz 41
-pozycji. Mapowanie kategorii tego pliku na kategorie w kodzie (`GLOSSARY_CATEGORIES`):
+**Status wdrożenia (2026-07-21):** glosariusz na stronie liczy **47 pozycji** (instrumenty:
+dikanza, ngoma, sanza, berimbau, hungú, marimba, dilongas, puita, mukindo, pandeiro; pojęcie
+„trzy generacje kuduro”; wcześniej postacie, miejsca, pojęcia i wątek transatlantycki).
+Mapowanie kategorii tego pliku na kategorie w kodzie (`GLOSSARY_CATEGORIES`):
 
 | Kategoria w pliku | `category` w app.js |
 |---|---|

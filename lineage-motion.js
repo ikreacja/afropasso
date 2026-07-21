@@ -38,7 +38,7 @@
 
         section.classList.add('lineage-map--scrub');
 
-        var routes = ['.route-primary', '.route-secondary', '.route-tertiary', '.route-quaternary']
+        var routes = ['.route-primary', '.route-secondary', '.route-tertiary', '.route-quaternary', '.route-brazil']
             .map(function (sel) { return svg.querySelector(sel); })
             .filter(Boolean);
         routes.forEach(function (route) {
@@ -49,8 +49,8 @@
 
         var point = function (sel) { return svg.querySelector('.map-point.' + sel); };
         var label = function (sel) { return svg.querySelector('.map-label.' + sel); };
-        var allPoints = [point('angola'), point('portugal'), point('france'), point('haiti'), point('diaspora')].filter(Boolean);
-        var allLabels = [label('label-angola'), label('label-europe'), label('label-haiti'), label('label-diaspora')].filter(Boolean);
+        var allPoints = [point('angola'), point('portugal'), point('france'), point('haiti'), point('diaspora'), point('brazil')].filter(Boolean);
+        var allLabels = [label('label-angola'), label('label-europe'), label('label-haiti'), label('label-diaspora'), label('label-brazil')].filter(Boolean);
 
         gsap.set(allPoints, { scale: 0, transformOrigin: '50% 50%' });
         gsap.set(allLabels, { opacity: 0, y: 10 });
@@ -70,6 +70,11 @@
 
         tl.to(point('angola'), pop, 0)
             .to(label('label-angola'), rise, 0.05);
+        if (routes[4]) {
+            tl.to(routes[4], { strokeDashoffset: 0, duration: 1 }, 0.7)
+                .to(point('brazil'), pop, 1.6)
+                .to(label('label-brazil'), rise, 1.7);
+        }
         if (routes[0]) {
             tl.to(routes[0], { strokeDashoffset: 0, duration: 1 }, 0.3)
                 .to([point('portugal'), point('france')], pop, 1.2)
