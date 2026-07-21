@@ -61,3 +61,17 @@ test('candidateToEvent omits summary_pl when absent', () => {
     });
     assert.ok(!('summary_pl' in event));
 });
+
+test('candidateToEvent carries country when present, omits when absent', () => {
+    const withCountry = candidateToEvent({
+        id: 'e5', title: 'T', type: 'festiwal', styles: ['kizomba'], city: 'Katowice',
+        date_start: '2026-08-14', url: 'https://x', sources: ['a', 'b'], link_ok: true,
+        country: 'Polska'
+    });
+    assert.strictEqual(withCountry.country, 'Polska');
+    const without = candidateToEvent({
+        id: 'e6', title: 'T', type: 'festiwal', styles: ['kizomba'], city: 'Katowice',
+        date_start: '2026-08-14', url: 'https://x', sources: ['a'], link_ok: true
+    });
+    assert.ok(!('country' in without));
+});

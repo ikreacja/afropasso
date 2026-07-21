@@ -50,6 +50,7 @@ function candidateToEvent(candidate) {
     if (candidate.price) event.price = candidate.price;
     if (candidate.image) event.image = candidate.image;
     if (candidate.summary_pl) event.summary_pl = candidate.summary_pl;
+    if (candidate.country) event.country = candidate.country;
     if (computeConfidence(candidate) === 'single-source') event.confidence = 'single-source';
     return event;
 }

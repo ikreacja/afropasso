@@ -105,6 +105,7 @@ async function main() {
     const title = await ask('Tytuł', og.title || '');
     const type = await ask(`Typ (${EVENT_TYPES.join(' / ')})`, 'social');
     const city = await ask('Miasto');
+    const country = await ask('Kraj', 'Polska');
     const date_start = await ask('Data rozpoczęcia (RRRR-MM-DD)');
     const date_end = await ask('Data zakończenia (enter = jednodniowe)', '');
     const time = await ask('Godzina (np. 21:00, enter = pomiń)', '');
@@ -118,7 +119,7 @@ async function main() {
     const event = {
         id, title, type,
         styles: stylesRaw.split(',').map(s => s.trim()).filter(Boolean),
-        city, date_start, url, featured, organizer, source
+        city, country, date_start, url, featured, organizer, source
     };
     const venue = await ask('Miejsce (enter = pomiń)', '');
     if (venue) event.venue = venue;

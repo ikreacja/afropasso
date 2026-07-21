@@ -50,7 +50,7 @@ Never downgrade an event just because its source is Facebook.
 
 ## Candidate shape
 
-Append objects to the `candidates` array in `data/candidates.json`. `sources` is an **array of URL strings**; leave `link_ok` as `null` (the human's `--promote` sets it by checking the link live). Styles must be slugs from `data/dances.json`.
+Append objects to the `candidates` array in `data/candidates.json`. `sources` is an **array of URL strings**; leave `link_ok` as `null` (the human's `--promote` sets it by checking the link live). Styles must be slugs from `data/dances.json`. **Always set `country`** (Polish name — `Polska`, `Francja`, `Portugalia`…); people filter events by country.
 
 ```json
 {
@@ -59,6 +59,7 @@ Append objects to the `candidates` array in `data/candidates.json`. `sources` is
   "type": "social",
   "styles": ["kizomba", "semba"],
   "city": "Wrocław",
+  "country": "Polska",
   "date_start": "2026-09-19",
   "url": "https://www.facebook.com/events/1234567890",
   "summary_pl": "Jedno–trzy zdania własnego opisu (krótko, konkretnie, bez marketingu).",
