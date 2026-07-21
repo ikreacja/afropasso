@@ -1,3 +1,22 @@
 {
-    "candidates": []
+    "candidates": [
+        {
+            "id": "bachaturo-festival-katowice-2026-08-14",
+            "title": "Bachaturo Festival 2026",
+            "type": "festiwal",
+            "styles": ["kizomba", "urban-kizz"],
+            "city": "Katowice",
+            "country": "Polska",
+            "venue": "MCK i Arena Spodek",
+            "date_start": "2026-08-14",
+            "date_end": "2026-08-16",
+            "url": "https://bachaturo.com/index.php/en/home-english/",
+            "organizer": "Bachaturo",
+            "summary_pl": "Największy multi-style festiwal taneczny w Polsce, 16. edycja. Wśród pięciu parkietów osobna sala kizomby i urban kiz; warsztaty z międzynarodową kadrą w MCK i Spodku.",
+            "sources": ["https://bachaturo.com/index.php/en/home-english/", "https://latindancecalendar.com/festivals/bachaturo-festival/", "https://wydarzeniataneczne.pl/"],
+            "link_ok": null,
+            "status": "ready",
+            "notes": "Multi-style, ale ma dedykowaną salę kizomby/urban kiz. Data 14-16.08 zgodna na 3 źródłach + oficjalna strona."
+        }
+    ]
 }
