@@ -1680,6 +1680,87 @@ function eventRowHTML(event) {
     `;
 }
 
+function eventMapsUrl(event) {
+    const query = [event.venue, event.city].filter(Boolean).join(', ');
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
+function similarEvents(event) {
+    return getUpcomingEvents()
+        .filter(e => e.id !== event.id &&
+            (e.city === event.city || (e.styles || []).some(s => (event.styles || []).includes(s))))
+        .slice(0, 3);
+}
+
+function showEventDetail(id) {
+    const event = (eventsData || []).find(e => e.id === id);
+    if (!event) {
+        navigateTo('/events');
+        return;
+    }
+
+    const start = parseEventDate(event.date_start);
+    const end = event.date_end && event.date_end !== event.date_start ? parseEventDate(event.date_end) : null;
+    const fullDate = end
+        ? `${eventFullDateFormatter.format(start)} – ${eventFullDateFormatter.format(end)}`
+        : eventFullDateFormatter.format(start);
+    const typeLabel = EVENT_TYPE_LABELS[event.type] || event.type;
+
+    const styleChips = (event.styles || []).map(slug => {
+        const dance = dancesData.find(d => d.slug === slug);
+        const name = dance ? dance.names.pl : slug;
+        return dance
+            ? `<a class="event-style-chip" href="#/dance/${escapeAttribute(slug)}">${escapeHTML(name)}</a>`
+            : `<span class="event-style-chip">${escapeHTML(name)}</span>`;
+    }).join('');
+
+    const facts = [
+        event.time ? `🕘 ${escapeHTML(event.time)}` : '',
+        event.price ? `💶 ${escapeHTML(event.price)}` : ''
+    ].filter(Boolean).join('  ·  ');
+
+    const venueLine = event.venue
+        ? `<p class="event-detail-venue">📍 ${escapeHTML(event.venue)} · <a href="${escapeAttribute(eventMapsUrl(event))}" target="_blank" rel="noopener">otwórz w mapach ↗</a></p>`
+        : `<p class="event-detail-venue">📍 <a href="${escapeAttribute(eventMapsUrl(event))}" target="_blank" rel="noopener">${escapeHTML(event.city)} w mapach ↗</a></p>`;
+
+    const similar = similarEvents(event);
+    const similarHTML = similar.length
+        ? `<section class="detail-section event-similar">
+                <h3>Podobne wydarzenia</h3>
+                <div class="events-list">${similar.map(eventRowHTML).join('')}</div>
+            </section>`
+        : '';
+
+    elements.eventDetail.innerHTML = `
+        <header class="event-detail-header featured-event-tile ${event.image ? 'has-detail-image' : ''}"
+                ${event.image ? `style="--tile-image: url('${escapeAttribute(event.image)}')"` : ''}>
+            <div class="event-detail-head-content">
+                <button class="detail-back-link" onclick="navigateTo('/events')" type="button">Wróć do wydarzeń</button>
+                <p class="event-detail-kicker">${escapeHTML(typeLabel)} · ${escapeHTML(fullDate)} · ${escapeHTML(event.city)}</p>
+                <h2 class="event-detail-title">${escapeHTML(event.title)}</h2>
+            </div>
+        </header>
+        <div class="event-detail-body">
+            <section class="detail-section event-facts">
+                <p class="event-detail-dateline">📅 ${escapeHTML(fullDate)}${facts ? '  ·  ' + facts : ''}</p>
+                ${venueLine}
+                ${styleChips ? `<p class="event-detail-styles">Style: ${styleChips}</p>` : ''}
+                ${event.organizer ? `<p class="event-detail-organizer">Organizator: ${escapeHTML(event.organizer)}</p>` : ''}
+            </section>
+            ${event.summary_pl ? `
+            <section class="detail-section">
+                <h3>O wydarzeniu</h3>
+                <p class="event-detail-summary">${escapeHTML(event.summary_pl)}</p>
+            </section>` : ''}
+            <section class="detail-section event-cta-section">
+                <a class="event-cta" href="${escapeAttribute(event.url)}" target="_blank" rel="noopener">Kup bilet / Zapisz się ↗</a>
+                ${event.confidence === 'single-source' ? `<p class="event-confidence-note">⚠ Termin do potwierdzenia — sprawdź u organizatora.</p>` : ''}
+            </section>
+            ${similarHTML}
+        </div>
+    `;
+}
+
 function formatEventDateLabel(event) {
     const start = parseEventDate(event.date_start);
     const day = String(start.getDate());
