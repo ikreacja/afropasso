@@ -1,0 +1,21 @@
+{
+    "sources": [
+        { "name": "Latin Dance Calendar", "url": "https://latindancecalendar.com/", "type": "aggregator", "access": "agent", "role": "both", "quality": "high", "scope": "kizomba, worldwide", "notes": "Filtruje po stylu i kraju; podaje daty i linki oficjalne." },
+        { "name": "Placetodance", "url": "https://www.placetodance.com/", "type": "aggregator", "access": "agent", "role": "both", "quality": "high", "scope": "kizomba, worldwide", "notes": "Karty festiwali z datą i miejscem." },
+        { "name": "Danceplace", "url": "https://www.danceplace.com/", "type": "aggregator", "access": "agent", "role": "both", "quality": "high", "scope": "worldwide", "notes": "" },
+        { "name": "Kizomba World", "url": "https://kizomba-world.com/", "type": "aggregator", "access": "agent", "role": "both", "quality": "high", "scope": "kizomba/semba", "notes": "Bywa 403 na listach lokalizacji." },
+        { "name": "Where To Dance", "url": "https://where-to-dance-salsa.com/", "type": "aggregator", "access": "agent", "role": "both", "quality": "high", "scope": "worldwide", "notes": "" },
+        { "name": "go&dance", "url": "https://www.goandance.com/", "type": "aggregator", "access": "agent", "role": "both", "quality": "medium", "scope": "worldwide", "notes": "Paginacja." },
+        { "name": "Kizomba Embassy", "url": "https://kizombaembassy.com/", "type": "aggregator", "access": "agent", "role": "both", "quality": "medium", "scope": "kizomba", "notes": "" },
+        { "name": "Kizz Calendar", "url": "https://www.kizzcalendar.com/", "type": "aggregator", "access": "agent", "role": "both", "quality": "medium", "scope": "kizomba", "notes": "" },
+        { "name": "Kizomba Katxupa", "url": "https://kizombakatxupa.com/", "type": "aggregator", "access": "agent", "role": "both", "quality": "high", "scope": "kizomba/semba", "notes": "Często ma FB-only eventy w czytelnym HTML." },
+        { "name": "Wydarzenia Taneczne PL", "url": "https://wydarzeniataneczne.pl/", "type": "pl-calendar", "access": "agent", "role": "both", "quality": "high", "scope": "Polska", "notes": "Polski kalendarz festiwali/warsztatów." },
+        { "name": "Trójmiasto imprezy", "url": "https://www.trojmiasto.pl/imprezy/", "type": "pl-calendar", "access": "agent", "role": "both", "quality": "high", "scope": "Trójmiasto", "notes": "Near-term lokalny sweep; wyszukiwarka po haśle." },
+        { "name": "iwencik", "url": "https://iwencik.pl/", "type": "ticketing", "access": "agent", "role": "verify", "quality": "high", "scope": "Polska", "notes": "Publiczna strona zapisów potwierdza datę/miejsce." },
+        { "name": "Eventbrite", "url": "https://www.eventbrite.com/", "type": "ticketing", "access": "agent", "role": "verify", "quality": "high", "scope": "worldwide", "notes": "" },
+        { "name": "Dizizid", "url": "https://www.dizizid.com/", "type": "ticketing", "access": "agent", "role": "verify", "quality": "medium", "scope": "worldwide", "notes": "Brak publicznej przeglądarki — tylko strony biletowe konkretnych eventów." },
+        { "name": "Facebook", "url": "https://www.facebook.com/", "type": "social", "access": "human", "role": "both", "quality": "high", "scope": "worldwide", "notes": "Oficjalne profile/eventy organizatorów. Agent dosięga pośrednio przez WebSearch i agregatory; reszta przez paste-link." },
+        { "name": "Instagram", "url": "https://www.instagram.com/", "type": "social", "access": "human", "role": "both", "quality": "high", "scope": "worldwide", "notes": "Jak FB." },
+        { "name": "OnlyDance app", "url": "https://onlydanceapp.com/", "type": "social", "access": "human", "role": "discovery", "quality": "high", "scope": "worldwide", "notes": "Tylko apka mobilna, brak publicznego webu — wyłącznie paste-link." }
+    ]
+}
