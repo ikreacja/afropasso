@@ -15,7 +15,8 @@
             "organizer": "VAMOS Festival",
             "source": "research",
             "venue": "Novotel Airport",
-            "date_end": "2026-08-03"
+            "date_end": "2026-08-03",
+            "summary_pl": "Czterodniowy festiwal kizomby i urban kizz w Warszawie. Warsztaty z międzynarodową kadrą, popołudniowe sociale i wieczorne imprezy z DJ-ami. Baza w hotelu Novotel Airport."
         },
         {
             "id": "elsol-festival-fall-warszawa-2026-11-12",
@@ -30,7 +31,8 @@
             "featured": false,
             "organizer": "elSol Festival",
             "source": "research",
-            "date_end": "2026-11-16"
+            "date_end": "2026-11-16",
+            "summary_pl": "Jesienna edycja festiwalu elSol w Warszawie — pięć dni warsztatów i imprez, z kizombą w programie. Szczegółowy line-up podaje organizator."
         },
         {
             "id": "paris-kizomba-congress-2026-11-19",
@@ -47,7 +49,8 @@
             "organizer": "Paris Kizomba Congress",
             "source": "research",
             "venue": "Hilton Paris CDG",
-            "date_end": "2026-11-23"
+            "date_end": "2026-11-23",
+            "summary_pl": "Jeden z największych kongresów kizomby w Europie, pod Paryżem. Ponad 50 godzin warsztatów, pokazy i nocne imprezy w hotelu Hilton przy lotnisku Charles de Gaulle."
         },
         {
             "id": "nantes-kizomba-festival-2026-12-03",
@@ -67,7 +70,8 @@
             "source": "research",
             "venue": "Sure Hotel Nantes Beaujoire",
             "date_end": "2026-12-07",
-            "confidence": "single-source"
+            "confidence": "single-source",
+            "summary_pl": "Pięciodniowy festiwal w Nantes z dwiema salami: urban kiz i tarraxo oraz kizomba, semba i ghettozouk. Około 20 godzin lekcji z międzynarodową kadrą."
         },
         {
             "id": "tukina-lisboa-kizomba-semba-2026-12-11",
@@ -82,7 +86,8 @@
             "url": "https://kizombakatxupa.com/en/congresos/tukina/",
             "featured": false,
             "organizer": "Os Tukina",
-            "source": "research"
+            "source": "research",
+            "summary_pl": "Festiwal poświęcony kizombie i sembie w Lizbonie, blisko angolskich korzeni tańca. Warsztaty techniczne i kulturowe, sociale oraz angolscy DJ-e."
         }
     ]
 }
