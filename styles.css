@@ -2520,6 +2520,103 @@ select {
     background-size: cover;
 }
 
+/* Event cards as links */
+.event-row {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: transform 160ms var(--ease-micro), box-shadow 160ms var(--ease-micro);
+}
+.event-row:hover,
+.event-row:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px oklch(30% 0.03 60 / 0.14);
+    outline: none;
+}
+.event-row:focus-visible {
+    box-shadow: 0 0 0 2px var(--clay);
+}
+.event-row-arrow {
+    margin-left: auto;
+    align-self: center;
+    color: var(--clay);
+    font-size: 1.1rem;
+    transition: transform 160ms var(--ease-micro);
+}
+.event-row:hover .event-row-arrow {
+    transform: translateX(3px);
+}
+
+/* Event detail page */
+.event-detail-header {
+    display: flex;
+    align-items: end;
+    min-height: 220px;
+    padding: clamp(1.35rem, 3vw, 2.5rem);
+    border-radius: var(--radius-md);
+    color: var(--paper);
+    margin-bottom: var(--space-4);
+}
+.event-detail-kicker {
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    opacity: 0.92;
+}
+.event-detail-title {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    margin-top: var(--space-1);
+}
+.event-detail-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+.event-facts p { margin: 0 0 var(--space-2); }
+.event-style-chip {
+    display: inline-block;
+    margin: 0 6px 6px 0;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--sand);
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+a.event-style-chip:hover,
+a.event-style-chip:focus-visible {
+    background: var(--ochre);
+    outline: none;
+}
+.event-cta {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: var(--radius-sm);
+    background: var(--clay);
+    color: var(--paper);
+    text-decoration: none;
+    font-weight: 600;
+}
+.event-cta:hover,
+.event-cta:focus-visible {
+    filter: brightness(1.06);
+    outline: none;
+}
+.event-confidence-note {
+    margin-top: var(--space-2);
+    font-size: 0.88rem;
+    color: var(--muted);
+}
+.event-similar .events-list { margin-top: var(--space-2); }
+
+@media (prefers-reduced-motion: reduce) {
+    .event-row,
+    .event-row-arrow { transition: none; }
+    .event-row:hover,
+    .event-row:focus-visible { transform: none; }
+    .event-row:hover .event-row-arrow { transform: none; }
+}
+
 .month-heading {
     margin: var(--space-5) 0 var(--space-3);
     color: var(--clay);
