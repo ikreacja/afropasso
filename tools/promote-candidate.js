@@ -19,8 +19,12 @@ function computeConfidence(candidate) {
     return 'unverified';
 }
 
+function normalizeTitle(title) {
+    return (title || '').toLowerCase().replace(/[^a-z0-9]+/gi, ' ').trim();
+}
+
 function dedupeKey(event) {
-    return `${event.date_start}|${(event.city || '').toLowerCase()}`;
+    return `${event.date_start}|${(event.city || '').toLowerCase()}|${normalizeTitle(event.title)}`;
 }
 
 function isDuplicate(event, existingEvents) {

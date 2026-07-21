@@ -17,6 +17,12 @@ test('isDuplicate matches by id or by date+city', () => {
     assert.strictEqual(isDuplicate({ id: 'y', date_start: '2026-12-01', city: 'Gdańsk' }, existing), false);
 });
 
+test('isDuplicate allows distinct titles on the same date and city', () => {
+    const existing = [{ id: 'a', title: 'Kizomba Social Night', date_start: '2026-09-12', city: 'Warszawa' }];
+    assert.strictEqual(isDuplicate({ id: 'b', title: 'Semba Potańcówka', date_start: '2026-09-12', city: 'Warszawa' }, existing), false);
+    assert.strictEqual(isDuplicate({ id: 'c', title: 'Kizomba Social Night', date_start: '2026-09-12', city: 'warszawa' }, existing), true);
+});
+
 test('candidateToEvent strips staging fields and marks single-source', () => {
     const event = candidateToEvent({
         id: 'e1', title: 'T', type: 'festiwal', styles: ['kizomba'], city: 'Lizbona',
