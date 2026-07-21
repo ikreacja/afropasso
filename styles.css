@@ -2509,6 +2509,15 @@ select {
 
 .featured-event-tile {
     text-decoration: none;
+    background:
+        linear-gradient(180deg,
+            oklch(14% 0.04 48 / 0.15),
+            oklch(14% 0.04 48 / 0.72) 62%,
+            oklch(14% 0.04 48 / 0.92)),
+        var(--tile-image, none),
+        oklch(14% 0.04 48);
+    background-position: center;
+    background-size: cover;
 }
 
 .month-heading {
