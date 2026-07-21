@@ -61,6 +61,7 @@ Append objects to the `candidates` array in `data/candidates.json`. `sources` is
   "city": "Wrocław",
   "date_start": "2026-09-19",
   "url": "https://www.facebook.com/events/1234567890",
+  "summary_pl": "Jedno–trzy zdania własnego opisu (krótko, konkretnie, bez marketingu).",
   "organizer": "Kizomba Wrocław",
   "sources": ["https://www.facebook.com/events/1234567890", "https://wydarzeniataneczne.pl/..."],
   "link_ok": null,
@@ -69,7 +70,7 @@ Append objects to the `candidates` array in `data/candidates.json`. `sources` is
 }
 ```
 
-Optional fields: `date_end`, `time`, `venue`, `price`, `featured`, `image_src` (cover URL — downloaded + converted to WebP at promotion). `status` ∈ `ready` / `needs_second_source` / `needs_manual` / `rejected`. Recurring weekly classes are NOT events — they belong in `data/schools.json` (currently ships empty; if you must add one, mirror the fields `app.js`'s `renderSchools` reads).
+Optional fields: `date_end`, `time`, `venue`, `price`, `featured`, `image_src` (cover URL — downloaded + converted to WebP at promotion), `summary_pl` (own editorial blurb — 1–3 plain, concrete sentences in the user's voice; never copy the organizer's text). `status` ∈ `ready` / `needs_second_source` / `needs_manual` / `rejected`. Recurring weekly classes are NOT events — they belong in `data/schools.json` (currently ships empty; if you must add one, mirror the fields `app.js`'s `renderSchools` reads).
 
 ## Commands
 
