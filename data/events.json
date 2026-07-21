@@ -1,3 +1,88 @@
 {
-    "events": []
+    "events": [
+        {
+            "id": "vamos-festival-warsaw-2026-07-31",
+            "title": "VAMOS Festival Warsaw",
+            "type": "festiwal",
+            "styles": [
+                "kizomba",
+                "urban-kizz"
+            ],
+            "city": "Warszawa",
+            "date_start": "2026-07-31",
+            "url": "https://iwencik.pl/registrations/VAMOS2025/EN",
+            "featured": false,
+            "organizer": "VAMOS Festival",
+            "source": "research",
+            "venue": "Novotel Airport",
+            "date_end": "2026-08-03"
+        },
+        {
+            "id": "elsol-festival-fall-warszawa-2026-11-12",
+            "title": "elSol Festival Fall Edition",
+            "type": "festiwal",
+            "styles": [
+                "kizomba"
+            ],
+            "city": "Warszawa",
+            "date_start": "2026-11-12",
+            "url": "https://elsolfestival.pl",
+            "featured": false,
+            "organizer": "elSol Festival",
+            "source": "research",
+            "date_end": "2026-11-16"
+        },
+        {
+            "id": "paris-kizomba-congress-2026-11-19",
+            "title": "Paris Kizomba Congress",
+            "type": "festiwal",
+            "styles": [
+                "kizomba",
+                "urban-kizz"
+            ],
+            "city": "Tremblay-en-France",
+            "date_start": "2026-11-19",
+            "url": "https://www.pariskizombacongress.com",
+            "featured": false,
+            "organizer": "Paris Kizomba Congress",
+            "source": "research",
+            "venue": "Hilton Paris CDG",
+            "date_end": "2026-11-23"
+        },
+        {
+            "id": "nantes-kizomba-festival-2026-12-03",
+            "title": "Nantes Kizomba Festival",
+            "type": "festiwal",
+            "styles": [
+                "kizomba",
+                "semba",
+                "tarraxo",
+                "urban-kizz"
+            ],
+            "city": "Nantes",
+            "date_start": "2026-12-03",
+            "url": "https://www.placetodance.com/en/festivals/calendar/nantes-kizomba-festival-2026-b143e",
+            "featured": false,
+            "organizer": "Nantes Kizomba Festival",
+            "source": "research",
+            "venue": "Sure Hotel Nantes Beaujoire",
+            "date_end": "2026-12-07",
+            "confidence": "single-source"
+        },
+        {
+            "id": "tukina-lisboa-kizomba-semba-2026-12-11",
+            "title": "Tukina Lisboa – Kizomba & Semba",
+            "type": "festiwal",
+            "styles": [
+                "kizomba",
+                "semba"
+            ],
+            "city": "Lizbona",
+            "date_start": "2026-12-11",
+            "url": "https://kizombakatxupa.com/en/congresos/tukina/",
+            "featured": false,
+            "organizer": "Os Tukina",
+            "source": "research"
+        }
+    ]
 }
