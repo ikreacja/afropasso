@@ -117,6 +117,8 @@ function initializeElements() {
     elements.events.emptyState = document.getElementById('events-empty');
     elements.events.schoolsContainer = document.getElementById('schools-container');
     elements.views.events = document.getElementById('events-view');
+    elements.views.event = document.getElementById('event-detail-view');
+    elements.eventDetail = document.getElementById('event-detail');
 }
 
 // Setup event listeners
@@ -271,6 +273,13 @@ function handleRoute(path) {
                 navigateTo('/');
             }
             break;
+        case 'event':
+            if (params[0]) {
+                showEventDetail(params[0]);
+            } else {
+                navigateTo('/events');
+            }
+            break;
         case 'timeline':
             renderTimeline();
             break;
@@ -307,7 +316,7 @@ function updateNavigation() {
 
 function showView(viewName) {
     Object.values(elements.views).forEach(view => {
-        view.classList.remove('active');
+        if (view) view.classList.remove('active');
     });
     
     if (elements.views[viewName]) {
