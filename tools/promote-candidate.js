@@ -50,3 +50,104 @@ function candidateToEvent(candidate) {
 }
 
 module.exports = { computeConfidence, dedupeKey, isDuplicate, candidateToEvent };
+
+async function checkLink(url) {
+    try {
+        const res = await fetch(url, {
+            method: 'GET', redirect: 'follow',
+            headers: { 'User-Agent': 'Mozilla/5.0 (compatible; AfroPassoBot/1.0)' }
+        });
+        return res.ok;
+    } catch (error) {
+        return false;
+    }
+}
+
+function listCandidates(candidates) {
+    if (!candidates.length) { console.log('Poczekalnia pusta.'); return; }
+    for (const c of candidates) {
+        const conf = computeConfidence(c);
+        const dates = c.date_end && c.date_end !== c.date_start ? `${c.date_start}–${c.date_end}` : c.date_start;
+        console.log(`[${c.status || 'candidate'} · ${conf}] ${c.id}`);
+        console.log(`    ${c.title} — ${c.city} — ${dates}`);
+        console.log(`    url: ${c.url}  (źródła: ${(c.sources || []).length})`);
+    }
+}
+
+async function main() {
+    const args = process.argv.slice(2);
+    const candidatesFile = path.join(DATA_DIR, 'candidates.json');
+    const eventsFile = path.join(DATA_DIR, 'events.json');
+    const store = JSON.parse(fs.readFileSync(candidatesFile, 'utf8'));
+    const candidates = store.candidates || [];
+    const force = args.includes('--force');
+
+    if (args.length === 0 || args.includes('--list')) {
+        listCandidates(candidates);
+        return;
+    }
+
+    const rejectIdx = args.indexOf('--reject');
+    if (rejectIdx !== -1) {
+        const id = args[rejectIdx + 1];
+        const candidate = candidates.find(x => x.id === id);
+        if (!candidate) { console.error(`Nie znaleziono kandydata: ${id}`); process.exit(1); }
+        candidate.status = 'rejected';
+        fs.writeFileSync(candidatesFile, JSON.stringify(store, null, 4) + '\n');
+        console.log(`Odrzucono ${id}.`);
+        return;
+    }
+
+    const promoteIdx = args.indexOf('--promote');
+    if (promoteIdx === -1) {
+        console.error('Użycie: promote-candidate.js --list | --promote <id> | --reject <id> [--force]');
+        process.exit(1);
+    }
+
+    const id = args[promoteIdx + 1];
+    const candidate = candidates.find(x => x.id === id);
+    if (!candidate) { console.error(`Nie znaleziono kandydata: ${id}`); process.exit(1); }
+
+    candidate.link_ok = await checkLink(candidate.url);
+    const confidence = computeConfidence(candidate);
+    console.log(`Link: ${candidate.link_ok ? 'żywy' : 'MARTWY'} · pewność: ${confidence}`);
+    if (confidence === 'unverified' && !force) {
+        console.error('Kandydat unverified (martwy link lub brak źródeł) — nie publikuję. Użyj --force by wymusić.');
+        process.exit(1);
+    }
+
+    const eventsJson = JSON.parse(fs.readFileSync(eventsFile, 'utf8'));
+    if (isDuplicate(candidate, eventsJson.events) && !force) {
+        console.error('Wygląda na duplikat istniejącego eventu — nie publikuję. Użyj --force.');
+        process.exit(1);
+    }
+
+    if (candidate.image_src && !candidate.image) {
+        try {
+            candidate.image = await downloadAndConvertCover(candidate.image_src, candidate.id, IMAGES_DIR);
+            console.log(`Grafika: ${candidate.image}`);
+        } catch (error) {
+            console.warn(`Grafika pominięta: ${error.message}`);
+        }
+    }
+
+    const event = candidateToEvent(candidate);
+    const dances = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'dances.json'), 'utf8')).dances;
+    const knownStyleSlugs = dances.map(d => d.slug);
+    const errors = validateEvent(event, knownStyleSlugs, eventsJson.events.map(e => e.id));
+    if (errors.length > 0) {
+        console.error('Błędy walidacji — nic nie zapisano:');
+        errors.forEach(e => console.error(`  - ${e}`));
+        process.exit(1);
+    }
+
+    eventsJson.events = insertEventSorted(eventsJson.events, event);
+    fs.writeFileSync(eventsFile, JSON.stringify(eventsJson, null, 4) + '\n');
+    store.candidates = candidates.filter(x => x.id !== id);
+    fs.writeFileSync(candidatesFile, JSON.stringify(store, null, 4) + '\n');
+    console.log(`\nOpublikowano "${event.title}" do data/events.json. Sprawdź diff, potem: git add data/events.json assets/events && git commit`);
+}
+
+if (require.main === module) {
+    main().catch(error => { console.error(error); process.exit(1); });
+}
