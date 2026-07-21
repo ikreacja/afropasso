@@ -1704,6 +1704,62 @@ select {
     align-self: flex-start;
 }
 
+.films-readings {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-top: clamp(1.75rem, 3.5vw, 2.5rem);
+    border-top: 1px solid var(--sand-line);
+}
+
+.films-readings h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+}
+
+.films-readings-intro {
+    max-width: 68ch;
+    margin-top: var(--space-3);
+    color: var(--muted);
+    font-size: 1.06rem;
+}
+
+.readings-list {
+    margin-top: var(--space-5);
+    list-style: none;
+    display: grid;
+    gap: clamp(0.9rem, 2vw, 1.35rem);
+}
+
+.reading-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--sand-line);
+}
+
+.reading-title {
+    font-family: var(--font-display);
+    font-size: 1.14rem;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 180ms var(--ease-out);
+}
+
+.reading-title:hover,
+.reading-title:focus-visible {
+    color: var(--clay);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.reading-meta {
+    font-size: 0.92rem;
+    color: var(--muted);
+}
+
 /* ===== Lineage map prologue (full-bleed) ===== */
 .lineage-map {
     width: 100vw;

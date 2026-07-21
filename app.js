@@ -782,6 +782,62 @@ function renderFilms() {
         </article>
         `;
     }).join('');
+
+    renderReadings();
+}
+
+// Academic sources from the research guide — the "Do poczytania" reading list.
+const academicReadings = [
+    {
+        title: 'Kizomba Dance: From Market Success to Controversial National Brand',
+        authors: 'Livia Jiménez Sedano',
+        venue: 'Revue européenne des migrations internationales',
+        year: 2019,
+        url: 'https://journals.openedition.org/remi/13584'
+    },
+    {
+        title: 'Desiring Connection: Affect in the Embodied Experience of Kizomba Dance',
+        authors: 'Tiffany Pollock',
+        venue: 'Capacious: Journal for Emerging Affect Inquiry',
+        year: 2018,
+        url: 'https://capaciousjournal.com/cms/wp-content/uploads/2018/03/capacious-pollock-desiring-connection.pdf'
+    },
+    {
+        title: 'The SAGE International Encyclopedia of Music and Culture — hasła „Kizomba Music and Dance” i „Semba Music and Dance”',
+        authors: '',
+        venue: 'SAGE Reference',
+        year: 2019,
+        url: 'https://sk.sagepub.com/ency/edvol/the-sage-international-encyclopedia-of-music-and-culture/chpt/semba-music-dance'
+    },
+    {
+        title: '„Semba Dilema”: On Transatlantic Musical Flows between Angola and Brazil',
+        authors: '',
+        venue: 'ATeM — Archiv für Textmusikforschung',
+        year: null,
+        url: 'https://atem-journal.com/ATeM/article/download/4065/3291/9291'
+    },
+    {
+        title: 'Tradition and Modernity in the History of Pop-Rock and Semba',
+        authors: '',
+        venue: 'Brill — European Journal of Portuguese History',
+        year: null,
+        url: 'https://brill.com/view/journals/ejph/22/2/article-p206_4.pdf'
+    }
+];
+
+function renderReadings() {
+    const container = document.getElementById('readings-container');
+    if (!container) return;
+
+    container.innerHTML = academicReadings.map(reading => {
+        const metaLine = [reading.authors, reading.venue, reading.year].filter(Boolean).join(' · ');
+        return `
+        <li class="reading-item">
+            <a class="reading-title" href="${escapeAttribute(reading.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(reading.title)}</a>
+            ${metaLine ? `<span class="reading-meta">${escapeHTML(metaLine)}</span>` : ''}
+        </li>
+        `;
+    }).join('');
 }
 
 // Timeline rendering: the "lineage thread". Chapters alternate around a
