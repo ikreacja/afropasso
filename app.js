@@ -75,7 +75,8 @@ function initializeElements() {
     elements.views.timeline = document.getElementById('timeline-view');
     elements.views.compare = document.getElementById('compare-view');
     elements.views.glossary = document.getElementById('glossary-view');
-    
+    elements.views.filmy = document.getElementById('filmy-view');
+
     // Navigation
     elements.nav.links = document.querySelectorAll('.nav-link');
     elements.scrollTopButton = document.getElementById('scroll-top-button');
@@ -279,6 +280,9 @@ function handleRoute(path) {
         case 'glossary':
             // Glossary is already generated
             break;
+        case 'filmy':
+            renderFilms();
+            break;
         default:
             navigateTo('/');
             return;
@@ -344,7 +348,7 @@ function getFeaturedDescription(dance) {
         'kizomba-fusion': 'Kizomba z subtelnymi wpływami innych stylów.',
         'urban-kizz': 'Współczesna interpretacja kizomby w miejskim stylu.',
         'kuduro': 'Energia, opór i elektroniczny puls Luandy.',
-        'kompa': 'Haitański groove, luźniejsza rama i karaibski puls.'
+        'kompa': 'Haitański groove, luźniejsze objęcie i karaibski puls.'
     };
     return overrides[dance.slug] || truncateText(dance.character_pl, 96);
 }
@@ -551,7 +555,7 @@ function showDanceDetail(slug) {
                         <p>${escapeHTML(dance.feeling_pl)}</p>
                     </div>
                     <div class="characteristic-item">
-                        <h4>Ramka</h4>
+                        <h4>Objęcie</h4>
                         <p>${escapeHTML(dance.frame_pl)}</p>
                     </div>
                     <div class="characteristic-item">
@@ -687,6 +691,97 @@ function getVideoTypeLabel(type) {
         'lesson': 'Lekcja'
     };
     return labels[type] || type;
+}
+
+// "Do obejrzenia" — verified documentaries from the research guide. Static
+// data rendered into the #/filmy view; each card links out to a source.
+const documentaryFilms = [
+    {
+        title: "O Ritmo do N'gola Ritmos",
+        year: 1978,
+        director: 'reż. António Ole',
+        meta: 'portugalski · wysoka wartość historyczna',
+        description: 'Walka o niepodległość Angoli widziana przez pryzmat zespołu Ngola Ritmos i roli kultury popularnej w mobilizacji politycznej lat 40. i 50.',
+        url: 'https://www.youtube.com/watch?v=ifI9Zv34RtE'
+    },
+    {
+        title: 'Bonga: au nom de la liberté',
+        year: 2000,
+        director: 'reż. Dom Pedro',
+        meta: '52 min · francuski/portugalski',
+        description: 'Portret Bongi — głosu semby i symbolu oporu, kultury oraz wolności Angoli.',
+        url: 'https://www.imdb.com/title/tt0353253/'
+    },
+    {
+        title: 'I Love Kuduro',
+        year: 2014,
+        director: 'reż. Mário Patrocínio',
+        meta: '93 min · Angola/Portugalia',
+        description: 'Miejski ruch kulturowy kuduro, który narodził się w Luandzie w ostatniej dekadzie wojny domowej i wpłynął na młodzież na całym świecie.',
+        url: 'https://africanfilmny.org/films/i-love-kuduro/'
+    },
+    {
+        title: "KizCast: A Dance's Journey",
+        year: 2024,
+        director: '',
+        meta: '48 min · angielski',
+        description: 'Dziewięć znanych postaci świata kizomby opowiada o swoim wejściu w taniec, indywidualnym stylu i wizji.',
+        url: 'https://www.youtube.com/watch?v=tzXVjDclSag'
+    },
+    {
+        title: 'Escape from Luanda',
+        year: 2007,
+        director: 'reż. Phil Grabsky',
+        meta: 'nagroda Royal Television Society',
+        description: 'Rok z życia uczniów jedynej szkoły muzycznej w Angoli, na tle kryzysu humanitarnego po 27-letniej wojnie domowej.',
+        url: 'https://www.documentary.org/feature/music-proves-lifeline-escape-luanda'
+    },
+    {
+        title: 'Death Metal Angola',
+        year: 2012,
+        director: 'reż. Jeremy Xido',
+        meta: 'IMDb 7.5 · nagroda festiwalowa',
+        description: 'Angolska para, Sonia i Wilker, i ich miłość do death metalu jako sposób radzenia sobie z dziedzictwem wojny — nieoczywista strona angolskiej sceny.',
+        url: 'https://www.imdb.com/title/tt2118609/'
+    },
+    {
+        title: 'Kizomba without Boundaries',
+        year: null,
+        director: '',
+        meta: '60 min · portugalski · Hiszpania',
+        description: 'Rozwój angolskiej kizomby w Europie — Portugalia, Hiszpania i Francja jako centra jej rozprzestrzeniania.',
+        url: 'https://festhome.com/ondemand_films/view_film/98121'
+    },
+    {
+        title: 'O Lendário Tio Liceu e os Ngola Ritmos',
+        year: 2010,
+        director: '',
+        meta: '55 min · IMDb 7.5',
+        description: 'Legendarny „wujek” Liceu i zespół Ngola Ritmos — kluczowa postać w historii angolskiej muzyki i tożsamości narodowej.',
+        url: 'https://www.imdb.com/title/tt1981672/'
+    }
+];
+
+function renderFilms() {
+    const container = document.getElementById('films-container');
+    if (!container) return;
+
+    container.innerHTML = documentaryFilms.map(film => {
+        const metaLine = [film.director, film.meta].filter(Boolean).join(' · ');
+        return `
+        <article class="film-card">
+            <div class="film-card-body">
+                <p class="film-card-year">${film.year ? escapeHTML(String(film.year)) : 'film dokumentalny'}</p>
+                <h3 class="film-card-title">${escapeHTML(film.title)}</h3>
+                ${metaLine ? `<p class="film-card-meta">${escapeHTML(metaLine)}</p>` : ''}
+                <p class="film-card-desc">${escapeHTML(film.description)}</p>
+            </div>
+            <a class="film-card-link video-link" href="${escapeAttribute(film.url)}" target="_blank" rel="noopener noreferrer">
+                Zobacz źródło <span aria-hidden="true">&rarr;</span>
+            </a>
+        </article>
+        `;
+    }).join('');
 }
 
 // Timeline rendering: the "lineage thread". Chapters alternate around a
@@ -900,7 +995,9 @@ function handleComparison() {
 const GLOSSARY_CATEGORIES = {
     taniec: 'Taniec',
     muzyka: 'Muzyka',
+    instrument: 'Instrument',
     historia: 'Ludzie i historia',
+    kultura: 'Kultura',
     jezyk: 'Język'
 };
 
@@ -1007,6 +1104,172 @@ const glossaryTerms = [
         term: 'Eduardo Paím',
         category: 'historia',
         definition: 'Angolski muzyk uznawany za jednego z ojców kizomby, założyciel zespołu SOS.'
+    },
+
+    // — Tańce i formy pokrewne —
+    {
+        id: 'afro-house',
+        term: 'Afro House',
+        category: 'taniec',
+        definition: 'Angolska forma muzyczno-taneczna, która zyskała popularność ok. 2006 roku, u szczytu ery kuduro classico. Łączy tradycyjne rytmy z house’em.'
+    },
+    {
+        id: 'tchianda',
+        term: 'Tchianda',
+        category: 'taniec',
+        definition: 'Styl muzyczno-taneczny kultury Lunda-Tchokwe ze wschodniej Angoli (prowincje Moxico, Lunda Sul i Norte); obecny także w DR Konga i Zambii.'
+    },
+    {
+        id: 'tance-karnawalowe',
+        term: 'Tańce karnawałowe',
+        category: 'taniec',
+        definition: 'Zestaw tradycyjnych angolskich tańców karnawałowych: kabetula, kasukuta, maringa, caduque, dizanda i cidralia — tańczone grupowo podczas dorocznego karnawału.'
+    },
+    {
+        id: 'lundu',
+        term: 'Lundu',
+        category: 'taniec',
+        definition: 'Afro-brazylijski styl tańca i muzyki zawierający ruch semby (umbigada); uznawany za pierwszą czarną muzykę zaakceptowaną przez brazylijskie społeczeństwo pod koniec XVIII wieku.'
+    },
+    {
+        id: 'umbigada',
+        term: 'Umbigada',
+        category: 'taniec',
+        definition: 'Ruch „dotyku brzuchów” przeniesiony przez zniewolonych Angolczyków do Brazylii — ogniwo łączące massembę i sembę z narodzinami samby.'
+    },
+    {
+        id: 'batuque',
+        term: 'Batuque',
+        category: 'taniec',
+        definition: 'Ogólna portugalska nazwa afro-brazylijskich tańców z perkusją, klaskaniem i śpiewem, wywodzących się z tradycji regionu Kongo-Angola.'
+    },
+    {
+        id: 'samba',
+        term: 'Samba',
+        category: 'taniec',
+        definition: 'Brazylijski taniec, którego nazwa według wielu badaczy pochodzi od kimbundijskiego „semba” — zaproszenia do tańca przez zetknięcie brzuchów.'
+    },
+
+    // — Muzyka —
+    {
+        id: 'zouk-beton',
+        term: 'Zouk béton',
+        category: 'muzyka',
+        definition: 'Szybka, „betonowa” odmiana zouk z Antyli Francuskich, wykorzystująca technologię MIDI; jeden ze składników muzyki kuduro.'
+    },
+    {
+        id: 'compasso',
+        term: 'Compasso',
+        category: 'muzyka',
+        definition: 'Metryczno-rytmiczne „serce” semby — akcentowanie kroków i praca nóg zgodne z pulsem muzyki w takcie 2/4.'
+    },
+    {
+        id: 'nova-semba',
+        term: 'Nowa Semba',
+        category: 'muzyka',
+        definition: 'Odnowienie semby na przełomie XX i XXI wieku, którego głównymi nazwiskami byli m.in. Carlos Burity, Carlitos Vieira Dias i Bonga.'
+    },
+
+    // — Instrumenty —
+    {
+        id: 'dikanza',
+        term: 'Dikanza',
+        category: 'instrument',
+        definition: 'Angolski idiofon zdrapywany, podobny do brazylijskiego reco-reco; jeden z rytmicznych filarów semby.'
+    },
+    {
+        id: 'ngoma',
+        term: 'Ngoma',
+        category: 'instrument',
+        definition: 'Afrykańskie bębny ngoma — podstawa tradycyjnej perkusji Angoli.'
+    },
+    {
+        id: 'sanza',
+        term: 'Sanza (kissanje)',
+        category: 'instrument',
+        definition: 'Lamelofon typu kalimba ludu Mbundu; obok marimby jeden z melodycznych instrumentów tradycyjnej semby.'
+    },
+    {
+        id: 'berimbau',
+        term: 'Berimbau',
+        category: 'instrument',
+        definition: 'Jednostrunny łuk muzyczny pełniący też rolę instrumentu perkusyjnego; znany również z brazylijskiej capoeiry.'
+    },
+    {
+        id: 'hungu',
+        term: 'Hungú',
+        category: 'instrument',
+        definition: 'Angolski łuk muzyczny pokrewny berimbau, używany m.in. w tradycyjnej perkusji show „Raiz da alma” Paulo Floresa.'
+    },
+
+    // — Ludzie i zespoły —
+    {
+        id: 'liceu-vieira-dias',
+        term: 'Liceu Vieira Dias',
+        category: 'historia',
+        definition: '„Wujek Liceu” — gitarzysta i lider zespołu Ngola Ritmos, współzałożyciel MPLA. Połączył instrumenty europejskie z angolskimi rytmami; więziony dziesięć lat w Tarrafal.'
+    },
+    {
+        id: 'bonga',
+        term: 'Bonga',
+        category: 'historia',
+        definition: 'Bonga (Barceló de Carvalho, ur. 1942) — „głos semby”, artysta world music i symbol oporu, kultury oraz wolności Angoli.'
+    },
+    {
+        id: 'paulo-flores',
+        term: 'Paulo Flores',
+        category: 'historia',
+        definition: '„Ojciec nowoczesnej semby” i „poeta ludu”; łączy klasykę semby z żywą, tradycyjną perkusją.'
+    },
+    {
+        id: 'carlos-burity',
+        term: 'Carlos Burity',
+        category: 'historia',
+        definition: 'Angolski muzyk (1952–2020), jedno z głównych nazwisk „Nowej Semby”.'
+    },
+    {
+        id: 'kassav',
+        term: 'Kassav',
+        category: 'historia',
+        definition: 'Zespół z Martyniki i Gwadelupy, który spopularyzował zouk; jego trasy po Afryce luzofońskiej wzmocniły wpływ zouk na sembę i kizombę.'
+    },
+
+    // — Kultura, miejsca, pojęcia —
+    {
+        id: 'luanda',
+        term: 'Luanda',
+        category: 'kultura',
+        definition: 'Stolica Angoli — wielokulturowe centrum, w którym narodziły się semba, kizomba i kuduro.'
+    },
+    {
+        id: 'benguela',
+        term: 'Benguela',
+        category: 'kultura',
+        definition: 'Nadmorski port z czasów kolonialnych; obok Luandy jeden z obszarów wczesnego rozwoju semby w XVII wieku.'
+    },
+    {
+        id: 'musseques',
+        term: 'Musseques',
+        category: 'kultura',
+        definition: 'Dzielnice slumsowe Luandy — środowisko, w którym w czasie wojny domowej narodziło się kuduro.'
+    },
+    {
+        id: 'angolanidade',
+        term: 'Angolanidade',
+        category: 'kultura',
+        definition: 'Angolska tożsamość narodowa, którą współtworzyły semba i kizomba jako formy oporu kulturowego w czasach kolonialnych i postkolonialnych.'
+    },
+    {
+        id: 'palop',
+        term: 'PALOP',
+        category: 'kultura',
+        definition: 'Kraje afrykańskie języka portugalskiego — wspólna przestrzeń rozwoju i rozprzestrzeniania kizomby.'
+    },
+    {
+        id: 'folkloryzacja',
+        term: 'Folkloryzacja',
+        category: 'kultura',
+        definition: 'Kolonialny proces kategoryzowania i kontrolowania muzyki nie-Europejczyków — np. opisywanie semby jako „angolskiego merengue”.'
     }
 ];
 

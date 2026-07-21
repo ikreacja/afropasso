@@ -304,7 +304,8 @@ select {
 .schools-section,
 .timeline-section,
 .compare-section,
-.glossary-section {
+.glossary-section,
+.films-section {
     position: relative;
     z-index: 3;
     scroll-margin-top: 6rem;
@@ -322,6 +323,7 @@ select {
 #timeline-view,
 #compare-view,
 #glossary-view,
+#filmy-view,
 #etykieta-view {
     padding-top: clamp(2.75rem, 6vw, 5rem);
 }
@@ -629,7 +631,8 @@ select {
 .section-heading h3,
 .timeline-section h2,
 .compare-section h2,
-.glossary-section h2 {
+.glossary-section h2,
+.films-section h2 {
     margin-top: var(--space-2);
     font-size: clamp(2.1rem, 4.5vw, 4.4rem);
     font-weight: 500;
@@ -1623,18 +1626,82 @@ select {
 
 .timeline-section,
 .compare-section,
-.glossary-section {
+.glossary-section,
+.films-section {
     max-width: 1100px;
     margin: 0 auto;
 }
 
 .timeline-intro,
 .compare-intro,
-.glossary-intro {
+.glossary-intro,
+.films-intro {
     max-width: 68ch;
     margin-top: var(--space-4);
     color: var(--muted);
     font-size: 1.12rem;
+}
+
+/* ===== Do obejrzenia (films) ===== */
+.films-grid {
+    margin-top: var(--space-6);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: clamp(1rem, 2.4vw, 1.6rem);
+}
+
+.film-card {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.25rem, 2.4vw, 1.75rem);
+    background: var(--paper-soft);
+    border: 1px solid var(--sand-line);
+    border-radius: 14px;
+    transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
+}
+
+.film-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px -20px oklch(21% 0.026 55 / 0.5);
+}
+
+.film-card-body {
+    flex: 1;
+}
+
+.film-card-year {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--clay);
+}
+
+.film-card-title {
+    margin-top: var(--space-2);
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 1.8vw, 1.6rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+.film-card-meta {
+    margin-top: var(--space-1);
+    font-size: 0.92rem;
+    color: var(--muted);
+}
+
+.film-card-desc {
+    margin-top: var(--space-3);
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.film-card-link {
+    margin-top: var(--space-4);
+    align-self: flex-start;
 }
 
 /* ===== Lineage map prologue (full-bleed) ===== */
@@ -2156,6 +2223,16 @@ select {
 .glossary-tile--muzyka .glossary-tile-cat {
     background: oklch(68% 0.132 76 / 0.2);
     color: oklch(45% 0.1 66);
+}
+
+.glossary-tile--instrument .glossary-tile-cat {
+    background: oklch(50% 0.06 55 / 0.16);
+    color: oklch(34% 0.05 55);
+}
+
+.glossary-tile--kultura .glossary-tile-cat {
+    background: oklch(78% 0.064 74 / 0.5);
+    color: oklch(40% 0.062 60);
 }
 
 .glossary-tile--historia .glossary-tile-cat {

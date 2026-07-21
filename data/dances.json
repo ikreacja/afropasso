@@ -95,6 +95,170 @@
       ]
     },
     {
+      "id": "tchianda",
+      "slug": "tchianda",
+      "names": {
+        "pl": "Tchianda",
+        "en": ""
+      },
+      "origin": {
+        "country": "Angola",
+        "region": "Moxico, Lunda Sul i Norte",
+        "period": "tradycyjny",
+        "years": "tradycyjny"
+      },
+      "classification": [
+        "tradycyjny",
+        "regionalny"
+      ],
+      "family": [
+        "Lunda-Tchokwe",
+        "tradycje ludu Chokwe"
+      ],
+      "music": {
+        "description_pl": "Styl muzyczno-taneczny kultury Lunda-Tchokwe — jednej z najbardziej rozpowszechnionych kultur angolskich — oparty na tradycyjnej perkusji i śpiewie wspólnotowym",
+        "examples": [
+          "tradycyjne rytmy Lunda-Tchokwe"
+        ]
+      },
+      "feeling_pl": "Wspólnotowy, zakorzeniony w tradycji, wyrażający tożsamość i więź z przodkami",
+      "frame_pl": "Taniec wspólnotowy i grupowy, bez stałego objęcia partnerskiego — ekspresja zbiorowa",
+      "basics_pl": "Ruchy oparte na tradycji ludu Chokwe; taniec nie jest typowy wyłącznie dla wschodniej Angoli — występuje też w Demokratycznej Republice Konga i Zambii",
+      "character_pl": "Regionalny styl muzyczno-taneczny wschodniej Angoli, wyrastający z kultury Lunda-Tchokwe i tradycji ludu Chokwe jako wyraz tożsamości i połączeń z przodkami",
+      "influences": [
+        "kultura Lunda-Tchokwe",
+        "tradycje ludu Chokwe",
+        "wspólne dziedzictwo z DR Konga i Zambią"
+      ],
+      "differences_pl": [
+        {
+          "vs": "semba",
+          "text": "Tchianda to tradycyjny taniec regionalny o korzeniach plemiennych, podczas gdy semba jest miejską formą tańca w parach z Luandy."
+        }
+      ],
+      "controversies_pl": [
+        "Przynależność tchiandy wyłącznie do Angoli bywa dyskusyjna — styl występuje także w sąsiednich krajach jako wspólne dziedzictwo Lunda-Tchokwe"
+      ],
+      "videos": [
+        {
+          "type": "essence",
+          "title": "AFRO CONTEMPORARY DANCE || AFRICAN TRADITIONAL DANCE || ANGOLA || AFROCONEX",
+          "url": "https://youtu.be/B-ixLLaTMGg",
+          "author": "AfroConex",
+          "year": 2022
+        }
+      ],
+      "sources": [
+        {
+          "title": "Pochodzenie i tradycje angolskich tańców - Google Docs",
+          "url": "https://docs.google.com/document/d/1-B69nf2V4Cw2aLE-XUz5vJtStEHZoBW4H4DEKmAm5XE/edit",
+          "note": "Główne źródło badawcze"
+        },
+        {
+          "title": "Traditional Dances - joinangola",
+          "url": "https://joinangola.com/traditional-dances/",
+          "note": "Opis tradycyjnych tańców Angoli"
+        },
+        {
+          "title": "Chokwe: Dance and Song and Ancestors - Academia.edu",
+          "url": "https://www.academia.edu/6496376/Chokwe_Dance_and_Song_and_Ancestors",
+          "note": "Tradycje taneczne ludu Chokwe"
+        }
+      ],
+      "keywords_pl": [
+        "tchianda",
+        "Lunda-Tchokwe",
+        "Chokwe",
+        "Moxico",
+        "Angola",
+        "tradycyjny",
+        "regionalny"
+      ]
+    },
+    {
+      "id": "tance_karnawalowe",
+      "slug": "tance-karnawalowe",
+      "names": {
+        "pl": "Tańce karnawałowe",
+        "en": ""
+      },
+      "origin": {
+        "country": "Angola",
+        "region": "cała Angola",
+        "period": "tradycyjny",
+        "years": "tradycyjny"
+      },
+      "classification": [
+        "tradycyjny",
+        "grupowy"
+      ],
+      "family": [
+        "karnawał angolski"
+      ],
+      "music": {
+        "description_pl": "Tradycyjne rytmy angolskiego karnawału — dorocznej celebracji, w której uczestniczą grupy z różnych regionów kraju, reprezentujące lokalne i regionalne grupy etniczne",
+        "examples": [
+          "muzyka karnawału angolskiego"
+        ]
+      },
+      "feeling_pl": "Radosny, celebracyjny, wspólnotowy — taniec ulicy i święta",
+      "frame_pl": "Tańce grupowe wykonywane zbiorowo podczas karnawału, bez stałego objęcia partnerskiego",
+      "basics_pl": "Zestaw tradycyjnych tańców karnawałowych: kabetula, kasukuta, maringa, caduque, dizanda i cidralia",
+      "character_pl": "Bogaty zestaw angolskich tańców karnawałowych (kabetula, kasukuta, maringa, caduque, dizanda, cidralia) — zbiorowa ekspresja kulturowa dorocznego karnawału",
+      "influences": [
+        "karnawał angolski",
+        "regionalne grupy etniczne Angoli",
+        "tradycje miejskie Luandy"
+      ],
+      "differences_pl": [
+        {
+          "vs": "semba",
+          "text": "Tańce karnawałowe są tradycyjnymi formami grupowymi związanymi z dorocznym świętem, podczas gdy semba to całoroczny miejski taniec w parach."
+        }
+      ],
+      "controversies_pl": [
+        "Wiele z tych tańców jest słabo udokumentowanych, a ich regionalne warianty i nazwy bywają różnie zapisywane"
+      ],
+      "videos": [
+        {
+          "type": "essence",
+          "title": "AFRO CONTEMPORARY DANCE || AFRICAN TRADITIONAL DANCE || ANGOLA || AFROCONEX",
+          "url": "https://youtu.be/B-ixLLaTMGg",
+          "author": "AfroConex",
+          "year": 2022
+        }
+      ],
+      "sources": [
+        {
+          "title": "Pochodzenie i tradycje angolskich tańców - Google Docs",
+          "url": "https://docs.google.com/document/d/1-B69nf2V4Cw2aLE-XUz5vJtStEHZoBW4H4DEKmAm5XE/edit",
+          "note": "Główne źródło badawcze"
+        },
+        {
+          "title": "Traditional / folk music of Angola - FolkCloud",
+          "url": "https://folkcloud.com/folk-music-by-country/angola",
+          "note": "Tradycyjna muzyka i tańce Angoli"
+        },
+        {
+          "title": "Traditional Dances - joinangola",
+          "url": "https://joinangola.com/traditional-dances/",
+          "note": "Opis tradycyjnych tańców Angoli"
+        }
+      ],
+      "keywords_pl": [
+        "tańce karnawałowe",
+        "kabetula",
+        "kasukuta",
+        "maringa",
+        "caduque",
+        "dizanda",
+        "cidralia",
+        "karnawał",
+        "Angola",
+        "tradycyjny"
+      ]
+    },
+    {
       "id": "semba",
       "slug": "semba",
       "names": {
@@ -407,6 +571,93 @@
       ]
     },
     {
+      "id": "afro_house",
+      "slug": "afro-house",
+      "names": {
+        "pl": "Afro House",
+        "en": ""
+      },
+      "origin": {
+        "country": "Angola",
+        "region": "Luanda",
+        "period": "współczesny",
+        "years": "ok. 2006"
+      },
+      "classification": [
+        "współczesny",
+        "elektroniczny"
+      ],
+      "family": [
+        "kuduro",
+        "house",
+        "perkusje afrykańskie"
+      ],
+      "music": {
+        "description_pl": "Angolska forma muzyczno-taneczna łącząca tradycyjne rytmy z muzyką house; zyskała popularność około 2006 roku, gdy kuduro classico było u szczytu popularności",
+        "examples": [
+          "Kings of Afro House"
+        ]
+      },
+      "feeling_pl": "Energiczny, uziemiony, oparty na mocnej pracy nóg i indywidualnej ekspresji",
+      "frame_pl": "Taniec głównie solowy i grupowy, bez stałego objęcia partnerskiego — skupiony na footworku i ekspresji",
+      "basics_pl": "Wymaga opanowania podstawowych ruchów tradycyjnych stylów tanecznych; łączy angolskie rytmy z groovem house",
+      "character_pl": "Współczesna angolska forma taneczna wyrastająca z kuduro i muzyki house, która zyskała popularność około 2006 roku i rozprzestrzeniła się na scenie międzynarodowej",
+      "influences": [
+        "kuduro",
+        "house",
+        "perkusje afrykańskie",
+        "tradycyjne style angolskie"
+      ],
+      "differences_pl": [
+        {
+          "vs": "kuduro",
+          "text": "Afro house wyrasta z kuduro, ale ma bardziej housowy groove i nieco spokojniejszy charakter niż szybkie, energiczne kuduro."
+        },
+        {
+          "vs": "kizomba",
+          "text": "Afro house to energiczny taniec solowy/grupowy, podczas gdy kizomba jest wolnym, romantycznym tańcem w parach."
+        }
+      ],
+      "controversies_pl": [
+        "Nazwa „afro house” bywa używana szeroko dla różnych afrykańskich stylów house, co zaciera granicę między angolskim rodowodem a innymi scenami"
+      ],
+      "videos": [
+        {
+          "type": "essence",
+          "title": "Angola Afrohouse/Kuduro",
+          "url": "https://www.youtube.com/watch?v=aUktyJiOlUw",
+          "author": "AfroConex",
+          "year": 2023
+        }
+      ],
+      "sources": [
+        {
+          "title": "Pochodzenie i tradycje angolskich tańców - Google Docs",
+          "url": "https://docs.google.com/document/d/1-B69nf2V4Cw2aLE-XUz5vJtStEHZoBW4H4DEKmAm5XE/edit",
+          "note": "Główne źródło badawcze"
+        },
+        {
+          "title": "Afro House Dance: The History Breakdown - AfroConex",
+          "url": "https://www.afroconex.online/post/afrohouse-dance-the-history-breakdown",
+          "note": "Historia i geneza afro house"
+        },
+        {
+          "title": "Kings of Afro House - Ver Angola",
+          "url": "https://www.verangola.net/va/en/062020/Culture/20662/Kings-of-Afro-House-the-documentary-about-DJs-and-producers-of-Afro-House.htm",
+          "note": "Dokument o DJ-ach i producentach afro house"
+        }
+      ],
+      "keywords_pl": [
+        "afro house",
+        "Angola",
+        "Luanda",
+        "kuduro",
+        "house",
+        "współczesny",
+        "elektroniczny"
+      ]
+    },
+    {
       "id": "tarraxinha",
       "slug": "tarraxinha",
       "names": {
@@ -436,9 +687,9 @@
         ]
       },
       "feeling_pl": "Bardzo bliskie, intymne i oszczędne w ruchu; skupione na mikro-izolacjach bioder, tułowia i reakcji partnerów na muzyczne pauzy.",
-      "frame_pl": "Bardzo bliski kontakt partnerów, często z połączeniem w okolicy bioder; rama jest kompaktowa, miękka i prowadzona subtelnymi impulsami ciała.",
+      "frame_pl": "Bardzo bliski kontakt partnerów, często z połączeniem w okolicy bioder; objęcie jest kompaktowe, miękkie i prowadzone subtelnymi impulsami ciała.",
       "basics_pl": "Minimalne przemieszczanie lub brak chodzenia; małe rotacje, izolacje i pulsacje ciała prowadzone rytmem, zamiast dużych figur krokowych.",
-      "character_pl": "Nazwa oznacza „małą śrubę” w portugalskim; tarraxinha koncentruje się na bliskim kontakcie, mikro-ruchu i spokojnej interpretacji rytmu.",
+      "character_pl": "Nazwa oznacza „małą śrubę” w portugalskim; tarraxinha koncentruje się na bliskim kontakcie, mikro-ruchu i spokojnej interpretacji rytmu. Ze względu na bardzo intymny charakter w Angoli tańczyli ją blisko przede wszystkim zakochani i pary — tańczenie z obcą osobą bywało tam nietaktem, w odróżnieniu od europejskich sociali, gdzie tańczy się ją towarzysko.",
       "influences": [
         "kuduro",
         "ghetto zouk",
@@ -928,6 +1179,13 @@
           "dances": [
             "tradycyjne tańce afrykańskie"
           ]
+        },
+        {
+          "title": "Tchianda i tradycje Lunda-Tchokwe",
+          "description": "Regionalny styl muzyczno-taneczny kultury Lunda-Tchokwe ze wschodniej Angoli, wyraz tożsamości i więzi z przodkami",
+          "dances": [
+            "tchianda"
+          ]
         }
       ]
     },
@@ -941,6 +1199,13 @@
           "description": "Rozwój massemby jako wczesnej miejskiej społecznej formy tańca z wpływami portugalskimi",
           "dances": [
             "massemba"
+          ]
+        },
+        {
+          "title": "Tradycyjne tańce karnawałowe",
+          "description": "Kabetula, kasukuta, maringa, caduque, dizanda i cidralia — zbiorowe tańce dorocznego karnawału angolskiego",
+          "dances": [
+            "tance_karnawalowe"
           ]
         }
       ]
@@ -956,6 +1221,10 @@
           "dances": [
             "semba"
           ]
+        },
+        {
+          "title": "Liceu Vieira Dias — rewolucja angolskiej muzyki",
+          "description": "Gitarzysta i lider Ngola Ritmos, współzałożyciel MPLA. Połączył instrumenty europejskie z angolskimi rytmami; aresztowany w 1959 roku i więziony dziesięć lat w Tarrafal."
         },
         {
           "title": "Popularyzacja semby (lata 50.)",
@@ -985,6 +1254,10 @@
             "semba",
             "massemba"
           ]
+        },
+        {
+          "title": "Bonga — głos semby i oporu",
+          "description": "Barceló de Carvalho (ur. 1942), symbol oporu, kultury i wolności Angoli, rozsławił sembę na świecie jako artysta world music."
         }
       ]
     },
@@ -1008,6 +1281,10 @@
           ]
         },
         {
+          "title": "Paulo Flores — ojciec nowoczesnej semby",
+          "description": "Pionier ruchu kizomby i „poeta ludu”, współtworzył nowy język muzyczny łączący sembę z wpływami karaibskimi."
+        },
+        {
           "title": "Powstanie kuduro (koniec lat 80.)",
           "description": "Rozwój kuduro w Luandzie podczas wojny domowej w Angoli",
           "dances": [
@@ -1029,6 +1306,10 @@
           ]
         },
         {
+          "title": "Carlos Burity i Nowa Semba",
+          "description": "Carlos Burity (1952–2020), jedno z głównych nazwisk „Nowej Semby”, odnawiał tradycję semby obok Bongi i Carlitosa Vieiry Diasa."
+        },
+        {
           "title": "Pierwsza generacja kuduro (lata 90.)",
           "description": "Rozwój pierwszej generacji kuduro z tempem 128-135 BPM",
           "dances": [
@@ -1040,6 +1321,13 @@
           "description": "DJ Madabaya i DJ Znobia tworzą tarraxinhę jako spowolnione kuduro",
           "dances": [
             "tarraxinha"
+          ]
+        },
+        {
+          "title": "Popularność afro house (ok. 2006)",
+          "description": "Afro house zyskuje popularność u szczytu ery kuduro classico, łącząc angolskie rytmy z muzyką house",
+          "dances": [
+            "afro_house"
           ]
         }
       ]
@@ -1104,6 +1392,10 @@
           "dances": [
             "kuduro"
           ]
+        },
+        {
+          "title": "Kizomba uznana za dziedzictwo kulturowe (2024)",
+          "description": "Angola oficjalnie uznała kizombę za niematerialne dziedzictwo kulturowe, podkreślając jej znaczenie dla tożsamości narodowej."
         }
       ]
     }
