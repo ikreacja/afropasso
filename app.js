@@ -107,6 +107,7 @@ function initializeElements() {
     elements.glossary.container = document.getElementById('glossary-container');
 
     // Events view
+    elements.events.countryFilter = document.getElementById('event-country-filter');
     elements.events.cityFilter = document.getElementById('event-city-filter');
     elements.events.styleFilter = document.getElementById('event-style-filter');
     elements.events.typeFilter = document.getElementById('event-type-filter');
@@ -140,6 +141,7 @@ function setupEventListeners() {
     elements.compare.danceB.addEventListener('change', handleComparison);
 
     // Event filters
+    elements.events.countryFilter.addEventListener('change', handleEventFilters);
     elements.events.cityFilter.addEventListener('change', handleEventFilters);
     elements.events.styleFilter.addEventListener('change', handleEventFilters);
     elements.events.typeFilter.addEventListener('change', handleEventFilters);
@@ -1541,11 +1543,13 @@ function getUpcomingEvents() {
 }
 
 function handleEventFilters() {
+    const country = elements.events.countryFilter.value;
     const city = elements.events.cityFilter.value;
     const style = elements.events.styleFilter.value;
     const type = elements.events.typeFilter.value;
 
     filteredEvents = getUpcomingEvents().filter(event =>
+        (!country || event.country === country) &&
         (!city || event.city === city) &&
         (!style || event.styles.includes(style)) &&
         (!type || event.type === type)
@@ -1553,10 +1557,11 @@ function handleEventFilters() {
 
     renderFeaturedEvents();
     renderEventsList();
-    updateEventFilterStatus(Boolean(city || style || type));
+    updateEventFilterStatus(Boolean(country || city || style || type));
 }
 
 function clearEventFilters() {
+    elements.events.countryFilter.value = '';
     elements.events.cityFilter.value = '';
     elements.events.styleFilter.value = '';
     elements.events.typeFilter.value = '';
@@ -1576,8 +1581,14 @@ function renderEventsPage() {
 
 function populateEventFilterOptions() {
     const upcoming = getUpcomingEvents();
+    const selectedCountry = elements.events.countryFilter.value;
     const selectedCity = elements.events.cityFilter.value;
     const selectedStyle = elements.events.styleFilter.value;
+
+    const countries = [...new Set(upcoming.map(event => event.country).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pl'));
+    elements.events.countryFilter.innerHTML = '<option value="">Wszystkie</option>' +
+        countries.map(country => `<option value="${escapeAttribute(country)}">${escapeHTML(country)}</option>`).join('');
+    elements.events.countryFilter.value = countries.includes(selectedCountry) ? selectedCountry : '';
 
     const cities = [...new Set(upcoming.map(event => event.city))].sort((a, b) => a.localeCompare(b, 'pl'));
     elements.events.cityFilter.innerHTML = '<option value="">Wszystkie</option>' +
@@ -1613,6 +1624,7 @@ function renderEventsList() {
     if (filteredEvents.length === 0) {
         container.innerHTML = '';
         const hasFilters = Boolean(
+            elements.events.countryFilter.value ||
             elements.events.cityFilter.value ||
             elements.events.styleFilter.value ||
             elements.events.typeFilter.value
@@ -1705,6 +1717,7 @@ function showEventDetail(id) {
         ? `${eventFullDateFormatter.format(start)} – ${eventFullDateFormatter.format(end)}`
         : eventFullDateFormatter.format(start);
     const typeLabel = EVENT_TYPE_LABELS[event.type] || event.type;
+    const placeLabel = event.country ? `${event.city}, ${event.country}` : event.city;
 
     const styleChips = (event.styles || []).map(slug => {
         const dance = dancesData.find(d => d.slug === slug);
@@ -1721,7 +1734,7 @@ function showEventDetail(id) {
 
     const venueLine = event.venue
         ? `<p class="event-detail-venue">📍 ${escapeHTML(event.venue)} · <a href="${escapeAttribute(eventMapsUrl(event))}" target="_blank" rel="noopener">otwórz w mapach ↗</a></p>`
-        : `<p class="event-detail-venue">📍 <a href="${escapeAttribute(eventMapsUrl(event))}" target="_blank" rel="noopener">${escapeHTML(event.city)} w mapach ↗</a></p>`;
+        : `<p class="event-detail-venue">📍 <a href="${escapeAttribute(eventMapsUrl(event))}" target="_blank" rel="noopener">${escapeHTML(placeLabel)} w mapach ↗</a></p>`;
 
     const similar = similarEvents(event);
     const similarHTML = similar.length
@@ -1736,7 +1749,7 @@ function showEventDetail(id) {
                 ${event.image ? `style="--tile-image: url('${escapeAttribute(event.image)}')"` : ''}>
             <div class="event-detail-head-content">
                 <button class="detail-back-link" onclick="navigateTo('/events')" type="button">Wróć do wydarzeń</button>
-                <p class="event-detail-kicker">${escapeHTML(typeLabel)} · ${escapeHTML(fullDate)} · ${escapeHTML(event.city)}</p>
+                <p class="event-detail-kicker">${escapeHTML(typeLabel)} · ${escapeHTML(fullDate)} · ${escapeHTML(placeLabel)}</p>
                 <h2 class="event-detail-title">${escapeHTML(event.title)}</h2>
             </div>
         </header>
