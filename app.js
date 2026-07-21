@@ -1596,7 +1596,7 @@ function populateEventFilterOptions() {
 function renderFeaturedEvents() {
     const featured = filteredEvents.filter(event => event.featured).slice(0, 3);
     elements.events.featuredContainer.innerHTML = featured.map(event => `
-        <a class="featured-tile featured-event-tile" href="${escapeAttribute(event.url)}" target="_blank" rel="noopener"
+        <a class="featured-tile featured-event-tile" href="#/event/${escapeAttribute(event.id)}"
            ${event.image ? `style="--tile-image: url('${escapeAttribute(event.image)}')"` : ''}>
             <div class="featured-tile-content">
                 <p class="featured-country">${escapeHTML(formatEventDateLabel(event))} · ${escapeHTML(event.city)}</p>
@@ -1664,7 +1664,7 @@ function eventRowHTML(event) {
     const details = [event.time, event.venue, event.price].filter(Boolean).join(' · ');
 
     return `
-        <article class="event-row">
+        <a class="event-row" href="#/event/${escapeAttribute(event.id)}">
             <div class="event-date-block" aria-hidden="true">
                 <span class="event-day">${escapeHTML(dayLabel)}</span>
                 <span class="event-weekday">${escapeHTML(weekday)}</span>
@@ -1675,8 +1675,8 @@ function eventRowHTML(event) {
                 <p class="event-meta">${escapeHTML(meta)}</p>
                 ${details ? `<p class="event-details">${escapeHTML(details)}</p>` : ''}
             </div>
-            <a class="event-link" href="${escapeAttribute(event.url)}" target="_blank" rel="noopener">Szczegóły</a>
-        </article>
+            <span class="event-row-arrow" aria-hidden="true">→</span>
+        </a>
     `;
 }
 
