@@ -63,7 +63,7 @@
                 'aria-label="Passo — przewodnik po stronie. Otwórz powitanie.">' +
             '<picture>' +
                 '<source srcset="assets/avatar/passo-companion.webp" type="image/webp">' +
-                '<img src="assets/avatar/passo-companion.png" alt="" width="76" height="76" draggable="false">' +
+                '<img src="assets/avatar/passo-companion.webp" alt="" width="76" height="76" draggable="false">' +
             '</picture>' +
         '</button>';
     document.body.appendChild(root);

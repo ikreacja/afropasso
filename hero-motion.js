@@ -20,7 +20,7 @@
     var buttons = hero.querySelectorAll('.hero-actions > *');
     var onHome = !location.hash || location.hash === '#' || location.hash === '#/';
 
-    var HERO_IMAGE = 'assets/hero/afropasso-hero-background.png';
+    var HERO_IMAGE = 'assets/hero/afropasso-hero-background.webp';
     var ZOOM_START = 1.16;
     var ZOOM_REST = 1.05; /* permanent slight overscan: safety margin for displacement + parallax */
 

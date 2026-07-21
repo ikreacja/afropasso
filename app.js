@@ -350,20 +350,20 @@ function getFeaturedDescription(dance) {
 }
 
 function getFeaturedImage(slug) {
-    return getDanceImage(slug) || 'assets/hero-dance-workshop.png';
+    return getDanceImage(slug) || 'assets/hero-dance-workshop.webp';
 }
 
 function getDanceImage(slug) {
     const images = {
-        'massemba': 'assets/dances/massemba.png',
-        'kizomba': 'assets/hero-dance-workshop.png',
-        'semba': 'assets/dances/semba.png',
-        'tarraxinha': 'assets/dances/tarraxinha.png',
-        'tarraxo': 'assets/dances/tarraxo.png',
-        'kizomba-fusion': 'assets/dances/kizomba-fusion.png',
-        'urban-kizz': 'assets/dances/urban-kizz.png',
-        'kuduro': 'assets/dances/kuduro.png',
-        'kompa': 'assets/dances/kompa.png'
+        'massemba': 'assets/dances/massemba.webp',
+        'kizomba': 'assets/hero-dance-workshop.webp',
+        'semba': 'assets/dances/semba.webp',
+        'tarraxinha': 'assets/dances/tarraxinha.webp',
+        'tarraxo': 'assets/dances/tarraxo.webp',
+        'kizomba-fusion': 'assets/dances/kizomba-fusion.webp',
+        'urban-kizz': 'assets/dances/urban-kizz.webp',
+        'kuduro': 'assets/dances/kuduro.webp',
+        'kompa': 'assets/dances/kompa.webp'
     };
     return images[slug] || null;
 }

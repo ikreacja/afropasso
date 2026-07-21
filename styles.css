@@ -76,7 +76,7 @@ body::before {
     width: var(--motif-width);
     pointer-events: none;
     z-index: 2;
-    background-image: url("assets/patterns/afropasso-left-motif.png");
+    background-image: url("assets/patterns/afropasso-left-motif.webp");
     background-repeat: repeat-y;
     background-position: left top;
     background-size: var(--motif-width) auto;
@@ -357,7 +357,7 @@ select {
     background:
         linear-gradient(90deg, oklch(97% 0.021 79 / 0.99) 0%, oklch(97% 0.021 79 / 0.94) 31%, oklch(97% 0.021 79 / 0.72) 43%, oklch(97% 0.021 79 / 0.28) 55%, transparent 72%),
         linear-gradient(180deg, oklch(97% 0.021 79 / 0.3), oklch(97% 0.021 79 / 0.08)),
-        url("assets/hero/afropasso-hero-background.png") center right / cover no-repeat,
+        url("assets/hero/afropasso-hero-background.webp") center right / cover no-repeat,
         var(--paper);
     box-shadow: none;
     overflow: hidden;
@@ -688,7 +688,7 @@ select {
     z-index: 0;
     background:
         linear-gradient(90deg, oklch(14% 0.04 48 / 0.84), oklch(14% 0.04 48 / 0.46), transparent 78%),
-        var(--tile-image, url("assets/hero-dance-workshop.png"));
+        var(--tile-image, url("assets/hero-dance-workshop.webp"));
     background-position: var(--tile-position, 50% 50%);
     background-size: cover;
 }
@@ -832,16 +832,16 @@ select {
     z-index: 0;
     background:
         linear-gradient(90deg, oklch(14% 0.04 48 / 0.84), oklch(14% 0.04 48 / 0.46), transparent 78%),
-        var(--guide-image, url("assets/hero-dance-workshop.png"));
+        var(--guide-image, url("assets/hero-dance-workshop.webp"));
     background-position: 50% 50%;
     background-size: cover;
 }
 
-.guide-tile--events .guide-tile-media { --guide-image: url("assets/guide/spolecznosc.png"); }
-.guide-tile--etykieta .guide-tile-media { --guide-image: url("assets/guide/etykieta.png"); }
-.guide-tile--timeline .guide-tile-media { --guide-image: url("assets/guide/korzenie.png"); }
-.guide-tile--compare .guide-tile-media { --guide-image: url("assets/guide/porownaj.png"); }
-.guide-tile--glossary .guide-tile-media { --guide-image: url("assets/guide/glosariusz.png"); }
+.guide-tile--events .guide-tile-media { --guide-image: url("assets/guide/spolecznosc.webp"); }
+.guide-tile--etykieta .guide-tile-media { --guide-image: url("assets/guide/etykieta.webp"); }
+.guide-tile--timeline .guide-tile-media { --guide-image: url("assets/guide/korzenie.webp"); }
+.guide-tile--compare .guide-tile-media { --guide-image: url("assets/guide/porownaj.webp"); }
+.guide-tile--glossary .guide-tile-media { --guide-image: url("assets/guide/glosariusz.webp"); }
 
 .guide-tile-content {
     max-width: 24rem;
@@ -1673,7 +1673,7 @@ select {
     width: 100vw;
     height: 100%;
     z-index: 0;
-    background-image: url("assets/patterns/korzenie-background-v2.png");
+    background-image: url("assets/patterns/korzenie-background-v2.webp");
     background-position: center top;
     background-repeat: no-repeat;
     background-size: cover;
@@ -2919,7 +2919,7 @@ select {
         background:
             linear-gradient(180deg, oklch(97% 0.021 79 / 0.98) 0%, oklch(97% 0.021 79 / 0.9) 42%, oklch(97% 0.021 79 / 0.42) 70%, transparent 100%),
             linear-gradient(90deg, oklch(97% 0.021 79 / 0.96) 0%, oklch(97% 0.021 79 / 0.72) 52%, transparent 100%),
-            url("assets/hero/afropasso-hero-background.png") 62% center / cover no-repeat,
+            url("assets/hero/afropasso-hero-background.webp") 62% center / cover no-repeat,
             var(--paper);
     }
 
@@ -3114,7 +3114,7 @@ select {
 
 /* ===== Etykieta / dance floor code ===== */
 #etykieta-view {
-    background-image: url("assets/guide/etykieta-background.png");
+    background-image: url("assets/guide/etykieta-background.webp");
     background-position: center top;
     background-repeat: no-repeat;
     background-size: max(100%, 900px) auto;
@@ -3144,7 +3144,7 @@ select {
     justify-content: center;
     background:
         linear-gradient(90deg, oklch(97% 0.021 79 / 0.97) 0%, oklch(97% 0.021 79 / 0.9) 32%, oklch(97% 0.021 79 / 0.55) 46%, transparent 68%),
-        url("assets/hero/korzenie-hero-bg.png") right top / cover no-repeat,
+        url("assets/hero/korzenie-hero-bg.webp") right top / cover no-repeat,
         var(--paper);
 }
 
@@ -3176,7 +3176,7 @@ select {
     justify-content: center;
     background:
         linear-gradient(90deg, oklch(97% 0.021 79 / 0.97) 0%, oklch(97% 0.021 79 / 0.9) 32%, oklch(97% 0.021 79 / 0.55) 46%, transparent 68%),
-        url("assets/hero/porownaj-hero-bg.png") right top / cover no-repeat,
+        url("assets/hero/porownaj-hero-bg.webp") right top / cover no-repeat,
         var(--paper);
 }
 
@@ -3219,7 +3219,7 @@ select {
     justify-content: center;
     background:
         linear-gradient(90deg, oklch(97% 0.021 79 / 0.97) 0%, oklch(97% 0.021 79 / 0.9) 32%, oklch(97% 0.021 79 / 0.55) 46%, transparent 68%),
-        url("assets/hero/biblioteka-hero-bg.png") right top / cover no-repeat,
+        url("assets/hero/biblioteka-hero-bg.webp") right top / cover no-repeat,
         var(--paper);
 }
 
@@ -3394,7 +3394,7 @@ select {
         background:
             linear-gradient(180deg, oklch(97% 0.021 79 / 0.98) 0%, oklch(97% 0.021 79 / 0.9) 30%, oklch(97% 0.021 79 / 0.55) 52%, oklch(97% 0.021 79 / 0.3) 100%),
             linear-gradient(90deg, oklch(97% 0.021 79 / 0.94) 0%, oklch(97% 0.021 79 / 0.6) 55%, transparent 100%),
-            url("assets/hero/korzenie-hero-bg.png") 68% top / cover no-repeat,
+            url("assets/hero/korzenie-hero-bg.webp") 68% top / cover no-repeat,
             var(--paper);
     }
 
@@ -3415,7 +3415,7 @@ select {
         background:
             linear-gradient(180deg, oklch(97% 0.021 79 / 0.98) 0%, oklch(97% 0.021 79 / 0.9) 30%, oklch(97% 0.021 79 / 0.55) 52%, oklch(97% 0.021 79 / 0.3) 100%),
             linear-gradient(90deg, oklch(97% 0.021 79 / 0.94) 0%, oklch(97% 0.021 79 / 0.6) 55%, transparent 100%),
-            url("assets/hero/porownaj-hero-bg.png") 68% top / cover no-repeat,
+            url("assets/hero/porownaj-hero-bg.webp") 68% top / cover no-repeat,
             var(--paper);
     }
 
@@ -3432,7 +3432,7 @@ select {
         background:
             linear-gradient(180deg, oklch(97% 0.021 79 / 0.98) 0%, oklch(97% 0.021 79 / 0.9) 30%, oklch(97% 0.021 79 / 0.55) 52%, oklch(97% 0.021 79 / 0.3) 100%),
             linear-gradient(90deg, oklch(97% 0.021 79 / 0.94) 0%, oklch(97% 0.021 79 / 0.6) 55%, transparent 100%),
-            url("assets/hero/biblioteka-hero-bg.png") 68% top / cover no-repeat,
+            url("assets/hero/biblioteka-hero-bg.webp") 68% top / cover no-repeat,
             var(--paper);
     }
 
