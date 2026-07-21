@@ -5,6 +5,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { downloadAndConvertCover } = require('./cover-image');
 
 const EVENT_TYPES = ['social', 'warsztaty', 'festiwal'];
 const DATA_DIR = path.join(__dirname, '..', 'data');
@@ -77,13 +78,7 @@ async function fetchOgTags(url) {
 
 async function downloadImage(imageUrl, id) {
     try {
-        const response = await fetch(imageUrl);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const ext = (imageUrl.match(/\.(jpe?g|png|webp)(?:\?|$)/i) || [, 'jpg'])[1].toLowerCase();
-        fs.mkdirSync(IMAGES_DIR, { recursive: true });
-        const filePath = path.join(IMAGES_DIR, `${id}.${ext}`);
-        fs.writeFileSync(filePath, Buffer.from(await response.arrayBuffer()));
-        return `assets/events/${id}.${ext}`;
+        return await downloadAndConvertCover(imageUrl, id, IMAGES_DIR);
     } catch (error) {
         console.warn(`Nie udało się pobrać grafiki: ${error.message}`);
         return '';
