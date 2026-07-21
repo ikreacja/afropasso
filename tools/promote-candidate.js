@@ -49,6 +49,7 @@ function candidateToEvent(candidate) {
     if (candidate.time) event.time = candidate.time;
     if (candidate.price) event.price = candidate.price;
     if (candidate.image) event.image = candidate.image;
+    if (candidate.summary_pl) event.summary_pl = candidate.summary_pl;
     if (computeConfidence(candidate) === 'single-source') event.confidence = 'single-source';
     return event;
 }

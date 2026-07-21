@@ -44,3 +44,20 @@ test('candidateToEvent omits confidence when verified', () => {
     });
     assert.ok(!('confidence' in event));
 });
+
+test('candidateToEvent carries summary_pl when present', () => {
+    const event = candidateToEvent({
+        id: 'e3', title: 'T', type: 'festiwal', styles: ['kizomba'], city: 'Gdańsk',
+        date_start: '2026-10-01', url: 'https://x', sources: ['a', 'b'], link_ok: true,
+        summary_pl: 'Krótki opis.'
+    });
+    assert.strictEqual(event.summary_pl, 'Krótki opis.');
+});
+
+test('candidateToEvent omits summary_pl when absent', () => {
+    const event = candidateToEvent({
+        id: 'e4', title: 'T', type: 'festiwal', styles: ['kizomba'], city: 'Gdańsk',
+        date_start: '2026-10-01', url: 'https://x', sources: ['a'], link_ok: true
+    });
+    assert.ok(!('summary_pl' in event));
+});
