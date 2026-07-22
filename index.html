@@ -69,11 +69,16 @@
                 </a>
             </h1>
             <ul class="nav-menu">
-                <li><a href="#/dances" class="nav-link" data-route="dances">Wszystkie tańce</a></li>
+                <li class="nav-item-has-sub">
+                    <a href="#/dances" class="nav-link" data-route="dances">Wszystkie tańce <span class="nav-caret" aria-hidden="true">▾</span></a>
+                    <ul class="nav-submenu">
+                        <li><a href="#/dances" class="nav-sublink">Biblioteka tańców</a></li>
+                        <li><a href="#/compare" class="nav-sublink">Porównaj tańce</a></li>
+                    </ul>
+                </li>
                 <li><a href="#/events" class="nav-link" data-route="events">Społeczność</a></li>
                 <li><a href="#/etykieta" class="nav-link" data-route="etykieta">Etykieta</a></li>
                 <li><a href="#/timeline" class="nav-link" data-route="timeline">Korzenie</a></li>
-                <li><a href="#/compare" class="nav-link" data-route="compare">Porównaj</a></li>
                 <li><a href="#/glossary" class="nav-link" data-route="glossary">Glosariusz</a></li>
                 <li><a href="#/filmy" class="nav-link" data-route="filmy">Do obejrzenia</a></li>
             </ul>
@@ -270,6 +275,15 @@
                     </div>
                     <p id="filter-status" class="filter-status hidden" role="status"></p>
                 </div>
+
+                <a class="compare-banner" href="#/compare">
+                    <span class="compare-banner-icon" aria-hidden="true">⇄</span>
+                    <span class="compare-banner-text">
+                        <strong>Porównaj tańce obok siebie</strong>
+                        <span>Zobacz różnice między kizombą, sembą, urban kizz i innymi — na jednej stronie.</span>
+                    </span>
+                    <span class="compare-banner-arrow" aria-hidden="true">→</span>
+                </a>
 
                 <div class="dances-grid">
                     <div id="dances-container" class="cards-grid" role="grid" aria-label="Siatka kart tańców">

@@ -308,8 +308,12 @@ function handleRoute(path) {
 function updateNavigation() {
     elements.nav.links.forEach(link => {
         const route = link.getAttribute('data-route');
-        if ((route === 'home' && currentRoute === 'home') || 
-            (route !== 'home' && route === currentRoute)) {
+        // Compare lives under "Wszystkie tańce" (data-route="dances"), so that
+        // parent stays active on #/compare too.
+        const matchesCompare = route === 'dances' && currentRoute === 'compare';
+        if ((route === 'home' && currentRoute === 'home') ||
+            (route !== 'home' && route === currentRoute) ||
+            matchesCompare) {
             link.classList.add('active');
         } else {
             link.classList.remove('active');

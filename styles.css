@@ -290,6 +290,59 @@ select {
     transform: translateY(-1px);
 }
 
+/* "Wszystkie tańce" dropdown (desktop only; hidden on the mobile scroll bar) */
+.nav-item-has-sub {
+    position: relative;
+}
+.nav-caret {
+    font-size: 0.7em;
+    opacity: 0.7;
+    margin-left: 2px;
+}
+.nav-submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 220px;
+    margin: 8px 0 0;
+    padding: 8px;
+    list-style: none;
+    background: var(--surface);
+    border: 1px solid var(--sand-line);
+    border-radius: var(--radius-md);
+    box-shadow: 0 12px 30px oklch(30% 0.03 60 / 0.16);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition: opacity 0.14s ease, transform 0.14s ease, visibility 0.14s;
+    z-index: 60;
+}
+.nav-item-has-sub:hover .nav-submenu,
+.nav-item-has-sub:focus-within .nav-submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.nav-sublink {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+.nav-sublink:hover,
+.nav-sublink:focus-visible {
+    background: color-mix(in oklch, var(--ochre) 22%, transparent);
+    outline: none;
+}
+@media (prefers-reduced-motion: reduce) {
+    .nav-submenu {
+        transition: none;
+    }
+}
+
 .main-content {
     width: min(var(--page-max), calc(100% - (var(--page-gutter) * 2)));
     margin: 0 auto;
@@ -645,6 +698,63 @@ select {
 
 .filters {
     margin-top: var(--space-5);
+}
+
+/* Banner into the Compare page, under the library search */
+.compare-banner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: 0 0 var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--sand-line);
+    border-radius: var(--radius-md);
+    background: linear-gradient(90deg, color-mix(in oklch, var(--ochre) 16%, var(--surface)), var(--surface) 70%);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+.compare-banner:hover,
+.compare-banner:focus-visible {
+    border-color: var(--clay);
+    box-shadow: 0 6px 18px oklch(30% 0.03 60 / 0.12);
+    transform: translateY(-1px);
+    outline: none;
+}
+.compare-banner-icon {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--clay);
+    color: var(--paper);
+    font-size: 1.3rem;
+}
+.compare-banner-text {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.compare-banner-text strong {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.1rem;
+    color: var(--ink);
+}
+.compare-banner-text span {
+    color: var(--muted);
+    font-size: 0.92rem;
+}
+.compare-banner-arrow {
+    flex: 0 0 auto;
+    color: var(--clay);
+    font-size: 1.3rem;
+}
+.compare-banner:hover .compare-banner-arrow,
+.compare-banner:focus-visible .compare-banner-arrow {
+    transform: translateX(3px);
 }
 
 .filters-container {
@@ -1353,6 +1463,18 @@ select {
     color: var(--ink);
     outline: none;
     border-bottom-color: currentColor;
+}
+
+/* On the dark "earth" event header the link must read light, not clay */
+.event-detail-header .detail-back-link {
+    color: var(--paper);
+    border-bottom-color: oklch(100% 0 0 / 0.5);
+    text-shadow: 0 1px 3px oklch(14% 0.04 48 / 0.65);
+}
+.event-detail-header .detail-back-link:hover,
+.event-detail-header .detail-back-link:focus-visible {
+    color: var(--paper);
+    border-bottom-color: var(--paper);
 }
 
 .dance-detail-title {
@@ -3353,6 +3475,13 @@ a.event-style-chip:focus-visible {
         justify-self: start;
         overflow-x: auto;
         padding-bottom: var(--space-1);
+    }
+
+    /* On the horizontally scrolling mobile bar the dropdown would be clipped —
+       "Wszystkie tańce" is a plain link here; Porównaj lives in the library banner. */
+    .nav-submenu,
+    .nav-caret {
+        display: none;
     }
 
     .lineage-map-sticky {
