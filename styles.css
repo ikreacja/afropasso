@@ -2607,6 +2607,13 @@ select {
     color: var(--paper);
     margin-bottom: var(--space-4);
 }
+/* No organizer cover → "korzenie" cracked-earth texture under a flat dark film */
+.event-detail-header:not(.has-detail-image) {
+    background:
+        linear-gradient(oklch(14% 0.04 48 / 0.85), oklch(14% 0.04 48 / 0.85)),
+        url("assets/patterns/korzenie-background-v2.webp") center / cover no-repeat,
+        oklch(14% 0.04 48);
+}
 .event-detail-kicker {
     font-size: 0.9rem;
     letter-spacing: 0.04em;
