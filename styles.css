@@ -1653,7 +1653,8 @@ select {
     position: relative;
     display: flex;
     align-items: flex-end;
-    min-height: clamp(240px, 32vw, 360px);
+    aspect-ratio: 1672 / 941;
+    min-height: 260px;
     padding: clamp(1.4rem, 3.5vw, 2.75rem);
     border-radius: var(--radius-md);
     overflow: hidden;
@@ -1665,7 +1666,7 @@ select {
             oklch(14% 0.04 48 / 0.82) 100%),
         url("assets/guide/do-obejrzenia.webp");
     background-size: cover;
-    background-position: 50% 38%;
+    background-position: 50% 32%;
 }
 
 .films-hero-inner {
