@@ -3421,6 +3421,27 @@ a.event-style-chip:focus-visible {
     display: inline-flex;
 }
 
+/* Mobile: the bottom edge is shared with Passo (bottom-left) and the scroll-top
+   button (bottom-right). Move the support widget to the right column, stacked
+   above the scroll-top button, and default it to the compact pill (JS). The
+   expanded card is width-capped so it clears Passo's avatar on the left. */
+@media (max-width: 760px) {
+    .coffee-widget {
+        left: auto;
+        right: clamp(1rem, 2vw, 1.5rem);
+        bottom: calc(clamp(1rem, 2vw, 1.5rem) + 3.75rem);
+        transform: none;
+    }
+    .coffee-widget-card {
+        width: min(300px, calc(100vw - 6rem));
+    }
+    /* The rightward "kliknij mnie" hint would clash with the widget on narrow
+       screens; the avatar alone is an obvious tap target on touch. */
+    .passo-hint {
+        display: none;
+    }
+}
+
 .scroll-top-button {
     position: fixed;
     right: clamp(1rem, 2vw, 1.5rem);

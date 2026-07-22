@@ -13,12 +13,18 @@
     var collapseButton = widget.querySelector('.coffee-widget-collapse');
     var toggleButton = widget.querySelector('.coffee-widget-toggle');
 
-    var collapsed = false;
+    // No stored choice yet → start collapsed on mobile (the pill keeps the
+    // crowded bottom edge clear of Passo / scroll-top), expanded on desktop.
+    // A remembered choice always wins.
+    var stored = null;
     try {
-        collapsed = window.localStorage.getItem(STORAGE_KEY) === 'true';
+        stored = window.localStorage.getItem(STORAGE_KEY);
     } catch (e) {
-        collapsed = false;
+        stored = null;
     }
+    var collapsed = stored === null
+        ? window.matchMedia('(max-width: 760px)').matches
+        : stored === 'true';
     widget.classList.toggle('is-collapsed', collapsed);
 
     function setCollapsed(value) {
