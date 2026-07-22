@@ -39,6 +39,19 @@
             ]
         },
         {
+            "id": "salsa-club-gdansk",
+            "name": "Salsa Club Gdańsk",
+            "city": "Gdańsk",
+            "url": "https://salsaclub.pl/grafik/gdansk/",
+            "styles": ["kuduro", "kizomba"],
+            "classes": [
+                { "styles": ["kuduro"], "day": 4, "time": "18:20", "level": "otwarte", "location": "Gdańsk (Żabianka)" },
+                { "styles": ["kuduro"], "day": 4, "time": "19:05", "level": "otwarte", "location": "Gdańsk (Żabianka)" },
+                { "styles": ["kizomba"], "day": 4, "time": "20:00", "level": "otwarte", "type": "practice", "location": "Gdańsk (Żabianka)" },
+                { "styles": ["kizomba"], "day": 4, "time": "20:45", "level": "otwarte", "type": "practice", "location": "Gdańsk (Żabianka)" }
+            ]
+        },
+        {
             "id": "dance-atelier",
             "name": "Dance Atelier",
             "city": "Gdańsk",
