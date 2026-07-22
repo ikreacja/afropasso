@@ -371,14 +371,17 @@ function getFeaturedImage(slug) {
 function getDanceImage(slug) {
     const images = {
         'massemba': 'assets/dances/massemba.webp',
-        'kizomba': 'assets/hero-dance-workshop.webp',
+        'kizomba': 'assets/dances/kizomba.webp',
         'semba': 'assets/dances/semba.webp',
         'tarraxinha': 'assets/dances/tarraxinha.webp',
         'tarraxo': 'assets/dances/tarraxo.webp',
         'kizomba-fusion': 'assets/dances/kizomba-fusion.webp',
         'urban-kizz': 'assets/dances/urban-kizz.webp',
         'kuduro': 'assets/dances/kuduro.webp',
-        'kompa': 'assets/dances/kompa.webp'
+        'kompa': 'assets/dances/kompa.webp',
+        'tchianda': 'assets/dances/tchianda.webp',
+        'tance-karnawalowe': 'assets/dances/tance-karnawalowe.webp',
+        'afro-house': 'assets/dances/afro-house.webp'
     };
     return images[slug] || null;
 }
