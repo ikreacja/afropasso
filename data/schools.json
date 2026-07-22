@@ -1,3 +1,28 @@
 {
-    "schools": []
+    "schools": [
+        {
+            "id": "sosalsa",
+            "name": "so!salsa",
+            "city": "Gdańsk",
+            "url": "https://sosalsa.pl/kizombaurban-kiz,44,pl",
+            "styles": ["kizomba", "urban-kizz"],
+            "classes": []
+        },
+        {
+            "id": "dance-atelier",
+            "name": "Dance Atelier",
+            "city": "Gdańsk",
+            "url": "https://danceatelier.pl/kurs-tanca/kizomba/",
+            "styles": ["kizomba", "urban-kizz"],
+            "classes": []
+        },
+        {
+            "id": "energy-club-gdynia",
+            "name": "Energy Club Gdynia",
+            "city": "Gdynia",
+            "url": "https://energyclub-gdynia.cms.efitness.com.pl/kalendarz-zajec",
+            "styles": ["kizomba"],
+            "classes": []
+        }
+    ]
 }

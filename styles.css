@@ -2763,6 +2763,98 @@ a.event-style-chip:focus-visible {
     color: var(--muted);
 }
 
+/* Weekly class schedule (Trójmiasto) */
+.schedule-container {
+    padding-top: var(--space-4, 24px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4, 24px);
+}
+.schedule-day-name {
+    margin: 0 0 var(--space-2, 12px);
+    color: var(--clay);
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+.schedule-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2, 12px);
+}
+.schedule-item {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3, 16px);
+    padding: var(--space-2, 12px) var(--space-3, 16px);
+    border: 1px solid var(--sand-line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+}
+.schedule-time {
+    flex: 0 0 auto;
+    min-width: 56px;
+    font-weight: 600;
+    color: var(--ink);
+}
+.schedule-body {
+    flex: 1 1 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px var(--space-2, 12px);
+    align-items: baseline;
+}
+.schedule-style {
+    font-weight: 600;
+    color: var(--ink);
+}
+.schedule-level {
+    font-size: 0.85rem;
+    color: var(--clay);
+}
+.schedule-school {
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+.schedule-link {
+    flex: 0 0 auto;
+    align-self: center;
+    color: var(--clay);
+    text-decoration: none;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+.schedule-link:hover,
+.schedule-link:focus-visible {
+    text-decoration: underline;
+    outline: none;
+}
+.schools-legend {
+    margin-top: var(--space-2, 12px);
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+.schools-legend a {
+    color: var(--clay);
+    text-decoration: none;
+}
+.schools-legend a:hover,
+.schools-legend a:focus-visible {
+    text-decoration: underline;
+}
+
+@media (max-width: 560px) {
+    .schedule-item {
+        flex-wrap: wrap;
+    }
+    .schedule-link {
+        align-self: flex-start;
+    }
+}
+
 @media (max-width: 760px) {
     .featured-events-grid {
         grid-template-columns: 1fr;

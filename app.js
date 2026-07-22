@@ -1521,6 +1521,7 @@ function closeGlossaryEntry() {
 // ===== Events hub =====
 
 const EVENT_TYPE_LABELS = { social: 'potańcówka', warsztaty: 'warsztaty', festiwal: 'festiwal' };
+const WEEKDAYS_PL = ['', 'poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek', 'sobota', 'niedziela'];
 const eventMonthFormatter = new Intl.DateTimeFormat('pl-PL', { month: 'long', year: 'numeric' });
 const eventWeekdayFormatter = new Intl.DateTimeFormat('pl-PL', { weekday: 'short' });
 const eventFullDateFormatter = new Intl.DateTimeFormat('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -1579,7 +1580,7 @@ function renderEventsPage() {
     }
     populateEventFilterOptions();
     handleEventFilters();
-    renderSchools();
+    renderWeeklySchedule();
 }
 
 function populateEventFilterOptions() {
@@ -1810,21 +1811,59 @@ function formatEventFilterStatus(count) {
     return few ? `${count} wydarzenia pasują do filtrów.` : `${count} wydarzeń pasuje do filtrów.`;
 }
 
-function renderSchools() {
-    if (!schoolsData || !elements.events.schoolsContainer) return;
+function renderWeeklySchedule() {
+    const container = elements.events.schoolsContainer;
+    if (!schoolsData || !container) return;
     if (schoolsData.length === 0) {
-        elements.events.schoolsContainer.innerHTML =
+        container.innerHTML =
             '<p class="schools-empty">Wkrótce dodamy szkoły i regularne zajęcia. Prowadzisz takie? Zgłoś się!</p>';
         return;
     }
-    elements.events.schoolsContainer.innerHTML = schoolsData.map(school => `
-        <article class="school-card">
-            <h4>${escapeHTML(school.name)}</h4>
-            <p class="school-meta">${escapeHTML(school.city)} · ${escapeHTML(school.schedule_pl)}</p>
-            <p class="school-styles">${escapeHTML(school.styles.map(slug => (dancesData.find(dance => dance.slug === slug) || {}).names?.pl || slug).join(', '))}</p>
-            <a class="card-link" href="${escapeAttribute(school.url)}" target="_blank" rel="noopener">Zapisy i informacje</a>
-        </article>
-    `).join('');
+
+    const styleName = slug => (dancesData.find(dance => dance.slug === slug) || {}).names?.pl || slug;
+    const classes = schoolsData.flatMap(school =>
+        (school.classes || []).map(cls => ({
+            ...cls,
+            schoolName: school.name,
+            schoolUrl: school.url,
+            place: cls.location || school.city
+        }))
+    );
+
+    let html = '';
+    if (classes.length === 0) {
+        html = '<p class="schools-empty">Wkrótce dodamy grafik regularnych zajęć.</p>';
+    } else {
+        for (let day = 1; day <= 7; day++) {
+            const dayClasses = classes
+                .filter(cls => cls.day === day)
+                .sort((a, b) => (a.time || '').localeCompare(b.time || ''));
+            if (dayClasses.length === 0) continue;
+            html += `<div class="schedule-day">
+                <h4 class="schedule-day-name">${escapeHTML(WEEKDAYS_PL[day])}</h4>
+                <ul class="schedule-list">
+                    ${dayClasses.map(cls => `
+                        <li class="schedule-item">
+                            <span class="schedule-time">${escapeHTML(cls.time || '')}</span>
+                            <span class="schedule-body">
+                                <span class="schedule-style">${escapeHTML((cls.styles || []).map(styleName).join(', '))}</span>
+                                ${cls.level ? `<span class="schedule-level">${escapeHTML(cls.level)}</span>` : ''}
+                                <span class="schedule-school">${escapeHTML(cls.schoolName)} · ${escapeHTML(cls.place)}</span>
+                            </span>
+                            <a class="schedule-link" href="${escapeAttribute(cls.schoolUrl)}" target="_blank" rel="noopener">zapisy ↗</a>
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>`;
+        }
+    }
+
+    const legend = schoolsData
+        .map(school => `<a href="${escapeAttribute(school.url)}" target="_blank" rel="noopener">${escapeHTML(school.name)}</a>`)
+        .join(' · ');
+    html += `<p class="schools-legend">Szkoły: ${legend}</p>`;
+
+    container.innerHTML = html;
 }
 
 // Utility functions
