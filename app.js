@@ -4,6 +4,7 @@ let timelineData = null;
 let filteredDances = [];
 let eventsData = null;
 let schoolsData = null;
+let scheduleTypeFilter = 'all'; // 'all' | 'lekcja' | 'practice'
 let filteredEvents = [];
 let currentRoute = 'home';
 
@@ -1522,6 +1523,9 @@ function closeGlossaryEntry() {
 
 const EVENT_TYPE_LABELS = { social: 'potańcówka', warsztaty: 'warsztaty', festiwal: 'festiwal' };
 const WEEKDAYS_PL = ['', 'poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek', 'sobota', 'niedziela'];
+const WEEKDAYS_PL_SHORT = ['', 'Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob', 'Ndz'];
+const scheduleNarrowMQ = window.matchMedia('(max-width: 700px)');
+let scheduleMediaBound = false;
 const eventMonthFormatter = new Intl.DateTimeFormat('pl-PL', { month: 'long', year: 'numeric' });
 const eventWeekdayFormatter = new Intl.DateTimeFormat('pl-PL', { weekday: 'short' });
 const eventFullDateFormatter = new Intl.DateTimeFormat('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -1821,7 +1825,8 @@ function renderWeeklySchedule() {
     }
 
     const styleName = slug => (dancesData.find(dance => dance.slug === slug) || {}).names?.pl || slug;
-    const classes = schoolsData.flatMap(school =>
+    const isPractice = cls => cls.type === 'practice';
+    const allClasses = schoolsData.flatMap(school =>
         (school.classes || []).map(cls => ({
             ...cls,
             schoolName: school.name,
@@ -1829,33 +1834,83 @@ function renderWeeklySchedule() {
             place: cls.location || school.city
         }))
     );
+    const hasPractice = allClasses.some(isPractice);
+    const hasLekcja = allClasses.some(cls => !isPractice(cls));
+
+    // Practice can be attended on its own, so it stays separately filterable.
+    const classes = allClasses.filter(cls => {
+        if (scheduleTypeFilter === 'practice') return isPractice(cls);
+        if (scheduleTypeFilter === 'lekcja') return !isPractice(cls);
+        return true;
+    });
 
     let html = '';
-    if (classes.length === 0) {
-        html = '<p class="schools-empty">Wkrótce dodamy grafik regularnych zajęć.</p>';
+    if (hasPractice && hasLekcja) {
+        const tab = (value, label) =>
+            `<button type="button" class="schedule-filter-btn${scheduleTypeFilter === value ? ' is-active' : ''}" data-schedule-filter="${value}" aria-pressed="${scheduleTypeFilter === value}">${label}</button>`;
+        html += `<div class="schedule-filter" role="group" aria-label="Filtruj zajęcia i practice">
+            ${tab('all', 'Wszystko')}
+            ${tab('lekcja', 'Zajęcia')}
+            ${tab('practice', 'Praktis')}
+        </div>`;
+    }
+
+    if (allClasses.length === 0) {
+        html += '<p class="schools-empty">Wkrótce dodamy grafik regularnych zajęć.</p>';
+    } else if (classes.length === 0) {
+        html += '<p class="schools-empty">Brak pozycji dla tego filtra.</p>';
     } else {
+        // Calendar grid: hours down the rows, days across the columns.
+        // Desktop shows the full week (empty days included, so gaps read as gaps);
+        // on narrow screens only days that actually have classes become columns.
+        const hourOf = time => parseInt((time || '00').slice(0, 2), 10);
+        const onTheHour = time => /:00$/.test(time || '');
+        const daysWithClasses = [];
         for (let day = 1; day <= 7; day++) {
-            const dayClasses = classes
-                .filter(cls => cls.day === day)
-                .sort((a, b) => (a.time || '').localeCompare(b.time || ''));
-            if (dayClasses.length === 0) continue;
-            html += `<div class="schedule-day">
-                <h4 class="schedule-day-name">${escapeHTML(WEEKDAYS_PL[day])}</h4>
-                <ul class="schedule-list">
-                    ${dayClasses.map(cls => `
-                        <li class="schedule-item">
-                            <span class="schedule-time">${escapeHTML(cls.time || '')}</span>
-                            <span class="schedule-body">
-                                <span class="schedule-style">${escapeHTML((cls.styles || []).map(styleName).join(', '))}</span>
-                                ${cls.level ? `<span class="schedule-level">${escapeHTML(cls.level)}</span>` : ''}
-                                <span class="schedule-school">${escapeHTML(cls.schoolName)} · ${escapeHTML(cls.place)}</span>
-                            </span>
-                            <a class="schedule-link" href="${escapeAttribute(cls.schoolUrl)}" target="_blank" rel="noopener">zapisy ↗</a>
-                        </li>
-                    `).join('')}
-                </ul>
-            </div>`;
+            if (classes.some(cls => cls.day === day)) daysWithClasses.push(day);
         }
+        const days = scheduleNarrowMQ.matches ? daysWithClasses : [1, 2, 3, 4, 5, 6, 7];
+        const hours = classes.map(cls => hourOf(cls.time));
+        const minHour = Math.min(...hours);
+        const maxHour = Math.max(...hours);
+        const rows = [];
+        for (let h = minHour; h <= maxHour; h++) rows.push(h);
+
+        const cardHTML = cls => `
+            <a class="sg-card${isPractice(cls) ? ' sg-card--practice' : ''}" href="${escapeAttribute(cls.schoolUrl)}" target="_blank" rel="noopener">
+                <span class="sg-card-style">${escapeHTML((cls.styles || []).map(styleName).join(', '))}${isPractice(cls) ? ' <span class="schedule-tag">praktis</span>' : ''}</span>
+                ${onTheHour(cls.time) ? '' : `<span class="sg-card-time">${escapeHTML(cls.time)}</span>`}
+                ${cls.level ? `<span class="sg-card-meta">${escapeHTML(cls.level)}</span>` : ''}
+                ${cls.instructor ? `<span class="sg-card-meta sg-card-instructor">${escapeHTML(cls.instructor)}</span>` : ''}
+                <span class="sg-card-school">${escapeHTML(cls.schoolName)} · ${escapeHTML(cls.place)}</span>
+            </a>`;
+
+        html += `<div class="sg-scroll">
+            <table class="schedule-grid">
+                <thead>
+                    <tr>
+                        <td class="sg-corner"><span class="sr-only">Godzina</span></td>
+                        ${days.map(day => `<th scope="col" class="sg-dayhead">
+                            <span class="sg-day-full">${escapeHTML(WEEKDAYS_PL[day])}</span>
+                            <span class="sg-day-abbr" aria-hidden="true">${escapeHTML(WEEKDAYS_PL_SHORT[day])}</span>
+                        </th>`).join('')}
+                    </tr>
+                </thead>
+                <tbody>
+                    ${rows.map(hour => `<tr>
+                        <th scope="row" class="sg-time">${String(hour).padStart(2, '0')}:00</th>
+                        ${days.map(day => {
+                            const cell = classes
+                                .filter(cls => cls.day === day && hourOf(cls.time) === hour)
+                                .sort((a, b) => (a.time || '').localeCompare(b.time || ''));
+                            return cell.length === 0
+                                ? '<td class="sg-cell sg-cell--empty"></td>'
+                                : `<td class="sg-cell">${cell.map(cardHTML).join('')}</td>`;
+                        }).join('')}
+                    </tr>`).join('')}
+                </tbody>
+            </table>
+        </div>`;
     }
 
     const legend = schoolsData
@@ -1864,6 +1919,19 @@ function renderWeeklySchedule() {
     html += `<p class="schools-legend">Szkoły: ${legend}</p>`;
 
     container.innerHTML = html;
+
+    container.querySelectorAll('[data-schedule-filter]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            scheduleTypeFilter = btn.dataset.scheduleFilter;
+            renderWeeklySchedule();
+        });
+    });
+
+    // Re-render when crossing the narrow breakpoint so the column set adapts.
+    if (!scheduleMediaBound) {
+        scheduleMediaBound = true;
+        scheduleNarrowMQ.addEventListener('change', () => renderWeeklySchedule());
+    }
 }
 
 // Utility functions

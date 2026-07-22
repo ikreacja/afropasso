@@ -2559,7 +2559,7 @@ select {
             oklch(14% 0.04 48 / 0.15),
             oklch(14% 0.04 48 / 0.72) 62%,
             oklch(14% 0.04 48 / 0.92)),
-        var(--tile-image, none),
+        var(--tile-image, url("assets/events/event-header-earth.webp")),
         oklch(14% 0.04 48);
     background-position: center;
     background-size: cover;
@@ -2607,11 +2607,15 @@ select {
     color: var(--paper);
     margin-bottom: var(--space-4);
 }
-/* No organizer cover → "korzenie" cracked-earth texture under a flat dark film */
+/* No organizer cover → "earth" event-header graphic, kept visible under a
+   bottom-anchored scrim so the title stays legible (align-items: end). */
 .event-detail-header:not(.has-detail-image) {
     background:
-        linear-gradient(oklch(14% 0.04 48 / 0.85), oklch(14% 0.04 48 / 0.85)),
-        url("assets/patterns/korzenie-background-v2.webp") center / cover no-repeat,
+        linear-gradient(180deg,
+            oklch(14% 0.04 48 / 0.2),
+            oklch(14% 0.04 48 / 0.55) 58%,
+            oklch(14% 0.04 48 / 0.9)),
+        url("assets/events/event-header-earth.webp") center / cover no-repeat,
         oklch(14% 0.04 48);
 }
 .event-detail-kicker {
@@ -2778,67 +2782,148 @@ a.event-style-chip:focus-visible {
     flex-direction: column;
     gap: var(--space-4, 24px);
 }
-.schedule-day-name {
-    margin: 0 0 var(--space-2, 12px);
+.schedule-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1, 8px);
+    margin-bottom: calc(-1 * var(--space-2, 12px));
+}
+.schedule-filter-btn {
+    padding: 6px 14px;
+    border: 1px solid var(--sand-line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--muted);
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.schedule-filter-btn:hover {
+    color: var(--ink);
+    border-color: var(--clay);
+}
+.schedule-filter-btn.is-active {
+    color: var(--paper, #fff);
+    background: var(--clay);
+    border-color: var(--clay);
+}
+.schedule-filter-btn:focus-visible {
+    outline: 2px solid var(--clay);
+    outline-offset: 2px;
+}
+.schedule-tag {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 8px;
+    border-radius: 999px;
+    background: var(--palm, var(--clay));
+    color: var(--paper, #fff);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+/* Calendar grid: hours × days */
+.sg-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.schedule-grid {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 8px;
+    table-layout: fixed;
+}
+.sg-corner {
+    width: 54px;
+}
+.sg-dayhead {
+    padding: 0 6px 6px;
+    text-align: left;
+    vertical-align: bottom;
     color: var(--clay);
-    font-size: 0.95rem;
-    letter-spacing: 0.06em;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
 }
-.schedule-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2, 12px);
+.sg-day-abbr {
+    display: none;
 }
-.schedule-item {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-3, 16px);
-    padding: var(--space-2, 12px) var(--space-3, 16px);
+.sg-time {
+    width: 54px;
+    padding: 6px 10px 0 0;
+    text-align: right;
+    vertical-align: top;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.sg-cell {
+    vertical-align: top;
+    border-radius: var(--radius-md);
+    padding: 0;
+}
+.sg-cell--empty {
+    border: 1px dashed var(--sand-line);
+    background: color-mix(in oklch, var(--sand-line) 12%, transparent);
+}
+.sg-card {
+    display: block;
+    padding: 8px 10px;
     border: 1px solid var(--sand-line);
     border-radius: var(--radius-md);
     background: var(--surface);
-}
-.schedule-time {
-    flex: 0 0 auto;
-    min-width: 56px;
-    font-weight: 600;
-    color: var(--ink);
-}
-.schedule-body {
-    flex: 1 1 auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px var(--space-2, 12px);
-    align-items: baseline;
-}
-.schedule-style {
-    font-weight: 600;
-    color: var(--ink);
-}
-.schedule-level {
-    font-size: 0.85rem;
-    color: var(--clay);
-}
-.schedule-school {
-    font-size: 0.9rem;
-    color: var(--muted);
-}
-.schedule-link {
-    flex: 0 0 auto;
-    align-self: center;
-    color: var(--clay);
     text-decoration: none;
-    font-size: 0.9rem;
-    white-space: nowrap;
+    color: inherit;
+    overflow-wrap: anywhere;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
-.schedule-link:hover,
-.schedule-link:focus-visible {
-    text-decoration: underline;
+.sg-card + .sg-card {
+    margin-top: 8px;
+}
+.sg-card:hover,
+.sg-card:focus-visible {
+    border-color: var(--clay);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+    transform: translateY(-1px);
     outline: none;
+}
+.sg-card--practice {
+    border-style: dashed;
+}
+.sg-card-style {
+    display: block;
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 0.92rem;
+    line-height: 1.25;
+}
+.sg-card-time {
+    display: block;
+    margin-top: 2px;
+    color: var(--ink);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+.sg-card-meta {
+    display: block;
+    margin-top: 2px;
+    color: var(--clay);
+    font-size: 0.8rem;
+}
+.sg-card-instructor {
+    color: var(--muted-brown, var(--muted));
+}
+.sg-card-school {
+    display: block;
+    margin-top: 3px;
+    color: var(--muted);
+    font-size: 0.8rem;
 }
 .schools-legend {
     margin-top: var(--space-2, 12px);
@@ -2854,12 +2939,34 @@ a.event-style-chip:focus-visible {
     text-decoration: underline;
 }
 
-@media (max-width: 560px) {
-    .schedule-item {
-        flex-wrap: wrap;
+@media (max-width: 700px) {
+    .schedule-grid {
+        border-spacing: 5px;
     }
-    .schedule-link {
-        align-self: flex-start;
+    .sg-corner,
+    .sg-time {
+        width: 42px;
+    }
+    .sg-time {
+        font-size: 0.76rem;
+        padding-right: 6px;
+    }
+    .sg-day-full {
+        display: none;
+    }
+    .sg-day-abbr {
+        display: inline;
+    }
+    .sg-card {
+        padding: 6px 8px;
+    }
+    .sg-card-style {
+        font-size: 0.84rem;
+    }
+    .sg-card-time,
+    .sg-card-meta,
+    .sg-card-school {
+        font-size: 0.75rem;
     }
 }
 

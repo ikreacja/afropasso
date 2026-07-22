@@ -4,12 +4,27 @@
             "id": "sosalsa",
             "name": "so!salsa",
             "city": "Gdańsk",
-            "url": "https://sosalsa.pl/kizombaurban-kiz,44,pl",
+            "url": "https://sosalsa.pl/grafik,4,pl",
             "styles": ["kizomba", "urban-kizz"],
             "classes": [
                 { "styles": ["kizomba"], "day": 1, "time": "18:00", "level": "początkujący", "location": "Gdańsk" },
-                { "styles": ["urban-kizz"], "day": 3, "time": "18:00", "level": "początkujący", "location": "Gdańsk" },
-                { "styles": ["kizomba"], "day": 7, "time": "20:00", "level": "początkujący", "location": "Gdańsk" }
+                { "styles": ["kizomba"], "day": 1, "time": "18:00", "level": "średniozaawansowany", "location": "Gdańsk" },
+                { "styles": ["kizomba"], "day": 1, "time": "19:00", "level": "zaawansowany", "location": "Gdańsk" },
+                { "styles": ["kizomba"], "day": 1, "time": "20:00", "level": "otwarte", "type": "practice", "location": "Gdańsk" },
+                { "styles": ["urban-kizz"], "day": 3, "time": "19:00", "level": "początkujący", "location": "Gdańsk" },
+                { "styles": ["kizomba"], "day": 7, "time": "17:00", "level": "średniozaawansowany", "location": "Gdańsk" },
+                { "styles": ["kizomba"], "day": 7, "time": "18:00", "level": "zaawansowany", "location": "Gdańsk" }
+            ]
+        },
+        {
+            "id": "rytm-dance-studio",
+            "name": "Rytm Dance Studio",
+            "city": "Sopot",
+            "url": "https://www.rytmdancestudio.pl/grafik",
+            "styles": ["kizomba"],
+            "classes": [
+                { "styles": ["kizomba"], "day": 4, "time": "20:00", "level": "otwarte", "location": "Sopot" },
+                { "styles": ["kizomba"], "day": 4, "time": "21:00", "level": "otwarte", "type": "practice", "location": "Sopot" }
             ]
         },
         {
