@@ -1649,6 +1649,44 @@ select {
 }
 
 /* ===== Do obejrzenia (films) ===== */
+.films-hero {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: clamp(240px, 32vw, 360px);
+    padding: clamp(1.4rem, 3.5vw, 2.75rem);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    color: var(--paper);
+    background:
+        linear-gradient(180deg,
+            oklch(14% 0.04 48 / 0.18) 0%,
+            oklch(14% 0.04 48 / 0.4) 48%,
+            oklch(14% 0.04 48 / 0.82) 100%),
+        url("assets/guide/do-obejrzenia.webp");
+    background-size: cover;
+    background-position: 50% 38%;
+}
+
+.films-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 60ch;
+}
+
+.films-hero .section-kicker {
+    color: oklch(88% 0.06 78);
+}
+
+.films-hero h2 {
+    color: var(--paper);
+}
+
+.films-hero .films-intro {
+    margin-top: var(--space-3);
+    color: oklch(94% 0.03 78);
+}
+
 .films-grid {
     margin-top: var(--space-6);
     display: grid;
