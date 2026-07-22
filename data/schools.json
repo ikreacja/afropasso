@@ -7,7 +7,9 @@
             "url": "https://sosalsa.pl/kizombaurban-kiz,44,pl",
             "styles": ["kizomba", "urban-kizz"],
             "classes": [
-                { "styles": ["kizomba", "urban-kizz"], "day": 1, "time": "18:00", "level": "początkujący", "location": "Gdańsk" }
+                { "styles": ["kizomba"], "day": 1, "time": "18:00", "level": "początkujący", "location": "Gdańsk" },
+                { "styles": ["urban-kizz"], "day": 3, "time": "18:00", "level": "początkujący", "location": "Gdańsk" },
+                { "styles": ["kizomba"], "day": 7, "time": "20:00", "level": "początkujący", "location": "Gdańsk" }
             ]
         },
         {
