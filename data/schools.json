@@ -34,7 +34,8 @@
             "url": "https://energyclub-gdynia.cms.efitness.com.pl/kalendarz-zajec",
             "styles": ["kizomba"],
             "classes": [
-                { "styles": ["kizomba"], "day": 3, "time": "20:00", "level": "średniozaawansowany", "location": "Gdynia" }
+                { "styles": ["kizomba"], "day": 2, "time": "20:00", "level": "średniozaawansowany", "instructor": "Adam Wała", "location": "Gdynia" },
+                { "styles": ["kizomba"], "day": 2, "time": "21:00", "level": "zaawansowany", "instructor": "Adam Wała", "location": "Gdynia" }
             ]
         },
         {
