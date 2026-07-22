@@ -6,15 +6,9 @@
             "city": "Gdańsk",
             "url": "https://sosalsa.pl/kizombaurban-kiz,44,pl",
             "styles": ["kizomba", "urban-kizz"],
-            "classes": []
-        },
-        {
-            "id": "dance-atelier",
-            "name": "Dance Atelier",
-            "city": "Gdańsk",
-            "url": "https://danceatelier.pl/kurs-tanca/kizomba/",
-            "styles": ["kizomba", "urban-kizz"],
-            "classes": []
+            "classes": [
+                { "styles": ["kizomba", "urban-kizz"], "day": 1, "time": "18:00", "level": "początkujący", "location": "Gdańsk" }
+            ]
         },
         {
             "id": "energy-club-gdynia",
@@ -22,6 +16,16 @@
             "city": "Gdynia",
             "url": "https://energyclub-gdynia.cms.efitness.com.pl/kalendarz-zajec",
             "styles": ["kizomba"],
+            "classes": [
+                { "styles": ["kizomba"], "day": 3, "time": "20:00", "level": "średniozaawansowany", "location": "Gdynia" }
+            ]
+        },
+        {
+            "id": "dance-atelier",
+            "name": "Dance Atelier",
+            "city": "Gdańsk",
+            "url": "https://danceatelier.pl/kurs-tanca/kizomba/",
+            "styles": ["kizomba", "urban-kizz"],
             "classes": []
         }
     ]
