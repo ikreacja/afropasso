@@ -42,6 +42,9 @@ function readForm(form) {
     const data = Object.fromEntries(new FormData(form).entries());
     const styles = Array.from(form.querySelectorAll('input[name=styles]:checked')).map(el => el.value);
     const payload = {
+        kind: 'event',
+        source: 'form',
+        trust: 'public',
         title: (data.title || '').trim(),
         type: data.type || '',
         city: (data.city || '').trim(),
@@ -81,7 +84,7 @@ async function sendToBackend(payload) {
         const { initializeApp } = await import(`${SDK}/firebase-app.js`);
         const { getFirestore, collection, addDoc, serverTimestamp } = await import(`${SDK}/firebase-firestore.js`);
         const db = getFirestore(initializeApp(firebaseConfig));
-        firebaseWrite = (p) => addDoc(collection(db, 'submissions'),
+        firebaseWrite = (p) => addDoc(collection(db, 'queue'),
             { ...p, status: 'pending', submittedAt: serverTimestamp() });
     }
     return firebaseWrite(payload);
