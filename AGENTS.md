@@ -53,3 +53,10 @@ Use relative paths only (site must work under a `/afropasso/` subpath on GitHub 
 - Accessibility: target WCAG 2.1 AA — semantic HTML, keyboard navigation, visible focus states, reduced-motion support.
 
 Brand: name **AfroPasso**, tagline **z pasji do tańców afrykańskich**, hero concept **Tańce, które łączą ludzi i historie**.
+
+## Voice & copy
+
+Two reference docs govern how text sounds — read them before writing user-facing or Irek-authored copy:
+
+- `docs/ton-marki.md` — brand voice for on-site content (dance cards, history, glossary, events hub, UI): warm cultural documentary, and the audience (all Polish kizomba-family dancers — kizomba, semba, urban kizz, kizomba fusion and related).
+- `docs/styl-pisania-irek.md` — Irek's personal first-person voice for bios, footers, and community/announcement posts (short, plain, concrete, not AI-sounding; emoji rules differ by genre).
