@@ -18,7 +18,7 @@ const IMAGES_DIR = path.join(ROOT, 'assets', 'events');
 function db() {
   const admin = require('firebase-admin');
   if (!admin.apps.length) {
-    admin.initializeApp({ credential: admin.cert(require(KEY_PATH)) });
+    admin.initializeApp({ credential: admin.credential.cert(require(KEY_PATH)) });
   }
   return admin.firestore();
 }

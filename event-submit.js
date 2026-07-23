@@ -1,4 +1,4 @@
-// AfroPasso — on-site event submission form. Writes to Firestore `submissions`
+// AfroPasso — on-site event submission form. Writes to Firestore `queue`
 // (intake only). Lazy-loads the Firebase Web SDK from CDN on first real send.
 // Public config below is safe to commit (Firebase web config is not a secret).
 const firebaseConfig = {
