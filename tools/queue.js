@@ -7,7 +7,7 @@
 //   node tools/queue.js --reject <id> [powód]
 const fs = require('fs');
 const path = require('path');
-const { validateEvent, insertEventSorted } = require('./add-event');
+const { validateEvent, insertEventSorted, parseOgTags } = require('./add-event');
 const { downloadAndConvertCover } = require('./cover-image');
 const { targetFileForKind, validateQueueDoc, mapQueueDocToRecord } = require('./queue-core');
 
@@ -68,8 +68,17 @@ async function promote(id, force) {
   const errors = validateEvent(record, styles, eventsJson.events.map(e => e.id));
   if (errors.length) throw new Error('validateEvent: ' + errors.join('; '));
 
-  if (doc.image || record.image) {
-    try { record.image = await downloadAndConvertCover(doc.image || record.image, record.id, IMAGES_DIR); }
+  // Cover: use the event page's OpenGraph image (like add-event.js). An explicit
+  // doc.image wins if a submitter provided one.
+  let coverUrl = doc.image;
+  if (!coverUrl) {
+    try {
+      const html = await (await fetch(doc.url, { redirect: 'follow' })).text();
+      coverUrl = parseOgTags(html).image;
+    } catch (_) { /* no cover available */ }
+  }
+  if (coverUrl) {
+    try { record.image = await downloadAndConvertCover(coverUrl, record.id, IMAGES_DIR); }
     catch (e) { console.warn('Cover pominięty:', e.message); }
   }
 
@@ -92,7 +101,7 @@ async function reject(id, reason) {
     const pi = a.indexOf('--promote');
     if (pi !== -1 && a[pi + 1]) return await promote(a[pi + 1], a.includes('--force'));
     const ri = a.indexOf('--reject');
-    if (ri !== -1 && a[ri + 1]) return await reject(a[ri + 1], a[ri + 2]);
+    if (ri !== -1 && a[ri + 1]) return await reject(a[ri + 1], a.slice(ri + 2).join(' '));
     console.log('Użycie: node tools/queue.js --list | --json | --promote <id> [--force] | --reject <id> [powód]');
   } catch (e) { console.error('Błąd:', e.message); process.exit(1); }
 })();

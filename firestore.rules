@@ -35,7 +35,7 @@ service cloud.firestore {
               'title', 'type', 'city', 'date_start', 'styles', 'url', 'contactEmail',
               'organizer', 'notes', 'date_end', 'time', 'venue', 'price',
               'sourceUrl', 'submittedBy', 'submittedAt'])
-        && d.kind in ['event', 'school', 'class']
+        && d.kind == 'event'   // P1: events only; school/class kinds arrive in a later phase
         && d.source in ['form', 'cli', 'research']
         && d.trust in ['public', 'single-source', 'verified']
         && d.status == 'pending'
