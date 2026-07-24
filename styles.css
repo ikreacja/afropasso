@@ -4138,6 +4138,7 @@ a.event-style-chip:focus-visible {
 .submit-error { color: var(--danger); font-weight: 600; }
 .submit-success { color: var(--palm-dark); font-weight: 600; }
 .submit-actions { display: flex; justify-content: flex-end; gap: var(--space-3); margin-top: var(--space-4, 24px); }
+.submit-agent-note { color: var(--muted); font-size: 0.85rem; margin: var(--space-3) 0 0; padding-top: var(--space-3); border-top: 1px solid var(--sand-line); }
 
 @media (max-width: 760px) {
     .submit-row { grid-template-columns: 1fr; }

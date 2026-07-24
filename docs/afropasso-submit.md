@@ -44,10 +44,10 @@ Pomiń w dokumencie te pola opcjonalne, których nie masz — nie wysyłaj pusty
 Zgłoszenie to utworzenie (`POST`) nowego dokumentu w kolekcji `queue` przez Firestore REST API:
 
 ```
-https://firestore.googleapis.com/v1/projects/<PROJECT_ID>/databases/(default)/documents/queue?key=<PUBLIC_WEB_API_KEY>
+https://firestore.googleapis.com/v1/projects/afropasso/databases/(default)/documents/queue?key=AIzaSyBX-M3QCafT1kZYs64ICHgk1-G3Vp_3VZA
 ```
 
-`<PROJECT_ID>` i `<PUBLIC_WEB_API_KEY>` uzupełnia właściciel AfroPasso. Klucz API jest publiczny z założenia — bramą bezpieczeństwa są reguły Firestore (walidacja pól, brak odczytu publicznego), nie tajność klucza.
+`projectId` to `afropasso`, a klucz powyżej to publiczny klucz web AfroPasso. Klucz API jest publiczny z założenia — bramą bezpieczeństwa są reguły Firestore (walidacja pól, brak odczytu publicznego), nie tajność klucza.
 
 ## 4. Meta do dołączenia
 
