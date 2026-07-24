@@ -1,6 +1,25 @@
 {
     "events": [
         {
+            "id": "kizombada-park-orunski-gdansk-2026-07-25",
+            "title": "Kizombada w Parku Oruńskim",
+            "type": "social",
+            "styles": [
+                "kizomba"
+            ],
+            "city": "Gdańsk",
+            "date_start": "2026-07-25",
+            "url": "https://www.facebook.com/events/27768322022764127/",
+            "featured": false,
+            "organizer": "",
+            "source": "research",
+            "venue": "Park Oruński",
+            "time": "19:00",
+            "summary_pl": "Plenerowa potańcówka kizomby w gdańskim Parku Oruńskim. Taniec pod chmurką w sobotni wieczór — przychodzisz i tańczysz.",
+            "country": "Polska",
+            "confidence": "single-source"
+        },
+        {
             "id": "vamos-festival-warsaw-2026-07-31",
             "title": "VAMOS Festival Warsaw",
             "type": "festiwal",
