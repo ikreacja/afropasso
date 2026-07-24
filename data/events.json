@@ -58,6 +58,25 @@
             "country": "Polska"
         },
         {
+            "id": "kudissanga-lisboa-2026-09-04",
+            "title": "Kudissanga Lisboa",
+            "type": "festiwal",
+            "styles": [
+                "kizomba",
+                "semba"
+            ],
+            "city": "Lizbona",
+            "date_start": "2026-09-04",
+            "url": "https://www.facebook.com/events/652723407484846/",
+            "featured": false,
+            "organizer": "Kudissanga",
+            "source": "research",
+            "venue": "Time Out Market",
+            "date_end": "2026-09-06",
+            "summary_pl": "Angolski festiwal kizomby i semby w Lizbonie, blisko korzeni tańca. Pierwszy weekend września: warsztaty, sociale i nocne imprezy z angolskimi DJ-ami.",
+            "country": "Portugalia"
+        },
+        {
             "id": "elsol-festival-fall-warszawa-2026-11-12",
             "title": "elSol Festival Fall Edition",
             "type": "festiwal",
